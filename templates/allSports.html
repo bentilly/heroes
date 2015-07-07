@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+</head>
+<body>
+	<h1>All Sports</h1>
+	<ul>
+		{% for sport in sports %}
+			<l1>
+				<h3>{{ sport.title }}</h3>
+				<p>{{ sport.description }}</p>
+			</li>
+		{% endfor %}	
+	</ul>
+</body>
+</html>
+{% endautoescape %}

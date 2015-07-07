@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+</head>
+<body>
+	<h1>ADMIN</h1>
+	<div>
+		<h2>List of Sports</h2>
+		<ul>
+			{% for sport in sports %}
+				<l1>
+					<h3><a href="/admin/sportPage?sport_keystring={{ sport.key.urlsafe() }}">{{ sport.title }}</a></h3>
+					<p>{{ sport.key.urlsafe() }}</p>
+				</li>
+			{% endfor %}	
+		</ul>	
+	</div>
+	<div><a href="/admin/sportPage">New Sport</a></div>
+</body>
+</html>
+{% endautoescape %}

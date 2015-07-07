@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+</head>
+<body>
+	<h1>Response</h1>
+	<div>
+		<h2>
+			{{ title }}
+		</h2>
+		<p>
+			{{ body }}
+		</p>
+
+	</div>
+	<div><a href="/admin">Back to ADMIN</a></div>
+</body>
+</html>
+{% endautoescape %}
