@@ -1,4 +1,5 @@
 from flask import Flask
+import flask_restful
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
