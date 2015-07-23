@@ -20,7 +20,7 @@
 
   </head>
 
-  <body>
+  <body id="app-heroes">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -39,6 +39,9 @@ data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id='login'><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -60,8 +63,9 @@ get is this text and a mostly barebones HTML document.</p>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <script scr="/static/js/underscore-min.js"></script>
-    <script scr="/static/js/backbone-min.js"></script>
-    <script scr="/static/js/backbone.epoxy.min.js"></script>
+    <script src="/static/js/underscore-min.js"></script>
+    <script src="/static/js/backbone-min.js"></script>
+    <script src="/static/js/backbone.epoxy.min.js"></script>
+    <script src="/static/js/app.js"></script>
   </body>
 </html>
