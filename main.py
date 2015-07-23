@@ -1,15 +1,13 @@
-from flask import Flask
-app = Flask(__name__)
-app.config['DEBUG'] = True
+from flask import render_template
 
-# Note: We don't need to call run() since our application is embedded within
-# the App Engine WSGI application server.
+from heroes import create_app
 
+
+app = create_app()
 
 @app.route('/')
-def hello():
-    """Return a friendly HTTP greeting."""
-    return 'Sports heros - starts here'
+def index():
+    return render_template('index.html')
 
 
 @app.errorhandler(404)
