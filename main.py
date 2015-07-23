@@ -1,18 +1,9 @@
-import os
-
-from flask import Flask
 from flask import render_template
 
-cur_dir = os.path.abspath(os.path.curdir)
+from heroes import create_app
 
-app = Flask(__name__,
-            static_folder=os.path.join(cur_dir, 'static'),
-            template_folder=os.path.join(cur_dir, 'templates'))
-app.config['DEBUG'] = True
 
-# Note: We don't need to call run() since our application is embedded within
-# the App Engine WSGI application server.
-
+app = create_app()
 
 @app.route('/')
 def index():
