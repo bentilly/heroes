@@ -3,6 +3,8 @@ import logging
 
 from werkzeug import exceptions
 
+from flask_restful import Api, Resource, url_for, marshal_with, reqparse
+
 import flask
 from flask import jsonify
 
@@ -14,8 +16,18 @@ class Api(restful.Api):
     """
 
 
+class Resource(Resource):
+    def _make_parser(self, *fields):
+        parser = reqparse.RequestParser()
+        for field in fields:
+            name, params = field
+            parser.add_argument(name, **params)
+        return parser
+
+
 def is_iterable(value):
     return isinstance(value, (tuple, list))
+
 
 def make_response(data, marshal_table, cursors=None):
     if is_iterable(data):
@@ -26,7 +38,7 @@ def make_response(data, marshal_table, cursors=None):
             'result': map(lambda l: restful.marshal(l, marshal_table), data),
         }
         return jsonify(response)
-    return jsonpify({
+    return jsonify({
         'status': 'success',
         'now': datetime.utcnow().isoformat(),
         'result': restful.marshal(data, marshal_table),
