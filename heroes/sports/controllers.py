@@ -32,6 +32,24 @@ class SportListView(Resource):
 @sports_api.resource('/<int:sport_id>/')
 class SportView(Resource):
 
+    def get(self, sport_id):
+        sport = Sport.get_by_id(sport_id)
+        return make_response(sport, Sport.FIELDS)
+
+
+    @admin_required
+    def put(self, sport_id):
+        parser = self._make_parser(('name', {'required': True}),
+                                   ('description', {}))
+        args = parser.parse_args()
+
+        sport = Sport.get_by_id(sport_id)
+        sport.name = args.name
+        sport.description = args.description
+        sport.put()
+        return make_response(sport, Sport.FIELDS)
+
+
     @admin_required
     def delete(self, sport_id):
         sport = Sport.get_by_id(sport_id)

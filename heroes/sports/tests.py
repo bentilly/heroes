@@ -22,5 +22,14 @@ class SportTestCase(BaseTestCase):
         resp = self.testapp.post('/sports/', {'name': 'Sp1', 'description': 'Sp1 desc'})
         self.assertEqual(resp.status_int, 200)
 
-        resp = self.testapp.delete('/sports/{}/'.format(resp.json['result']['id']))
+        sport_id = resp.json['result']['id']
+        # get certain sport
+        data = self.testapp.get('/sports/{}/'.format(sport_id)).json
+        self.assertEqual(data['result']['name'], 'Sp1')
+
+        data = self.testapp.put('/sports/{}/'.format(sport_id), {'name': 'Sport updated'}).json
+        self.assertEqual(data['result']['name'], 'Sport updated')
+
+        # delete Sport entry
+        resp = self.testapp.delete('/sports/{}/'.format(sport_id))
         self.assertEqual(resp.status_int, 200)
