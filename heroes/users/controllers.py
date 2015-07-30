@@ -15,4 +15,5 @@ def user_config():
             data['is_admin'] = True
     else:
         data['login_url'] = users.create_login_url('/')
+        data['logout_url'] = users.create_logout_url('/')
     return jsonify(data)
