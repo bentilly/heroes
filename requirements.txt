@@ -7,3 +7,4 @@
 Flask
 Flask-RESTful
 werkzeug
+WebTest

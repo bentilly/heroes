@@ -1,6 +1,6 @@
 from datetime import datetime
 from functools import wraps
-
+import unittest
 import logging
 
 from flask import jsonify
@@ -9,8 +9,45 @@ from flask.ext import restful
 from flask_restful import Api, Resource, url_for, marshal_with, reqparse
 
 from google.appengine.api import users
+from google.appengine.api import memcache
+from google.appengine.ext import ndb
+from google.appengine.ext import testbed
 
 from werkzeug import exceptions
+import webtest
+
+
+class BaseTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_user_stub()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+
+        # Clear ndb's in-context cache between tests.
+        # This prevents data from leaking between tests.
+        # Alternatively, you could disable caching by
+        # using ndb.get_context().set_cache_policy(False)
+        ndb.get_context().clear_cache()
+
+        from . import create_app
+        self.app = create_app()
+        self.testapp = webtest.TestApp(self.app)
+
+
+    def login(self, email='user@example.com', id='123', is_admin=False):
+        self.testbed.setup_env(user_email=email, user_id=id,
+            user_is_admin='1' if is_admin else '0', overwrite=True)
+
+
+    def logout(self):
+        self.testbed.setup_env(user_email='', user_id='', user_is_admin='', overwrite=True)
+
+
+    def tearDown(self):
+        self.testbed.deactivate()
 
 
 class Api(restful.Api):

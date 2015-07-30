@@ -12,7 +12,7 @@ sports_api = Api(sports_bp)
 
 
 @sports_api.resource('/')
-class SportListResource(Resource):
+class SportListView(Resource):
 
     def get(self):
         sport_dbs = Sport.get_dbs()
@@ -30,7 +30,7 @@ class SportListResource(Resource):
 
 
 @sports_api.resource('/<int:sport_id>/')
-class SportResource(Resource):
+class SportView(Resource):
 
     @admin_required
     def delete(self, sport_id):
