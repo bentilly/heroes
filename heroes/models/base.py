@@ -18,7 +18,7 @@ def get_dbs(query, keys_only=None, **filters):
 class Base(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     modified = ndb.DateTimeProperty(auto_now=True)
-    version = ndb.IntegerProperty(default='0.1')
+    version = ndb.IntegerProperty(default=1)
 
     @classmethod
     def get_by(cls, name, value):
