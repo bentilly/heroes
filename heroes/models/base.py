@@ -20,13 +20,16 @@ class Base(ndb.Model):
     modified = ndb.DateTimeProperty(auto_now=True)
     version = ndb.IntegerProperty(default=1)
 
+
     @classmethod
     def get_by(cls, name, value):
         return cls.query(getattr(cls, name) == value).get()
 
+
     @classmethod
     def get_dbs(cls, query=None, ancestor=None, limit=None, cursor=None, **kwargs):
         return get_dbs(query or cls.query(ancestor=ancestor), **kwargs)
+
 
     FIELDS = {
       'key': fields.Key,

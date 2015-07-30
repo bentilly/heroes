@@ -1,14 +1,16 @@
 from datetime import datetime
+from functools import wraps
+
 import logging
 
-from werkzeug import exceptions
-
-from flask_restful import Api, Resource, url_for, marshal_with, reqparse
-
-import flask
 from flask import jsonify
 
 from flask.ext import restful
+from flask_restful import Api, Resource, url_for, marshal_with, reqparse
+
+from google.appengine.api import users
+
+from werkzeug import exceptions
 
 
 class Api(restful.Api):
@@ -43,3 +45,14 @@ def make_response(data, marshal_table, cursors=None):
         'now': datetime.utcnow().isoformat(),
         'result': restful.marshal(data, marshal_table),
     })
+
+
+def admin_required(func):
+    """Requires App Engine admin credentials.
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not users.is_current_user_admin():
+            raise exceptions.MethodNotAllowed('Admin credentials required.')
+        return func(*args, **kwargs)
+    return decorated_view
