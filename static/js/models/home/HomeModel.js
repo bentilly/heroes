@@ -4,7 +4,7 @@ define([
 ], function(_, Backbone) {
 
   var HomeModel = Backbone.Model.extend({
-    url: 'http://localhost:8080/users/config/',
+    url: '/users/config/',
     defaults: {
     },
 
