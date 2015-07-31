@@ -11,7 +11,7 @@ def create_app():
 
     app = Flask(__name__,
                 static_folder=os.path.join(cur_dir, 'static'),
-                template_folder=os.path.join(cur_dir, 'templates'))
+                template_folder=os.path.join(cur_dir, 'static'))
     app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(sports_bp, url_prefix='/sports')
 
