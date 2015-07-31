@@ -17,10 +17,16 @@ data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <li><a href="#contact">Contact</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" id='login'>
-                    <% if (!user.loggedIn) { %><span class="glyphicon glyphicon-log-in"></span> Login
-                    <% } else { %><span class="glyphicon glyphicon-log-out"></span> Logout<% } %>
-                </a>
+            <li>
+                <% if (!user.user_id) { %>
+                    <a href="<%= user.login_url %>" id='login'>
+                        <span class="glyphicon glyphicon-log-in"></span> Login
+                    </a>
+                <% } else {  %>
+                    <a href="<%= user.logout_url %>" id='login'>
+                        <span class="glyphicon glyphicon-log-out"></span> Logout
+                    </a>
+                <% } %>
             </li>
         </ul>
     </div>

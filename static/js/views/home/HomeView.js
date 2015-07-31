@@ -25,7 +25,6 @@ define([
                 user: this.model.toJSON(),
                 _: _ 
             };
-
             var compiledTemplate = _.template( homeTemplate)( data );
             this.$el.html(compiledTemplate);
         }
