@@ -30,4 +30,4 @@ def enable_admin_app(app):
     # from ndbadmin.main import app as ndbadmin_app
     return DispatcherMiddleware(DispatcherMiddleware(app, {
         '/admin': app
-    })
+    }))
