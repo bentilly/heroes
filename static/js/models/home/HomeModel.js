@@ -14,6 +14,7 @@ define([
 
     logFunction: function(){
       var onDataHandler = function(that) {
+        console.log(that)
         that.set({'loggedIn': true})
       };
 
