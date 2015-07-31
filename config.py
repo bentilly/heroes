@@ -1,2 +1,2 @@
 DEBUG = True
-ADMIN_ENABLED = True
+ADMIN_ENABLED = False

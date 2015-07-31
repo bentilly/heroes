@@ -24,7 +24,7 @@ def create_app():
 
 
 def enable_admin_app(app):
-    # from ndbadmin.main import app as ndbadmin_app
-    return DispatcherMiddleware(DispatcherMiddleware(app, {
-        '/admin': app
-    }))
+    from ndbadmin import main
+    return DispatcherMiddleware(app, {
+        '/admin': main.app
+    })
