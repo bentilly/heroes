@@ -1,0 +1,3 @@
+[submodule "ndbadmin"]
+	path = ndbadmin
+	url = git@github.com:crchemist/ndbadmin.git
