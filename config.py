@@ -1,0 +1,2 @@
+DEBUG = True
+ADMIN_ENABLED = True
