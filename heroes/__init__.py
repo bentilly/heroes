@@ -20,9 +20,6 @@ def create_app():
     app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(sports_bp, url_prefix='/sports')
 
-    if app.config.get('ADMIN_ENABLED'):
-        app = enable_admin_app(app)
-
     return app
 
 
