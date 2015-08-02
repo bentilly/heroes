@@ -4,8 +4,14 @@ define([
     'underscore',
     'backbone',
     'router', // Request router.js
-], function($, _, Backbone, Router) {
+    'views/LoginView',
+], function($, _, Backbone, Router, LoginView) {
     var initialize = function(){
+        // initialize user session.
+        var loginView = new LoginView()
+        loginView.render()
+
+        // initialize router.
         Router.initialize();
     };
 
