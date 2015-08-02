@@ -11,8 +11,8 @@ define([
             'click #login': 'login'
         },
         initialize: function(){
-            this.model = new HomeModel();
-            this.model.on("change", this.render, this);
+            //this.model = new HomeModel();
+            // this.model.on("change", this.render, this);
         },
 
         login: function() {
@@ -21,7 +21,7 @@ define([
 
         render: function(){
             var data = {
-                user: this.model.toJSON(),
+                user: 'this.model.toJSON()',
                 _: _ 
             };
             var compiledTemplate = _.template( homeTemplate)( data );
