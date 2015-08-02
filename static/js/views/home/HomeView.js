@@ -17,7 +17,6 @@ define([
 
         login: function() {
             var that = this;
-            this.model.logFunction();
         },
 
         render: function(){
