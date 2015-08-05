@@ -5,6 +5,7 @@ define([
     'backbone',
     'router', // Request router.js
     'views/LoginView',
+    'views/SportListView',
 ], function($, _, Backbone, Router, LoginView) {
     var initialize = function(){
         // initialize user session.

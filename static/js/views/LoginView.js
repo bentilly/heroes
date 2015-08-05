@@ -10,7 +10,6 @@ define([
         initialize: function(){
             this.model = new SessionModel();
             this.model.on('change', this.render, this);
-            // this.model.trigger('change', this.model)
         },
 
         render: function(){
