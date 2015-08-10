@@ -7,6 +7,7 @@ from werkzeug.wsgi import DispatcherMiddleware
 from .users.controllers import users_bp
 from .sports.controllers import sports_bp
 from .countries.controllers import countries_bp
+from .teams.controllers import teams_bp
 
 import config
 
@@ -21,6 +22,7 @@ def create_app():
     app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(sports_bp, url_prefix='/sports')
     app.register_blueprint(countries_bp, url_prefix='/countries')
+    app.register_blueprint(teams_bp, url_prefix='/teams')
 
     return app
 
