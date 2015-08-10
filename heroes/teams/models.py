@@ -3,16 +3,19 @@ from google.appengine.ext import ndb
 from heroes import fields
 from heroes.models import Base
 from heroes.sports.models import Sport
+from heroes.countries.models import Country
 
 class Team(Base):
     sport = ndb.KeyProperty(kind=Sport)
     name = ndb.StringProperty(required=False)
-    country_name = ndb.StringProperty(required=True)
+    country = ndb.KeyProperty(kind=Country, required=True)
     division_name = ndb.StringProperty(required=True)
 
 
     def __repr__(self):
-        return u'{}: {}: {}'.format(self.name, self.country_name, self.division_name)
+        return u'{}: {}: {}'.format(self.name,
+                                    self.country.get().code if self.country else 'None',
+                                    self.division_name)
 
     # this is where Admin CRUD form lives
     class Meta:
@@ -21,13 +24,12 @@ class Team(Base):
             self.fields = [
                 admin_fields.TextField("name", "Name", required=False),
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
-                admin_fields.TextField("country_name", "Country", required=True),
+                admin_fields.KeyField('country', 'Country', required=True, query=Country.query()),
                 admin_fields.TextField("division_name", "Division", required=True),
             ]
 
     FIELDS = {
         'name': fields.String,
-        'country_name': fields.String,
         'division_name': fields.String,
     }
     FIELDS.update(Base.FIELDS)
