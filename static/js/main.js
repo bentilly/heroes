@@ -3,6 +3,8 @@ require.config({
         jquery: 'libs/jquery/jquery-min',
         underscore: 'libs/underscore/underscore-min',
         backbone: 'libs/backbone/backbone-min',
+        courier: 'libs/backbone.courier',
+        collectionView: 'libs/backbone.collectionView',
         templates: '../templates'
     }
 
