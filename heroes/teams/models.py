@@ -30,6 +30,8 @@ class Team(Base):
 
     FIELDS = {
         'name': fields.String,
+        'sport': fields.Key,
+        'country': fields.Key,
         'division_name': fields.String,
     }
     FIELDS.update(Base.FIELDS)
