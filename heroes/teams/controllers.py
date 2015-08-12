@@ -1,14 +1,16 @@
 from flask import Blueprint, session, jsonify
+from google.appengine.ext import ndb
 
 from flask_restful import Api, url_for, marshal_with, reqparse
 
 from heroes.helpers import Api, Resource, make_response, admin_required
 
 from .models import Team
-
+from .models import Sport
 
 teams_bp = Blueprint('teams', __name__)
 teams_api = Api(teams_bp)
+
 
 
 @teams_api.resource('/')
@@ -21,11 +23,14 @@ class TeamListView(Resource):
 
     @admin_required
     def post(self):
-        parser = self._make_parser(('name', {'required': False}),
-                                   ('country_name', {'required': True}),
+        parser = self._make_parser(('sport_name', {'required': True}),
+                                   ('name', {'required': False}),
+                                   ('country_id', {'required': True}),
                                    ('division_name', {'required': True}))
         args = parser.parse_args()
-        team = Team(name=args.name, country_name=args.country_name, division_name=args.division_name)
+        team = Team(parent=Sport.sport_key(args.sport_name),
+                    name=args.name, country=ndb.Key(urlsafe=args.country_id),
+                    division_name=args.division_name)
         team.put()
         return make_response(team, Team.FIELDS)
 
@@ -41,14 +46,14 @@ class TeamView(Resource):
     @admin_required
     def put(self, team_id):
         parser = self._make_parser(('name', {'required': False}),
-                                   ('country_name', {'required': True}),
+                                   ('country_id', {'required': True}),
                                    ('division_name', {'required': True}))
                                    
         args = parser.parse_args()
 
         team = Team.get_by_id(team_id)
         team.name = args.name
-        team.country_name = args.country_name
+        team.country = ndb.Key(urlsafe=args.country_id)
         team.division_name = args.division_name
         team.put()
         return make_response(team, Team.FIELDS)
