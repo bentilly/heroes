@@ -9,20 +9,23 @@ from heroes.helpers import BaseTestCase
 class TeamTestCase(BaseTestCase):
 
     def test_team_view(self):
-        data = self.testapp.get('/teams/').json
-        self.assertEqual(data['count'], 0)
+        self.login(is_admin=True)
+        resp = self.testapp.post('/sports/', {'name': 'Sp1', 'description': 'Sp1 desc'})
+        import pdb;pdb.set_trace()
+        resp_count = self.testapp.post('/countries/', {'name': 'Con1', 'code': 'code1'})
+        resp_count = self.testapp.get('/countries/')
 
         # create team anonymous
         resp = self.testapp.post('/teams/',
-                                 {'name': 'Tm1', 'country_name': 'Tm1 country',
-                                  'division_name': 'Tm1 division'},
+                                 {'name': 'Tm1', 'country_id': 'Tm1 country',
+                                  'sport_name': 'Sp1', 'division_name': 'Tm1 division'},
                                  expect_errors=True)
         self.assertEqual(resp.status_int, 405)
 
         self.login(is_admin=True)
         resp = self.testapp.post('/teams/', 
-                                 {'name': 'Tm1', 'country_name': 'Tm1 country',
-                                  'division_name': 'Tm1 division'})
+                                 {'name': 'Tm1', 'country_id': 'Tm1 country',
+                                  'sport_name': 'Sp1', 'division_name': 'Tm1 division'})
         self.assertEqual(resp.status_int, 200)
 
         team_id = resp.json['result']['id']
@@ -32,7 +35,7 @@ class TeamTestCase(BaseTestCase):
 
         data = self.testapp.put('/teams/{}/'.format(team_id), {'name': 'Team updated',
                                                                'division_name': 'Division',
-                                                               'country_name': 'Country'}).json
+                                                               'country_id': 'Country'}).json
         self.assertEqual(data['result']['name'], 'Team updated')
 
         # delete Team entry
