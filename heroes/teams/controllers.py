@@ -1,4 +1,5 @@
 from flask import Blueprint, session, jsonify
+from google.appengine.ext import ndb
 
 from flask_restful import Api, url_for, marshal_with, reqparse
 
@@ -28,7 +29,7 @@ class TeamListView(Resource):
                                    ('division_name', {'required': True}))
         args = parser.parse_args()
         team = Team(parent=Sport.sport_key(args.sport_name),
-                    name=args.name, country=args.country_id,
+                    name=args.name, country=ndb.Key(urlsafe=args.country_id),
                     division_name=args.division_name)
         team.put()
         return make_response(team, Team.FIELDS)
@@ -52,7 +53,7 @@ class TeamView(Resource):
 
         team = Team.get_by_id(team_id)
         team.name = args.name
-        team.country = args.country_id
+        team.country = ndb.Key(urlsafe=args.country_id)
         team.division_name = args.division_name
         team.put()
         return make_response(team, Team.FIELDS)
