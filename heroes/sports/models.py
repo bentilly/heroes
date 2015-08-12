@@ -8,6 +8,9 @@ class Sport(Base):
     name = ndb.StringProperty(required=True)
     description = ndb.TextProperty()
 
+    @classmethod
+    def sport_key(self, sport_name):
+        return ndb.Key('Sport', sport_name)
 
     def __repr__(self):
         return u'{}: {}'.format(self.name, self.description)
