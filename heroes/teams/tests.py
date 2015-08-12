@@ -11,7 +11,6 @@ class TeamTestCase(BaseTestCase):
     def test_team_view(self):
         self.login(is_admin=True)
         resp = self.testapp.post('/sports/', {'name': 'Sp1', 'description': 'Sp1 desc'})
-        import pdb;pdb.set_trace()
         resp_count = self.testapp.post('/countries/', {'name': 'Con1', 'code': 'code1'})
         resp_count = self.testapp.get('/countries/')
 
