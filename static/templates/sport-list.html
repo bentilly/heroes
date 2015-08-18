@@ -1,0 +1,18 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Sport title</th>
+			<th>Sport description</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<% _.each(sports, function(sport) { %>
+		<tr>
+          <th><%= sport.name %></th>
+          <td><%= sport.description %></td>
+          <td><a class="btn btn-info">View</a></td>
+        </tr>
+        <% }); %>
+	</tbody>
+</table>
