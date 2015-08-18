@@ -15,7 +15,8 @@ define([
             var that = this;
             response.result.forEach(function (item) {
                 that.push(new SportModel({name: item.name, id: item.id,
-                                          description: item.description}))
+                                          description: item.description,
+                                          link: '#/sport/' + item.id + '/'}))
             });
             return that.models;
         }
