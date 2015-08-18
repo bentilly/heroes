@@ -23,7 +23,6 @@ define([
                 sports: this.collection.toJSON(),
                 _: _ 
             };
-            console.log(data.sports)
             var compiledTemplate = _.template(sportListTemplate)( data );
             this.$el.html(compiledTemplate);
         }
