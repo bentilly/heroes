@@ -10,7 +10,6 @@
 		<% _.each(items, function(item) { %>
 		<tr>
 		    <% _.each(fields, function(field) { %>
-            <th><%= item[field] %></th>
             <td><%= item[field] %></td>
             <% }); %>
             <td><a href="<%= item.link %>" class="btn btn-info">View</a></td>
