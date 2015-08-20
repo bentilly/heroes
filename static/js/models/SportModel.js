@@ -6,7 +6,8 @@ define([
         url: '/sports',
         defaults: {
             name: '',
-            description: ''
+            description: '',
+            link: ''
         },
     })
     return SportModel

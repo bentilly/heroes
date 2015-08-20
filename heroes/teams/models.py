@@ -10,7 +10,9 @@ class Team(Base):
     name = ndb.StringProperty(required=False)
     country = ndb.KeyProperty(kind=Country, required=True)
     division_name = ndb.StringProperty(required=True)
-
+    @property
+    def event(self):
+        return Event.query().filter(Event.teams == self.key)
 
     def __repr__(self):
         return u'{}: {}: {}'.format(self.name,
