@@ -1,4 +1,4 @@
-from flask import Blueprint, session, jsonify
+from flask import Blueprint, session, jsonify, render_template
 
 from flask_restful import Api, url_for, marshal_with, reqparse
 
@@ -8,6 +8,17 @@ from .models import Sport
 
 
 sports_bp = Blueprint('sports', __name__)
+
+@sports_bp.route('/')
+def sports_list():
+    sports_entries = Sport.get_dbs()
+    return render_template('table.html',
+        items=sports_entries,
+        table_headers=['Sport title', 'Sport description'],
+        fields=['name', 'description'])
+
+
+'''
 sports_api = Api(sports_bp)
 
 
@@ -54,3 +65,4 @@ class SportView(Resource):
     def delete(self, sport_id):
         sport = Sport.get_by_id(sport_id)
         sport.key.delete()
+'''
