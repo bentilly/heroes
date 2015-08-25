@@ -17,14 +17,15 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/main.css" rel="stylesheet">
-    <script data-main="static/js/main" src="static/js/libs/require/require.js"></script>
 
   </head>
 <body>
     <div id="navigation">
     </div>
     <div id="container" class="row">
-        <div id="sport-list" class="col-lg-6 col-lg-offset-3"></div>
+        {% block content %}
+        
+        {% endblock %}
     </div>
 </body>
 </html>

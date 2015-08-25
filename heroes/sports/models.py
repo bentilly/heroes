@@ -15,6 +15,10 @@ class Sport(Base):
     def __repr__(self):
         return u'{}: {}'.format(self.name, self.description)
 
+    @property
+    def link(self):
+        return '/sports/{}'.format(self.key.urlsafe())
+
     # this is where Admin CRUD form lives
     class Meta:
         def __init__(self):
