@@ -17,7 +17,7 @@ class Sport(Base):
 
     @property
     def link(self):
-        return '/sports/{}'.format(self.key.urlsafe())
+        return '/sports/{}/'.format(self.key.urlsafe())
 
     # this is where Admin CRUD form lives
     class Meta:

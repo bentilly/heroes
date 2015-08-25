@@ -1,8 +1,9 @@
 from flask import Blueprint, session, jsonify, render_template
 
-from flask_restful import Api, url_for, marshal_with, reqparse
+from google.appengine.ext import ndb
 
 from heroes.helpers import Api, Resource, make_response, admin_required
+from heroes.teams.models import Team
 
 from .models import Sport
 
@@ -18,51 +19,13 @@ def sports_list():
         fields=['name', 'description'])
 
 
-'''
-sports_api = Api(sports_bp)
-
-
-@sports_api.resource('/')
-class SportListView(Resource):
-
-    def get(self):
-        sport_dbs = Sport.get_dbs()
-        return make_response(sport_dbs, Sport.FIELDS)
-
-
-    @admin_required
-    def post(self):
-        parser = self._make_parser(('name', {'required': True}),
-                                   ('description', {}))
-        args = parser.parse_args()
-        sport = Sport(name=args.name, description=args.get('description'))
-        sport.put()
-        return make_response(sport, Sport.FIELDS)
-
-
-@sports_api.resource('/<int:sport_id>/')
-class SportView(Resource):
-
-    def get(self, sport_id):
-        sport = Sport.get_by_id(sport_id)
-        return make_response(sport, Sport.FIELDS)
-
-
-    @admin_required
-    def put(self, sport_id):
-        parser = self._make_parser(('name', {'required': True}),
-                                   ('description', {}))
-        args = parser.parse_args()
-
-        sport = Sport.get_by_id(sport_id)
-        sport.name = args.name
-        sport.description = args.description
-        sport.put()
-        return make_response(sport, Sport.FIELDS)
-
-
-    @admin_required
-    def delete(self, sport_id):
-        sport = Sport.get_by_id(sport_id)
-        sport.key.delete()
-'''
+@sports_bp.route('/<key>/')
+def sport_view(key):
+    sport_key = ndb.Key(urlsafe=key)
+    # TODO: refactor to "Ancestor Queries" when
+    # https://github.com/bentilly/heroes/issues/34 will be fixed.
+    teams_entries = Team.query(Team.sport==sport_key).fetch()
+    return render_template('table.html',
+        items=teams_entries,
+        table_headers=['Country', 'Division', 'Team name'],
+        fields=['country_name', 'division_name', 'name'])
