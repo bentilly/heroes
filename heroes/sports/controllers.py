@@ -26,6 +26,7 @@ def sport_view(key):
     # https://github.com/bentilly/heroes/issues/34 will be fixed.
     teams_entries = Team.query(Team.sport==sport_key).fetch()
     return render_template('table.html',
+        root_item=sport_key.get(),
         items=teams_entries,
         table_headers=['Country', 'Division', 'Team name'],
         fields=['country_name', 'division_name', 'name'])
