@@ -37,6 +37,7 @@ class Team(Base):
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
                 admin_fields.KeyField('country', 'Country', required=True, query=Country.query()),
                 admin_fields.TextField("division_name", "Division", required=True),
+                admin_fields.CheckboxListField('events', 'Events', required=True, query=Country.query()),
             ]
 
     FIELDS = {

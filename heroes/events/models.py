@@ -31,6 +31,7 @@ class Event(Base):
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
                 admin_fields.TextField('country', 'Country', required=True),
                 admin_fields.TextField("start_year", "Start year", required=True),
+                admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query()),
             ]
 
     FIELDS = {
