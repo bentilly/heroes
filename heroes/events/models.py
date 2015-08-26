@@ -9,7 +9,7 @@ from heroes.countries.models import Country
 class Event(Base):
     sport = ndb.KeyProperty(kind=Sport)
     title = ndb.StringProperty(required=True)
-    country = ndb.StringProperty(required=True)
+    country = ndb.KeyProperty(kind=Country, required=False)
     start_year = ndb.StringProperty(required=True)
     teams = ndb.KeyProperty(kind="Team", repeated=True)
 
@@ -29,7 +29,7 @@ class Event(Base):
             self.fields = [
                 admin_fields.TextField("title", "Title", required=False),
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
-                admin_fields.TextField('country', 'Country', required=True),
+                admin_fields.KeyField('country', 'Country', required=True, query=Country.query()),
                 admin_fields.TextField("start_year", "Start year", required=True),
                 admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query()),
             ]
