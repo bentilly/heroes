@@ -22,6 +22,18 @@ class Event(Base):
                                     self.country,
                                     self.start_year)
 
+    @property
+    def country_name(self):
+        name = ''
+        if self.country:
+            name = self.country.get().name
+        return name
+
+
+    @property
+    def link(self):
+        return '/events/{}/'.format(self.key.urlsafe())
+
     # this is where Admin CRUD form lives
     class Meta:
         def __init__(self):
