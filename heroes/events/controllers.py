@@ -1,12 +1,13 @@
 from flask import Blueprint, session, jsonify
+
 from google.appengine.ext import ndb
 
 from flask_restful import Api, url_for, marshal_with, reqparse
 
 from heroes.helpers import Api, Resource, make_response, admin_required
 
+from heroes.teams.models import Team
 from .models import Event
-from .models import Team
 from .models import Sport
 
 events_bp = Blueprint('events', __name__)
