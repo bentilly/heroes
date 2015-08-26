@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block navigation %}
+    {% if root_item %}
+    <a class="navbar-brand" href="{{ root_item.link }}">{{ root_item.name }}</a>
+    {% endif %}
+{% endblock %}
 {% block content %}
  <div class="col-lg-6 col-lg-offset-3">
     <table class="table">

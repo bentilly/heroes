@@ -16,6 +16,7 @@ def team_view(key):
     team_key = ndb.Key(urlsafe=key)
     events_entries = Event.query(Event.teams==team_key).fetch()
     return render_template('table.html',
+        root_item=team_key.get(),
         items=events_entries,
         table_headers=['Start year', 'Title', 'Venue country'],
         fields=['start_year', 'title', 'country_name'])
