@@ -11,7 +11,6 @@ REPR_ROLES = ['Player', 'Captain', 'Coach']
 class Representative(Base):
     name = ndb.StringProperty(required=True)
     role = ndb.StringProperty(required=True, choices=REPR_ROLES)
-    team_event_repr = ndb.KeyProperty(kind='TeamEventRepresentative', repeated=True)
 
 
     def __repr__(self):
@@ -29,8 +28,6 @@ class Representative(Base):
             from ndbadmin.admin import fields as admin_fields
             self.fields = [
                 admin_fields.TextField("name", "Name", required=False),
-                admin_fields.KeyField('teams', "Team", required=True, query=Team.query()),
-                admin_fields.KeyField("events", "Event", required=True, query=Event.query()),
                 admin_fields.ChoiceField("role", "Role", initial=REPR_ROLES,
                                         query=REPR_ROLES)
             ]
