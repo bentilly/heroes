@@ -6,6 +6,7 @@ from heroes.sports.models import Sport
 from heroes.teams.models import Team
 from heroes.countries.models import Country
 
+
 class Event(Base):
     sport = ndb.KeyProperty(kind=Sport)
     title = ndb.StringProperty(required=True)
@@ -53,3 +54,7 @@ class Event(Base):
         'start_year': fields.String,
     }
     FIELDS.update(Base.FIELDS)
+
+
+class Squad(Base):
+    events = ndb.KeyProperty(kind=Event, repeated=True)
