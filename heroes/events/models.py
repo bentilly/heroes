@@ -32,7 +32,7 @@ class Event(Base):
 
     @property
     def link(self):
-        return '/events/{}/'.format(self.key.urlsafe())
+        return '/representatives/{}/'.format(self.key.urlsafe())
 
     # this is where Admin CRUD form lives
     class Meta:
