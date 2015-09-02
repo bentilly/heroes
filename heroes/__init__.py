@@ -9,6 +9,8 @@ from .sports.controllers import sports_bp
 from .countries.controllers import countries_bp
 from .teams.controllers import teams_bp
 from .events.controllers import events_bp
+from .representatives.controllers import representatives_bp
+
 
 import config
 
@@ -25,6 +27,7 @@ def create_app():
     app.register_blueprint(countries_bp, url_prefix='/countries')
     app.register_blueprint(teams_bp, url_prefix='/teams')
     app.register_blueprint(events_bp, url_prefix='/events')
+    app.register_blueprint(representatives_bp, url_prefix='/representatives')
 
     return app
 
