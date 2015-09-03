@@ -19,7 +19,7 @@ events_api = Api(events_bp)
 class EventListView(Resource):
 
     def get(self):
-        event_dbs = Event.get_dbs()
+        event_dbs = Event.query().fetch()
         return make_response(event_dbs, Event.FIELDS)
 
 

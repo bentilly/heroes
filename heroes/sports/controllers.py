@@ -12,7 +12,7 @@ sports_bp = Blueprint('sports', __name__)
 
 @sports_bp.route('/')
 def sports_list():
-    sports_entries = Sport.get_dbs()
+    sports_entries = Sport.query().fetch()
     return render_template('table.html',
         items=sports_entries,
         table_headers=['Sport title', 'Sport description'],
