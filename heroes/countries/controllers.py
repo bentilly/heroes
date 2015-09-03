@@ -10,7 +10,7 @@ countries_api = Api(countries_bp)
 class CountryListView(Resource):
 
     def get(self):
-        country_dbs = Country.get_dbs()
+        country_dbs = Country.query().fetch()
         return make_response(country_dbs, Country.FIELDS)
 
 @countries_api.resource('/<int:country_id>/')

@@ -20,7 +20,7 @@ class Event(Base):
 
     def __repr__(self):
         return u'{}: {}: {}'.format(self.title,
-                                    self.country,
+                                    self.country_name,
                                     self.start_year)
 
     @property
