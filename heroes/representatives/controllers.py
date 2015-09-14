@@ -6,17 +6,18 @@ from heroes.helpers import Api, Resource, make_response, admin_required
 
 from heroes.events.models import Event
 
-from .models import Team
+from .models import Representative
 
-teams_bp = Blueprint('teams', __name__)
+representatives_bp = Blueprint('representatives', __name__)
 
 
-@teams_bp.route('/<key>/')
-def team_view(key):
-    team_key = ndb.Key(urlsafe=key)
-    events_entries = Event.query(Event.teams==team_key).fetch()
+@representatives_bp.route('/<key>/')
+def represenatives_list(key):
+    '''
     return render_template('table.html',
         root_item=team_key.get(),
         items=events_entries,
         table_headers=['Start year', 'Title', 'Venue country'],
         fields=['start_year', 'title', 'country_name'])
+    '''
+    return 'Hello'

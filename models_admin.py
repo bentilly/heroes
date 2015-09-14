@@ -4,6 +4,9 @@ from heroes.sports.models import Sport
 from heroes.divisions.models import Division
 from heroes.roles.models import Role
 from heroes.teams.models import Team
+from heroes.events.models import Event
+from heroes.representatives.models import Representative
+from heroes.representatives.models import Squad, ReprSquadState
 
 # Register here your models as strings
 MODELS = (
@@ -12,4 +15,8 @@ MODELS = (
     'Division',
     'Role',
     'Team',
+    'Event',
+    'Representative',
+    'ReprSquadState',
+    'Squad',
 )
