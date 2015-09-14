@@ -3,29 +3,18 @@ define([
     'underscore',
     'backbone',
     'collections',
-    'text!templates/sport-list.html'
-], function ($, _, Backbone, Collections, sportListTemplate) {
-    /*var SportItemView = Backbone.View.extend({
-        render: function() {
-            var data = this.model.toJSON()
-            this.$el.html('<tr><td>'+data.name+'</td>'+'<td>'+data.description+'</td></tr>')
-        }
-    }) */
-    var SportListView = Backbone.View.extend({
+    'views/TableView'
+], function ($, _, Backbone, Collections, TableView) {
+    var SportListView = TableView.extend({
         el: $('#sport-list'),
+        table_headers: ['Sport title', 'Sport description'],
+        fields: ['name', 'description'],
         initialize: function() {
             this.collection = new Collections.Sports()
             this.collection.on('change', this.render, this);
         },
-
         render: function() {
-            var data = {
-                sports: this.collection.toJSON(),
-                _: _ 
-            };
-            console.log(data.sports)
-            var compiledTemplate = _.template(sportListTemplate)( data );
-            this.$el.html(compiledTemplate);
+            TableView.prototype.render.apply(this)
         }
     })
     return SportListView;

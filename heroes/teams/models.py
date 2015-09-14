@@ -11,11 +11,22 @@ class Team(Base):
     country = ndb.KeyProperty(kind=Country, required=True)
     division_name = ndb.StringProperty(required=True)
 
+    @property
+    def event(self):
+        return Event.query().filter(Event.teams == self.key)
 
     def __repr__(self):
         return u'{}: {}: {}'.format(self.name,
                                     self.country.get().code if self.country else 'None',
                                     self.division_name)
+
+    @property
+    def link(self):
+        return '/teams/{}/'.format(self.key.urlsafe())
+
+    @property
+    def country_name(self):
+        return self.country.get().name
 
     # this is where Admin CRUD form lives
     class Meta:
