@@ -2,7 +2,7 @@
 from heroes.sports.models import Sport
 from heroes.countries.models import Country
 from heroes.teams.models import Team
-from heroes.events.models import Event
+from heroes.events.models import Event, Competition, TeamCompetitionState
 from heroes.representatives.models import Representative
 from heroes.representatives.models import Squad, ReprSquadState
 
@@ -15,4 +15,6 @@ MODELS = (
     'Representative',
     'ReprSquadState',
     'Squad',
+    'Competition',
+    'TeamCompetitionState',
 )

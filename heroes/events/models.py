@@ -38,7 +38,7 @@ class Event(Base):
     # this is where Admin CRUD form lives
     class Meta:
         def __init__(self):
-            from ndbadmin.admin import fields as admin_fields
+	    admin_fields = self.admin_fields
             self.fields = [
                 admin_fields.TextField("title", "Title", required=False),
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
@@ -53,7 +53,19 @@ class Event(Base):
         'country': fields.String,
         'start_year': fields.String,
     }
-    FIELDS.update(Base.FIELDS)
+
+
+class TeamCompetitionState(Base):
+    """
+    """
+    team = ndb.KeyProperty('ReprSquadState')
+    competition = ndb.KeyProperty('Competition')
+
+
+class Competition(Base):
+    """Many-to-One Event.
+    """
+    event = ndb.KeyProperty(Event)
 
 
 class Squad(Base):
