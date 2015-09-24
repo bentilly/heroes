@@ -14,6 +14,11 @@ class Event(Base):
     start_year = ndb.StringProperty(required=True)
     teams = ndb.KeyProperty(kind="Team", repeated=True)
 
+    def __init__(self, *args, **kw):
+        super(Event, self).__init__(*args, **kw)
+        self.__link = ''
+
+
     def add_team(self, team):
         self.teams.append(team.key)
         self.put()
@@ -33,7 +38,11 @@ class Event(Base):
 
     @property
     def link(self):
-        return '/representatives/{}/'.format(self.key.urlsafe())
+        return self.__link
+
+    @link.setter
+    def link(self, value):
+        self.__link = value
 
     # this is where Admin CRUD form lives
     class Meta:

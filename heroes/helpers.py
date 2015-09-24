@@ -93,3 +93,7 @@ def admin_required(func):
             raise exceptions.MethodNotAllowed('Admin credentials required.')
         return func(*args, **kwargs)
     return decorated_view
+
+
+def get_enitity_by_key(key):
+    return ndb.Key(urlsafe=key).get()
