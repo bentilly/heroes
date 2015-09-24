@@ -14,6 +14,11 @@ class Event(Base):
     start_year = ndb.StringProperty(required=True)
     teams = ndb.KeyProperty(kind="Team", repeated=True)
 
+    def __init__(self, *args, **kw):
+        super(Event, self).__init__(*args, **kw)
+        self.__link = ''
+
+
     def add_team(self, team):
         self.teams.append(team.key)
         self.put()
@@ -33,7 +38,11 @@ class Event(Base):
 
     @property
     def link(self):
-        return '/representatives/{}/'.format(self.key.urlsafe())
+        return self.__link
+
+    @link.setter
+    def link(self, value):
+        self.__link = value
 
     # this is where Admin CRUD form lives
     class Meta:
@@ -44,16 +53,21 @@ class Event(Base):
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
                 admin_fields.KeyField('country', 'Country', required=True, query=Country.query()),
                 admin_fields.TextField("start_year", "Start year", required=True),
-                admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query()),
+                admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query())
             ]
 
-    FIELDS = {
-        'title': fields.String,
-        'sport': fields.Key,
-        'country': fields.String,
-        'start_year': fields.String,
-    }
-    FIELDS.update(Base.FIELDS)
+
+class TeamCompetitionState(Base):
+    """
+    """
+    team = ndb.KeyProperty('ReprSquadState')
+    competition = ndb.KeyProperty('Competition')
+
+
+class Competition(Base):
+    """Many-to-One Event.
+    """
+    event = ndb.KeyProperty(Event)
 
 
 class Squad(Base):
