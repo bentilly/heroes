@@ -38,21 +38,14 @@ class Event(Base):
     # this is where Admin CRUD form lives
     class Meta:
         def __init__(self):
-	    admin_fields = self.admin_fields
+            from ndbadmin.admin import fields as admin_fields
             self.fields = [
                 admin_fields.TextField("title", "Title", required=False),
                 admin_fields.KeyField('sport', 'Sport', required=True, query=Sport.query()),
                 admin_fields.KeyField('country', 'Country', required=True, query=Country.query()),
                 admin_fields.TextField("start_year", "Start year", required=True),
-                admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query()),
+                admin_fields.CheckboxListField("teams", "Teams", initial=[], query=Team.query())
             ]
-
-    FIELDS = {
-        'title': fields.String,
-        'sport': fields.Key,
-        'country': fields.String,
-        'start_year': fields.String,
-    }
 
 
 class TeamCompetitionState(Base):
