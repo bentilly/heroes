@@ -9,6 +9,16 @@ class Base(ndb.Model):
     version = ndb.IntegerProperty(default=1)
 
 
+    class Meta:
+        def __init__(self):
+	    self.fields = []
+
+
+    @property
+    def admin_fields(self):
+        from ndbadmin.admin import fields
+	return fields
+
     @classmethod
     def get_by(cls, name, value):
         return cls.query(getattr(cls, name) == value).get()
