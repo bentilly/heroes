@@ -1,8 +1,8 @@
-from flask import Blueprint, session, jsonify, render_template
+from flask import Blueprint, session, jsonify, render_template, redirect
 
 from google.appengine.ext import ndb
 
-from heroes.helpers import Api, Resource, make_response, admin_required
+from heroes.helpers import admin_required
 from heroes.teams.models import Team
 
 from .models import Sport
@@ -10,15 +10,31 @@ from .models import Sport
 
 sports_bp = Blueprint('sports', __name__)
 
+
+# HOME PAGE. A list of sports
 @sports_bp.route('/')
 def sports_list():
     sports_entries = Sport.query().fetch()
-    return render_template('table.html',
-        items=sports_entries,
-        table_headers=['Sport title', 'Sport description'],
-        fields=['name', 'description'])
+    return render_template('home.html',
+            object_title='Heroes',
+        )
+
+# ADD A SPORT
+@sports_bp.route('/add', methods=['POST'])
+def add_entry():
+    return redirect('/')
 
 
+#BLANK SPORT PAGE
+@sports_bp.route('/new')
+def new_sport():
+    return render_template('sport.html',
+            object_title='New sport',
+        )
+
+
+
+# A SPORT PAGE.
 @sports_bp.route('/<key>/')
 def sport_view(key):
     sport_key = ndb.Key(urlsafe=key)

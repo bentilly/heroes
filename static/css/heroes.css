@@ -1,0 +1,141 @@
+html {
+
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #444444;
+}
+nav ul li{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+nav ul li a{
+    color: #AAAAAA;
+    font-size: 13px;
+}
+nav ul li a:hover{
+    color: #444444;
+    text-decoration: underline;
+}
+
+#contentParent{
+    display: flex;
+}
+.attributeContainer{
+    padding: 10px;
+    margin-right: 20px;
+}
+.listContainer{
+    padding: 10px;
+    margin-right: 20px;
+}
+dt{
+    color: #999999;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+a i{
+    color: #CCCCCC;
+}
+a:hover i{
+    color: #444444;
+}
+/* object titles */
+.objectTitle{
+    display: flex;
+}
+.objectTitle i{
+    font-size: 20px;
+    height: 20px;
+}
+.objectTitle a{
+    height: 20px;
+    margin-top: 8px;
+}
+.objectTitle h1{
+    font-weight: 100;
+    font-size: 30px;
+    color: #444444;
+    margin: 0px 20px 20px 0px;
+    padding: 0px;
+    line-height: 30px
+}
+/* list titles */
+.listTitle{
+    display: flex;
+    margin-top: 26px;
+}
+.listTitle i{
+    font-size: 20px;
+    height: 20px;
+}
+.listTitle a{
+    height: 20px;
+    margin-top: 6px;
+}
+.listTitle h3{
+    font-weight: 100;
+    font-size: 20px;
+    color: #444444;
+    margin: 0px 20px 10px 0px;
+    padding: 0px;
+    line-height: 30px
+}
+/* standard list */
+ul.standardList{
+    list-style: none;
+}
+ul.standardList li a{
+    color: #AAAAAA;
+}
+
+ul.standardList li a:hover{
+    color: #444444;
+    text-decoration: underline;
+}
+
+/* forms */
+form label{
+    color: #999999;
+    font-size: 10px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 10px;
+}
+input{
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
+textarea{
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
+form button{
+    padding: 5px 10px 5px 10px;
+    color: #FFFFFF;
+    font-size: 12px;
+    text-transform: uppercase;
+    background-color: #BBBBBB;
+    border-radius: 3px;
+}
+form button:hover{
+    background-color: #444444;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

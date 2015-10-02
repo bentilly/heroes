@@ -19,14 +19,6 @@ class Sport(Base):
     def link(self):
         return '/sports/{}/'.format(self.key.urlsafe())
 
-    # this is where Admin CRUD form lives
-    class Meta:
-        def __init__(self):
-            from ndbadmin.admin import fields as admin_fields
-            self.fields = [
-                admin_fields.TextField("name", "Name", required=True),
-                admin_fields.BigTextField("description", "Description"),
-            ]
 
     FIELDS = {
         'name': fields.String,
