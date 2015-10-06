@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home : </a></li>
+                        {% if division_object %}
+                        <li><a href="{{ division_object.key.parent().get().link }}">{{ division_object.key.parent().get().name }}</a></li>
+                        {% else %}
+                        <li><a href="{{ sport_object.link }}">{{ sport_object.name }}</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                 {% if division_object %}
+                <form name="divisionForm" action="/division/update/{{ division_object.key.urlsafe() }}" method=post>
+                    <label>division name</label>
+                    <input type="text" name="divisionName" value="{{ division_object.name }}">
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="divisionForm" action="/division/add/{{ sport_object.key.urlsafe() }}" method=post>
+                    <label>division name</label>
+                    <input type="text" name="divisionName">
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+    </body>
+</html>

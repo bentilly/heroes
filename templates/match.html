@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home : </a></li>
+<!--                        SPORT-->
+                        <li><a href="{{ event_object.key.parent().get().link }}">{{ event_object.key.parent().get().name }} : </a></li>
+<!--                        EVENT-->
+                        <li><a href="{{ event_object.link }}">{{ event_object.title }}</a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                {% if match_object %}
+                <form name="matchForm" action="/match/update/{{ match_object.key.urlsafe() }}" method=post>
+                    <label>match date</label>
+                    
+                    TODO:  values for form
+                    
+                    <input type="date" name="matchdate" value="">
+                    <label>start time date</label>
+                    <input type="time" name="matchstarttime">
+                    
+                    <label>venue</label>
+                    <select name="matchvenue">
+                        {% for venue in venues %}
+                        <option value="{{ venue.key.urlsafe() }}">{{ venue.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>division</label>
+                    <select name="matchdivision">
+                        {% for division in divisions %}
+                        <option value="{{ division.key.urlsafe() }}">{{ division.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country one</label>
+                    <select name="matchcountry1">
+                        {% for country in countries %}
+                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country one score</label>
+                    <input name="c1score" type="number" min="0"/>
+                    
+                    <label>country two</label>
+                    <select name="matchcountry2">
+                        {% for country in countries %}
+                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country two score</label>
+                    <input name="c2score" type="number" min="0"/>
+                    
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="matchForm" action="/match/add/{{ event_object.key.urlsafe() }}" method=post>
+                    <label>match date</label>
+                    <input type="date" name="matchdate">
+                    <label>start time date</label>
+                    <input type="time" name="matchstarttime">
+                    
+                    <label>venue</label>
+                    <select name="matchvenue">
+                        {% for venue in venues %}
+                        <option value="{{ venue.key.urlsafe() }}">{{ venue.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>division</label>
+                    <select name="matchdivision">
+                        {% for division in divisions %}
+                        <option value="{{ division.key.urlsafe() }}">{{ division.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country one</label>
+                    <select name="matchcountry1">
+                        {% for country in countries %}
+                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country one score</label>
+                    <input name="c1score" type="number" min="0"/>
+                    
+                    <label>country two</label>
+                    <select name="matchcountry2">
+                        {% for country in countries %}
+                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>country two score</label>
+                    <input name="c2score" type="number" min="0"/>
+                    
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+    </body>
+</html>

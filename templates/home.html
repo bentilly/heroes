@@ -21,11 +21,6 @@
                     <h1>{{ object_title }}</h1>
                     <!-- <a href="#"><i class="fa fa-pencil-square-o"></i></a> -->
                 </div>
-                
-                <!-- <dl>
-                    <dt>sport name</dt>
-                    <dd>Waterpolo</dd>
-                </dl> -->
             </div>
             <div class="listContainer">
                 <div class="listTitle">
@@ -33,7 +28,10 @@
                     <a href="new"><i class="fa fa-plus"></i></a>
                 </div>
                 <ul class="standardList">
-                    <li><a href="#">Waterpolo</a></li>
+                    
+                    {% for sport in sports %}
+                    <li><a href="{{ sport.link }}">{{ sport.name }}</a></li>
+                    {% endfor %}
                 </ul>
             
             </div>

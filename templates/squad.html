@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home : </a></li>
+<!--                        sport-->
+                        <li><a href="{{ team_object.key.parent().parent().get().link }}">{{ team_object.key.parent().parent().get().name }} : </a></li>
+<!--                        country-->
+                        <li><a href="{{ team_object.key.parent().get().link }}">{{ team_object.key.parent().get().name }} : </a></li>
+<!--                        team-->
+                        <li><a href="{{ team_object.link }}">{{ team_object.key.parent().get().code }} {{ team_object.division.get().name }} : </a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                {% if squad_object %}
+                
+<!--                NO UPDATE SQUAD-->
+                
+                {% else %}
+                <form name="squadForm" action="/squad/add/{{ team_object.key.urlsafe() }}" method=post>
+                    <label>event</label>
+                    <select name="squadEvent">
+                        {% for event in events %}
+                        <option value="{{ event.key.urlsafe() }}">{{ event.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Squad members</h3>
+                    {% if squad_object %}
+                    <a href="/squadmember/new/{{ squad_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for member in squadmembers %}
+                    <li><a href="{{ member.link }}">{{ member.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+    </body>
+</html>

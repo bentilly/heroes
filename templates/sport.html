@@ -19,60 +19,114 @@
                 </nav>
                 <div class="objectTitle">
                     <h1>{{ object_title }}</h1>
-                    <!-- <a href="#"><i class="fa fa-pencil-square-o"></i></a> -->
                 </div>
                 
-                <form name="sportForm" action="/sports/add" method=post class=add-entry>
+                
+                {% if sport_object %}
+                <form name="sportForm" action="/sport/update/{{ sport_object.key.urlsafe() }}" method=post>
                     <label>sport name</label>
-                    <input type="text" name="sportName">
+                    <input type="text" name="sportName" value="{{ sport_object.name }}">
+<!--
                     <label>sport description</label>
-                    <textarea rows="4" cols="30"></textarea>
+                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
+-->
                     <button type="submit">Save</button>
                 </form>
                 
+                {% else %}
+                <form name="sportForm" action="/sport/add" method=post>
+                    <label>sport name</label>
+                    <input type="text" name="sportName">
+<!--
+                    <label>sport description</label>
+                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
+-->
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
             </div>
             <div class="listContainer">
+                
                 <div class="listTitle">
-                    <h3>Roles</h3>
-                    <a href="#"><i class="fa fa-plus"></i></a>
+                    <h3>Countries</h3>
+                    {% if sport_object %}
+                    <a href="/country/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
                 </div>
+                
                 <ul class="standardList">
-                    <li><a href="#">Coach</a></li>
-                    <li><a href="#">Manager</a></li>
-                    <li><a href="#">Captian</a></li>
-                    <li><a href="#">Vice captain</a></li>
-                    <li><a href="#">Player</a></li>
+                    {% for country in countries %}
+                    <li><a href="{{ country.link }}">{{ country.name }}</a></li>
+                    {% endfor %} 
                 </ul>
             
             </div>
+            
+            
             <div class="listContainer">
                 <div class="listTitle">
-                    <h3>Postitions</h3>
-                    <a href="#"><i class="fa fa-plus"></i></a>
+                    <h3>Events</h3>
+                    {% if sport_object %}
+                    <a href="/event/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
                 </div>
+                
                 <ul class="standardList">
-                    <li><a href="#">Forward</a></li>
-                    <li><a href="#">Back</a></li>
-                    <li><a href="#">Half back</a></li>
-                    <li><a href="#">Wing</a></li>
-                    <li><a href="#">Goalie</a></li>
+                    {% for event in events %}
+                    <li><a href="{{ event.link }}">{{ event.title }}</a></li>
+                    {% endfor %} 
                 </ul>
             
             </div>
+            
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Divisions</h3>
-                    <a href="#"><i class="fa fa-plus"></i></a>
+                    {% if sport_object %}
+                    <a href="/division/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
                 </div>
                 <ul class="standardList">
-                    <li><a href="#">Open elite</a></li>
-                    <li><a href="#">Women</a></li>
-                    <li><a href="#">U19 Open</a></li>
-                    <li><a href="#">U21 Open</a></li>
-                    <li><a href="#">U19 Women</a></li>
-                    <li><a href="#">U21 Women</a></li>
+                    {% for division in divisions %}
+                    <li><a href="{{ division.link }}">{{ division.name }}</a></li>
+                    {% endfor %} 
                 </ul>
             </div>
+            
+<!--        TODO - move to child of COUNTRY
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Roles</h3>
+                    {% if sport_object %}
+                    <a href="/role/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for role in roles %}
+                    <li><a href="{{ role.link }}">{{ role.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+-->
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Venues</h3>
+                    {% if sport_object %}
+                    <a href="/venue/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for venue in venues %}
+                    <li><a href="{{ venue.link }}">{{ venue.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+            
+            
         </div>
 
     </body>

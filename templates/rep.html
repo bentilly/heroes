@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home : </a></li>
+<!--                        SPORT-->
+                        <li><a href="{{ country_object.key.parent().get().link }}">{{ country_object.key.parent().get().name }} : </a></li>
+<!--                        COUNTRY-->
+                        <li><a href="{{ country_object.link }}">{{ country_object.name }} : </a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                 {% if rep_object %}
+                <form name="repForm" action="/rep/update/{{ rep_object.key.urlsafe() }}" method=post>
+                    <label>first name</label>
+                    <input type="text" name="firstname" value="{{ rep_object.firstname }}">
+                    <label>last name</label>
+                    <input type="text" name="lastname" value="{{ rep_object.lastname }}">
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="repForm" action="/rep/add/{{ country_object.key.urlsafe() }}" method=post>
+                    <label>first name</label>
+                    <input type="text" name="firstname">
+                    <label>last name</label>
+                    <input type="text" name="lastname">
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+    </body>
+</html>

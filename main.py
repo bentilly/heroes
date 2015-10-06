@@ -7,7 +7,7 @@ app = create_app()
 
 @app.route('/')
 def index():
-    return redirect('/sports/')
+    return redirect('/sport/all')
 
 
 @app.errorhandler(404)
