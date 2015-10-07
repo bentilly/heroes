@@ -83,7 +83,7 @@ a:hover i{
     padding: 0px;
     line-height: 30px
 }
-/* standard list */
+/* LISTS */
 ul.standardList{
     list-style: none;
 }
@@ -95,8 +95,21 @@ ul.standardList li a:hover{
     color: #444444;
     text-decoration: underline;
 }
+ul.inactive{
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #DDDDDD;
+}
 
-/* forms */
+
+li i.addmember{
+    margin-left: 10px;
+}
+li.inactive{
+    color: #DDDDDD;
+}
+
+/* FORMS */
 form label{
     color: #999999;
     font-size: 10px;

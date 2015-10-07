@@ -9,6 +9,10 @@ class Country(Base):
 	code = ndb.StringProperty(required=True)
 
 	@property
+	def title(self):
+		return self.code
+
+	@property
 	def link(self):
 	    return '/country/{}/'.format(self.key.urlsafe())
 	    

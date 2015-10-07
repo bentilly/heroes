@@ -59,30 +59,19 @@
                         <th>date</th>
                         <th>division</th>
                         <th>c1</th>
+                        <th></th>
                         <th>c2</th>
                     </tr>
+                    {% for match in matches %}
                     <tr>
-                        <td>10 Dec 2014</td>
-                        <td>Under 19 Boys</td>
-                        <td>JPN</td>
-                        <td>NZL</td>
-                        <td><button>view</button></td>
+                        <td>{{ match.datestring }}</td>
+                        <td>{{ match.division.get().name }}</td>
+                        <td>{{ match.country1.get().code }}</td>
+                        <td>vs</td>
+                        <td>{{ match.country2.get().code }}</td>
+                        <td><button onclick="window.location='{{ match.link }}';">view</button></td>
                     </tr>
-                    <tr>
-                        <td>10 Dec 2014</td>
-                        <td>Under 19 Boys</td>
-                        <td>AUS</td>
-                        <td>JPN</td>
-                        <td><a href="#"><button>view</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>10 Dec 2014</td>
-                        <td>Under 19 Boys</td>
-                        <td>NZL</td>
-                        <td>FRA</td>
-                        <td><button>view</button></td>
-                    </tr>
-                
+                    {% endfor %}
                 </table>
             
             </div>

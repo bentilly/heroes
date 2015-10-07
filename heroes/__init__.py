@@ -13,6 +13,8 @@ from .representatives.controllers import rep_bp
 from .squadmembers.controllers import squadmember_bp
 from .venues.controllers import venue_bp
 from .matches.controllers import match_bp
+from .matchteams.controllers import matchteam_bp
+from .matchteammembers.controllers import matchteammember_bp
 
 import config
 
@@ -34,6 +36,8 @@ def create_app():
     app.register_blueprint(squadmember_bp, url_prefix='/squadmember')
     app.register_blueprint(venue_bp, url_prefix='/venue')
     app.register_blueprint(match_bp, url_prefix='/match')
+    app.register_blueprint(matchteam_bp, url_prefix='/matchteam')
+    app.register_blueprint(matchteammember_bp, url_prefix='/matchteammember')
 
 
     return app

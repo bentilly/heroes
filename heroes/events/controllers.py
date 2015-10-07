@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 
 from .models import Event
 from heroes.sports.models import Sport
+from heroes.matches.models import Match
 
 import datetime
 
@@ -17,9 +18,13 @@ def event_view(key):
     event_key = ndb.Key(urlsafe=key)
     event = event_key.get()
 
+    match_entries = Match.query(ancestor=event_key).fetch()
+
+
     return render_template('event.html',
             object_title=event.title,
             event_object=event,
+            matches=match_entries,
         )
 
 #NEW event PAGE

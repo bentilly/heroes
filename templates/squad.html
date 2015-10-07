@@ -14,13 +14,10 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home : </a></li>
-<!--                        sport-->
-                        <li><a href="{{ team_object.key.parent().parent().get().link }}">{{ team_object.key.parent().parent().get().name }} : </a></li>
-<!--                        country-->
-                        <li><a href="{{ team_object.key.parent().get().link }}">{{ team_object.key.parent().get().name }} : </a></li>
-<!--                        team-->
-                        <li><a href="{{ team_object.link }}">{{ team_object.key.parent().get().code }} {{ team_object.division.get().name }} : </a></li>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 <div class="objectTitle">
@@ -57,6 +54,43 @@
                     <li><a href="{{ member.link }}">{{ member.title }}</a></li>
                     {% endfor %}
                 </ul>
+            
+            </div>
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Matches</h3>
+                </div>
+                <table>
+                    {% for tm in team_matches %}
+                    <tr>
+                        <td>{{ tm.match.datestring }}</td>
+                        <td><strong>
+                            {% if tm.match.country1 == team_object.key.parent() %}
+                                {{ tm.match.country1.get().code }}
+                            {% else %}
+                                {{ tm.match.country2.get().code }}
+                            {% endif %}
+                        </strong></td>
+                        <td>vs</td>
+                        <td>
+                            {% if tm.match.country1 == team_object.key.parent() %}
+                                {{ tm.match.country2.get().code }}
+                            {% else %}
+                                {{ tm.match.country1.get().code }}
+                            {% endif %}
+                            
+                        </td>
+                        <td>
+                            {% if tm.team %}
+                            <a href="/matchteam/{{ tm.team.key.urlsafe() }}"><button>view team</button></a>
+                            {% else %}
+                            <a href="/matchteam/add/{{ tm.match.key.urlsafe() }}/{{ squad_object.key.urlsafe() }}"><button>add</button></a>
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             
             </div>
     </body>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Match Team members</h3>
+
+                </div>
+<!--                In the team-->
+                <ul class="standardList">
+                    {% for member in squad_matchteam %}
+                        {% if member.matchteammember %}
+                        <li>{{ member.squadmember.title }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+<!--                didnt play-->
+                <ul class="standardList inactive">
+                    {% for member in squad_matchteam %}
+                        {% if member.matchteammember %}
+<!--                        do nothing-->
+                        {% else %}
+                        <li class="inactive">{{ member.squadmember.title }}<a href="/matchteammember/add/{{ member.squadmember.key.urlsafe() }}/{{ matchteam_object.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            
+            </div>
+    </body>
+</html>

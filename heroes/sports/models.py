@@ -8,10 +8,9 @@ class Sport(Base):
     name = ndb.StringProperty(required=True)
     description = ndb.TextProperty()
 
-    # @classmethod
-    # def sport_key(self, sport_name):
-    #     return ndb.Key('Sport', sport_name)
-
+    @property
+    def title(self):
+        return self.name
 
     @property
     def link(self):

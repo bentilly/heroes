@@ -17,16 +17,24 @@ match_bp = Blueprint('match', __name__)
 # A match PAGE.
 @match_bp.route('/<key>/')
 def match_view(key):
-    match_key = ndb.Key(urlsafe=key)
-    match = match_key.get()
+	match_key = ndb.Key(urlsafe=key)
+	match = match_key.get()
 
-    event = match_key.parent().get()
+	event_key = match_key.parent()
+	event = event_key.get()
 
-    return render_template('match.html',
-            object_title="A Match",
-            match_object=match,
-            event_object=event,
-        )
+	venue_entries = Venue.query(ancestor=event_key.parent()).fetch()
+	division_entries = Division.query(ancestor=event_key.parent()).fetch()
+	country_entries = Country.query(ancestor=event_key.parent()).fetch()
+
+	return render_template('match.html',
+			object_title="A Match",
+			match_object=match,
+			event_object=event,
+			venues=venue_entries,
+			divisions=division_entries,
+			countries=country_entries,
+	)
 
 #NEW match PAGE
 @match_bp.route('/new/<key>')
@@ -58,17 +66,18 @@ def add_entry(parent_key):
 	datetimestring = request.form['matchdate']+"-"+request.form['matchstarttime']
 
 	matchdate = datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
-	logging.info("date")
 	matchvenue = ndb.Key(urlsafe=request.form['matchvenue'])
 	matchdivison = ndb.Key(urlsafe=request.form['matchdivision'])
 	matchcountry1 = ndb.Key(urlsafe=request.form['matchcountry1'])
-	logging.info(request.form['c1score'])
-	matchcountry1score = int(request.form['c1score'])
-	logging.info("countryscore")
+	matchcountry1score = None
+	if request.form['c1score']:
+		matchcountry1score = int(request.form['c1score'])
+		
+	
 	matchcountry2 = ndb.Key(urlsafe=request.form['matchcountry2'])
-	matchcountry2score = int(request.form['c2score'])
-
-	logging.info("made data")
+	matchcountry2score = None
+	if request.form['c2score']:
+		matchcountry2score = int(request.form['c2score'])
 
 	match = Match(
 		date=matchdate, 
@@ -81,11 +90,7 @@ def add_entry(parent_key):
 		parent=event_key,
 		)
 
-	logging.info("made Match object")
-
 	match.put()
-
-	logging.info("put done")
 
 	return redirect('/match/{}'.format(match.key.urlsafe()))
 
@@ -93,12 +98,26 @@ def add_entry(parent_key):
 # UPDATE match
 @match_bp.route('/update/<key>', methods=['POST'])
 def update_entry(key):
-    match_key = ndb.Key(urlsafe=key)
-    match = match_key.get()
-    match.name = request.form['matchName']
-    match.put()
+	match_key = ndb.Key(urlsafe=key)
+	match = match_key.get()
 
-    return redirect('/match/{}'.format(match.key.urlsafe()))
+	datetimestring = request.form['matchdate']+"-"+request.form['matchstarttime']
+	
+	match.date=datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+	match.venue=ndb.Key(urlsafe=request.form['matchvenue'])
+	match.division=ndb.Key(urlsafe=request.form['matchdivision'])
+	match.country1=ndb.Key(urlsafe=request.form['matchcountry1'])
+	match.country1score=None
+	if request.form['c1score']:
+		match.country1score = int(request.form['c1score'])
+	match.country2=ndb.Key(urlsafe=request.form['matchcountry2'])
+	match.country2score=None
+	if request.form['c2score']:
+		match.country2score = int(request.form['c2score'])
+
+	match.put()
+
+	return redirect('/match/{}'.format(match.key.urlsafe()))
 
 
 

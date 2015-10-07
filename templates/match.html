@@ -28,46 +28,53 @@
                 {% if match_object %}
                 <form name="matchForm" action="/match/update/{{ match_object.key.urlsafe() }}" method=post>
                     <label>match date</label>
+                    <input type="date" name="matchdate" value="{{ match_object.dateproperty }}">
                     
-                    TODO:  values for form
-                    
-                    <input type="date" name="matchdate" value="">
                     <label>start time date</label>
-                    <input type="time" name="matchstarttime">
+                    <input type="time" name="matchstarttime" value="{{ match_object.timeproperty }}">
                     
                     <label>venue</label>
                     <select name="matchvenue">
+<!--                        <option value="{{ match_object.venue.urlsafe() }}">{{ match_object.venue.get().name }}</option>-->
                         {% for venue in venues %}
-                        <option value="{{ venue.key.urlsafe() }}">{{ venue.name }}</option>
+                        <option value="{{ venue.key.urlsafe() }}"
+                                {% if match_object.venue.urlsafe() == venue.key.urlsafe() %} selected="selected" {% endif %}
+                                >{{ venue.name }}</option>
                         {% endfor %}
                     </select>
                     
                     <label>division</label>
                     <select name="matchdivision">
                         {% for division in divisions %}
-                        <option value="{{ division.key.urlsafe() }}">{{ division.name }}</option>
+                        <option value="{{ division.key.urlsafe() }}"
+                                {% if match_object.division.urlsafe() == division.key.urlsafe() %} selected="selected" {% endif %}
+                                >{{ division.name }}</option>
                         {% endfor %}
                     </select>
                     
                     <label>country one</label>
                     <select name="matchcountry1">
                         {% for country in countries %}
-                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        <option value="{{ country.key.urlsafe() }}"
+                                {% if match_object.country1.urlsafe() == country.key.urlsafe() %} selected="selected" {% endif %}
+                                >{{ country.name }}</option>
                         {% endfor %}
                     </select>
                     
                     <label>country one score</label>
-                    <input name="c1score" type="number" min="0"/>
+                    <input name="c1score" type="number" min="0" value="{{ match_object.country1score }}"/>
                     
                     <label>country two</label>
                     <select name="matchcountry2">
                         {% for country in countries %}
-                        <option value="{{ country.key.urlsafe() }}">{{ country.name }}</option>
+                        <option value="{{ country.key.urlsafe() }}"
+                                {% if match_object.country2.urlsafe() == country.key.urlsafe() %} selected="selected" {% endif %}
+                                >{{ country.name }}</option>
                         {% endfor %}
                     </select>
                     
                     <label>country two score</label>
-                    <input name="c2score" type="number" min="0"/>
+                    <input name="c2score" type="number" min="0" value="{{ match_object.country2score }}"/>
                     
                     <button type="submit">Save</button>
                 </form>

@@ -10,7 +10,7 @@ class Squad(Base):
 
     @property
     def title(self):
-        return self.key.parent().get().title + " at " + self.event.get().title
+        return self.event.get().title
 
     @property
     def link(self):

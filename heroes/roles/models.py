@@ -7,6 +7,10 @@ class Role(Base):
 	name = ndb.StringProperty(required=True)
 
 	@property
+	def title(self):
+		return self.name
+
+	@property
 	def link(self):
 		return '/role/{}/'.format(self.key.urlsafe())
 
