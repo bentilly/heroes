@@ -20,9 +20,18 @@ def event_view(key):
 
     match_entries = Match.query(ancestor=event_key).fetch()
 
+    #BREADCRUMB
+    # sport
+    sport = event_key.parent().get()
+
+    breadcrumb_list = [sport]
+    title = event.title
+    #END BREADCRUMB
+
 
     return render_template('event.html',
-            object_title=event.title,
+            breadcrumb = breadcrumb_list,
+            object_title=title,
             event_object=event,
             matches=match_entries,
         )
@@ -30,14 +39,16 @@ def event_view(key):
 #NEW event PAGE
 @event_bp.route('/new/<key>')
 def new_event(key):
-	sport_key = ndb.Key(urlsafe=key)
-	sport = sport_key.get()
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
 
+    breadcrumb_list = [sport]
 
-	return render_template('event.html',
-		object_title='New event',
-		sport_object=sport,
-		)
+    return render_template('event.html',
+        breadcrumb = breadcrumb_list,
+        object_title='New event',
+        sport_object=sport,
+    )
 
 
 

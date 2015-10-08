@@ -20,20 +20,29 @@ def match_view(key):
 	match_key = ndb.Key(urlsafe=key)
 	match = match_key.get()
 
+	#BREADCRUMB
+	# event
 	event_key = match_key.parent()
 	event = event_key.get()
+	# sport
+	sport = event_key.parent().get()
+
+	breadcrumb_list = [sport, event]
+	title = match.title
+	#END BREADCRUMB
 
 	venue_entries = Venue.query(ancestor=event_key.parent()).fetch()
 	division_entries = Division.query(ancestor=event_key.parent()).fetch()
 	country_entries = Country.query(ancestor=event_key.parent()).fetch()
 
 	return render_template('match.html',
-			object_title="A Match",
-			match_object=match,
-			event_object=event,
-			venues=venue_entries,
-			divisions=division_entries,
-			countries=country_entries,
+		breadcrumb = breadcrumb_list,
+		object_title=title,
+		match_object=match,
+		event_object=event,
+		venues=venue_entries,
+		divisions=division_entries,
+		countries=country_entries,
 	)
 
 #NEW match PAGE
@@ -46,13 +55,23 @@ def new_match(key):
 	division_entries = Division.query(ancestor=event_key.parent()).fetch()
 	country_entries = Country.query(ancestor=event_key.parent()).fetch()
 
+	#BREADCRUMB
+	# event - done above
+
+	# sport
+	sport = event_key.parent().get()
+
+	breadcrumb_list = [sport, event]
+	#END BREADCRUMB
+
 	return render_template('match.html',
+		breadcrumb = breadcrumb_list,
 		object_title='New match',
 		event_object=event,
 		venues=venue_entries,
 		divisions=division_entries,
 		countries=country_entries,
-		)
+	)
 
 
 

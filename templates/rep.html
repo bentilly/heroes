@@ -14,11 +14,10 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home : </a></li>
-<!--                        SPORT-->
-                        <li><a href="{{ country_object.key.parent().get().link }}">{{ country_object.key.parent().get().name }} : </a></li>
-<!--                        COUNTRY-->
-                        <li><a href="{{ country_object.link }}">{{ country_object.name }} : </a></li>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 <div class="objectTitle">

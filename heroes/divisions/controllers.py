@@ -16,8 +16,18 @@ division_bp = Blueprint('division', __name__)
 def division_view(key):
     division_key = ndb.Key(urlsafe=key)
     division = division_key.get()
+
+    #BREADCRUMB
+    # sport
+    sport = division_key.parent().get()
+
+    breadcrumb_list = [sport]
+    title = division.title
+    #END BREADCRUMB
+
     return render_template('division.html',
-            object_title=division.name,
+            breadcrumb = breadcrumb_list,
+            object_title=title,
             division_object=division,
         )
 
@@ -27,8 +37,10 @@ def new_division(key):
 	sport_key = ndb.Key(urlsafe=key)
 	sport = sport_key.get()
 
+	breadcrumb_list = [sport]
 
 	return render_template('division.html',
+		breadcrumb = breadcrumb_list,
 		object_title='New division',
 		sport_object=sport,
 		)

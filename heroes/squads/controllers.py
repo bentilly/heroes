@@ -9,6 +9,7 @@ from heroes.events.models import Event
 from heroes.squadmembers.models import Squadmember
 from heroes.matches.models import Match
 from heroes.matchteams.models import Matchteam
+from heroes.representatives.models import Rep
 
 squad_bp = Blueprint('squad', __name__)
 
@@ -31,10 +32,29 @@ def squad_view(key):
 	breadcrumb_list = [sport, country, team]
 	title = squad.title
 
-	#SQUADMEMBERS
+	#-----SQUADMEMBERS
+	#All REPS
+	rep_entries= Rep.query(ancestor=country.key).fetch()
+
+	#Some SQUADMEMBERS
 	squadmembers_entries = Squadmember.query(ancestor=squad_key).fetch()
 
-	#MATCHES for this squad
+
+	#REP SQUADMEMBERS
+	rep_squadmembers = []
+
+	for r in rep_entries:
+		rep_squadmember = {}
+		rep_squadmember['rep'] = r
+
+		for sm in squadmembers_entries:
+			if sm.rep == r.key:
+				rep_squadmember['squadmember'] = sm
+
+		rep_squadmembers.append(rep_squadmember)
+
+
+	#-----MATCHES for this squad
 	event_key = squad.event
 	team_key = squad_key.parent()
 	division_key = team_key.get().division
@@ -68,6 +88,7 @@ def squad_view(key):
 		squadmembers=squadmembers_entries,
 		team_matches=team_matches,
 		matchteams=matchteam_entries,
+		rep_squadmembers=rep_squadmembers,
 	)
 
 #NEW squad PAGE
@@ -79,7 +100,17 @@ def new_squad(key):
 	#need Sport key as ancestor
 	event_entries = Event.query(ancestor=team_key.parent().parent()).fetch()
 
+	#BREADCRUMB
+	#team - above
+	# country
+	country = team_key.parent().get()
+	# sport
+	sport = team_key.parent().parent().get()
+
+	breadcrumb_list = [sport, country, team]
+
 	return render_template('squad.html',
+		breadcrumb = breadcrumb_list,
 		object_title='New squad',
 		team_object=team,
 		events=event_entries,
@@ -90,13 +121,14 @@ def new_squad(key):
 # HANDLERS #
 
 # ADD squad
-@squad_bp.route('/add/<parent_key>', methods=['POST'])
-def add_entry(parent_key):
-	team_key = ndb.Key(urlsafe=parent_key)
-	event_key = ndb.Key(urlsafe=request.form['squadEvent'])
+@squad_bp.route('/add/<team_key>/<event_key>', methods=['GET'])
+def add_entry(team_key, event_key):
+	team_key = ndb.Key(urlsafe=team_key)
+	event_key = ndb.Key(urlsafe=event_key)
+
 	squad = Squad(parent=team_key, event=event_key)
 	squad.put()
-	return redirect('/squad/{}'.format(squad.key.urlsafe()))
+	return redirect('/team/{}'.format(team_key.urlsafe()))
 
 
 # UPDATE squad

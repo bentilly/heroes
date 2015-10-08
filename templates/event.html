@@ -14,12 +14,10 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home : </a></li>
-                        {% if event_object %}
-                        <li><a href="{{ event_object.key.parent().get().link }}">{{ event_object.key.parent().get().name }}</a></li>
-                        {% else %}
-                        <li><a href="{{ sport_object.link }}">{{ sport_object.name }}</a></li>
-                        {% endif %}
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 <div class="objectTitle">

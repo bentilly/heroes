@@ -12,12 +12,22 @@ venue_bp = Blueprint('venue', __name__)
 # A venue PAGE.
 @venue_bp.route('/<key>/')
 def venue_view(key):
-    venue_key = ndb.Key(urlsafe=key)
-    venue = venue_key.get()
-    return render_template('venue.html',
-            object_title=venue.name,
-            venue_object=venue,
-        )
+	venue_key = ndb.Key(urlsafe=key)
+	venue = venue_key.get()
+
+	#BREADCRUMB
+	# sport
+	sport = venue_key.parent().get()
+
+	breadcrumb_list = [sport]
+	title = venue.title
+	#END BREADCRUMB
+
+	return render_template('venue.html',
+		breadcrumb = breadcrumb_list,
+		object_title=title,
+		venue_object=venue,
+	)
 
 #NEW venue PAGE
 @venue_bp.route('/new/<key>')
@@ -25,11 +35,14 @@ def new_venue(key):
 	sport_key = ndb.Key(urlsafe=key)
 	sport = sport_key.get()
 
+	breadcrumb_list = [sport]
+
 
 	return render_template('venue.html',
+		breadcrumb = breadcrumb_list,
 		object_title='New venue',
 		sport_object=sport,
-		)
+	)
 
 
 

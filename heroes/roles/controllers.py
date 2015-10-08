@@ -12,12 +12,22 @@ role_bp = Blueprint('role', __name__)
 # A ROLE PAGE.
 @role_bp.route('/<key>/')
 def role_view(key):
-    role_key = ndb.Key(urlsafe=key)
-    role = role_key.get()
-    return render_template('role.html',
-            object_title=role.name,
-            role_object=role,
-        )
+	role_key = ndb.Key(urlsafe=key)
+	role = role_key.get()
+
+	#BREADCRUMB
+	# sport
+	sport = role_key.parent().get()
+
+	breadcrumb_list = [sport]
+	title = role.title
+	#END BREADCRUMB
+
+	return render_template('role.html',
+		breadcrumb = breadcrumb_list,
+		object_title=title,
+		role_object=role,
+	)
 
 #NEW ROLE PAGE
 @role_bp.route('/new/<key>')
@@ -25,11 +35,13 @@ def new_role(key):
 	sport_key = ndb.Key(urlsafe=key)
 	sport = sport_key.get()
 
+	breadcrumb_list = [sport]
 
 	return render_template('role.html',
+		breadcrumb = breadcrumb_list,
 		object_title='New role',
 		sport_object=sport,
-		)
+	)
 
 
 

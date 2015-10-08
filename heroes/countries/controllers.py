@@ -18,11 +18,21 @@ def country_view(key):
     country_key = ndb.Key(urlsafe=key)
     country = country_key.get()
 
+    #BREADCRUMB
+    # sport
+    sport = country_key.parent().get()
+
+    breadcrumb_list = [sport]
+    title = country.title
+    #END BREADCRUMB
+
+
     team_entries = Team.query(ancestor=country_key).fetch()
     rep_entries = Rep.query(ancestor=country_key).fetch()
 
     return render_template('country.html',
-            object_title=country.name,
+            breadcrumb = breadcrumb_list,
+            object_title=title,
             country_object=country,
             teams=team_entries,
             reps=rep_entries,
@@ -31,14 +41,22 @@ def country_view(key):
 #NEW country PAGE
 @country_bp.route('/new/<key>')
 def new_country(key):
-	sport_key = ndb.Key(urlsafe=key)
-	sport = sport_key.get()
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
+
+    #BREADCRUMB
+    # sport
+    # sport = country_key.parent().get()
+
+    breadcrumb_list = [sport]
+    #END BREADCRUMB
 
 
-	return render_template('country.html',
-		object_title='New country',
-		sport_object=sport,
-		)
+    return render_template('country.html',
+        breadcrumb = breadcrumb_list,
+        object_title='New country',
+        sport_object=sport,
+    )
 
 
 

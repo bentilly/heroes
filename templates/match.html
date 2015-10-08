@@ -14,11 +14,10 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home : </a></li>
-<!--                        SPORT-->
-                        <li><a href="{{ event_object.key.parent().get().link }}">{{ event_object.key.parent().get().name }} : </a></li>
-<!--                        EVENT-->
-                        <li><a href="{{ event_object.link }}">{{ event_object.title }}</a></li>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 <div class="objectTitle">
@@ -82,9 +81,9 @@
                 {% else %}
                 <form name="matchForm" action="/match/add/{{ event_object.key.urlsafe() }}" method=post>
                     <label>match date</label>
-                    <input type="date" name="matchdate">
+                    <input type="date" name="matchdate" value="{{ event_object.startdatestring }}">
                     <label>start time date</label>
-                    <input type="time" name="matchstarttime">
+                    <input type="time" name="matchstarttime" value="09:42">
                     
                     <label>venue</label>
                     <select name="matchvenue">

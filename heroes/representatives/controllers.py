@@ -17,23 +17,43 @@ def rep_view(key):
 
     country = rep_key.parent().get()
 
+
+    #BREADCRUMB
+    # country
+    country = rep_key.parent().get()
+    # sport
+    sport = country.key.parent().get()
+
+    breadcrumb_list = [sport, country]
+    title = rep.title
+    #END BREADCRUMB
+
     return render_template('rep.html',
-            object_title=rep.title,
-            rep_object=rep,
-            country_object=country,
-        )
+        breadcrumb = breadcrumb_list,
+        object_title=title,
+        rep_object=rep,
+        country_object=country,
+    )
 
 #NEW rep PAGE
 @rep_bp.route('/new/<key>')
 def new_rep(key):
-	country_key = ndb.Key(urlsafe=key)
-	country = country_key.get()
+    country_key = ndb.Key(urlsafe=key)
+    country = country_key.get()
 
+    #BREADCRUMB
+    # country
+    # sport
+    sport = country.key.parent().get()
 
-	return render_template('rep.html',
-		object_title='New rep',
-		country_object=country,
-		)
+    breadcrumb_list = [sport, country]
+    #END BREADCRUMB
+
+    return render_template('rep.html',
+        breadcrumb = breadcrumb_list,
+        object_title='New rep',
+        country_object=country,
+    )
 
 
 

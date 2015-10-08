@@ -14,16 +14,10 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home : </a></li>
-                        {% if team_object %}
-<!--                    Sport-->
-                        <li><a href="{{ team_object.key.parent().parent().get().link }}">{{ team_object.key.parent().parent().get().name }} : </a></li>
-<!--                    Country-->
-                        <li><a href="{{ team_object.key.parent().get().link }}">{{ team_object.key.parent().get().name }} : </a></li>
-                        {% else %}
-                        <li><a href="{{ country_object.key.parent().get().link }}">{{ country_object.key.parent().get().name }} : </a></li>
-                        <li><a href="{{ country_object.link }}">{{ country_object.name }}</a></li>
-                        {% endif %}
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 <div class="objectTitle">
@@ -38,22 +32,34 @@
                 </form>
                 
             </div>
+
             
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Squads</h3>
-                    {% if team_object %}
-                    <a href="/squad/new/{{ team_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
-                    {% endif %}
                 </div>
+                <!--                Created squads-->
                 <ul class="standardList">
-                    {% for squad in squads %}
-                    <li><a href="{{ squad.link }}">{{ squad.title }}</a></li>
+                    {% for event in event_squads %}
+                        {% if event.squad %}
+                        <li><a href="{{ event.squad.link }}">{{ event.squad.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+<!--                didnt play-->
+                <ul class="standardList inactive">
+                    {% for event in event_squads %}
+                        {% if event.squad %}
+<!--                        do nothing-->
+                        {% else %}
+                        <li class="inactive">{{ event.event.title }}<a href="/squad/add/{{ team_object.key.urlsafe() }}/{{ event.event.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             
             </div>
             
+
             
     </body>
 </html>

@@ -29,8 +29,8 @@ def matchteam_view(key):
     sport = squad.key.parent().parent().parent().get()
 
     breadcrumb_list = [sport, country, team, squad]
-
     title = matchteam.match.get().title
+    #END BREADCRUMB
 
     #SQUADMEMBERS
     squadmembers_entries = Squadmember.query(ancestor=squad.key).fetch()
