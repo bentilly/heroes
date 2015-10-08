@@ -14,8 +14,3 @@ class Venue(Base):
 	def link(self):
 		return '/venue/{}/'.format(self.key.urlsafe())
 
-
-	FIELDS = {
-		'name': fields.String,
-	}
-	FIELDS.update(Base.FIELDS)

@@ -21,9 +21,3 @@ class Event(Base):
 	def link(self):
 		return '/event/{}/'.format(self.key.urlsafe())
 
-
-	# FIELDS = {
-	# 	'name': fields.String,
-	# 	# 'startdate': fields.DateTime,
-	# }
-	# FIELDS.update(Base.FIELDS)

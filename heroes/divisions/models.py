@@ -15,8 +15,3 @@ class Division(Base):
 	def link(self):
 		return '/division/{}/'.format(self.key.urlsafe())
 
-
-	FIELDS = {
-		'name': fields.String,
-	}
-	FIELDS.update(Base.FIELDS)

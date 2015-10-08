@@ -42,7 +42,3 @@ class Match(Base):
 		return '/match/{}/'.format(self.key.urlsafe())
 
 
-	# FIELDS = {
-	# 	'name': fields.String,
-	# }
-	# FIELDS.update(Base.FIELDS)

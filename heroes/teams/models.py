@@ -20,10 +20,3 @@ class Team(Base):
     def link(self):
         return '/team/{}/'.format(self.key.urlsafe())
 
-    
-
-    FIELDS = {
-        'name': fields.String,
-        'division_name': fields.Key,
-    }
-    FIELDS.update(Base.FIELDS)

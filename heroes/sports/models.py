@@ -15,10 +15,3 @@ class Sport(Base):
     @property
     def link(self):
         return '/sport/{}/'.format(self.key.urlsafe())
-
-
-    FIELDS = {
-        'name': fields.String,
-        'description': fields.String,
-    }
-    FIELDS.update(Base.FIELDS)

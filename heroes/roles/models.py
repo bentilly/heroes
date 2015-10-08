@@ -14,8 +14,3 @@ class Role(Base):
 	def link(self):
 		return '/role/{}/'.format(self.key.urlsafe())
 
-
-	FIELDS = {
-		'name': fields.String,
-	}
-	FIELDS.update(Base.FIELDS)

@@ -16,10 +16,3 @@ class Squad(Base):
     def link(self):
         return '/squad/{}/'.format(self.key.urlsafe())
 
-    
-
-    FIELDS = {
-        'name': fields.String,
-        'division_name': fields.Key,
-    }
-    FIELDS.update(Base.FIELDS)

@@ -15,10 +15,3 @@ class Country(Base):
 	@property
 	def link(self):
 	    return '/country/{}/'.format(self.key.urlsafe())
-	    
-
-	FIELDS = {
-		'name': fields.String,
-		'code': fields.String,
-	}
-	FIELDS.update(Base.FIELDS)

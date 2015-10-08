@@ -15,8 +15,3 @@ class Rep(Base):
 	def link(self):
 		return '/rep/{}/'.format(self.key.urlsafe())
 
-
-	FIELDS = {
-		'name': fields.String,
-	}
-	FIELDS.update(Base.FIELDS)
