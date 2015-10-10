@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                 {% if country_object %}
+                <form name="countryForm" action="/country/update/{{ country_object.key.urlsafe() }}" method=post>
+                    <label>country name</label>
+                    <input type="text" name="countryName" value="{{ country_object.name }}">
+                    <label>country code (3 char)</label>
+                    <input type="text" name="countryCode" value="{{ country_object.code }}">
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="countryForm" action="/country/add/{{ sport_object.key.urlsafe() }}" method=post>
+                    <label>country name</label>
+                    <input type="text" name="countryName">
+                    <label>country code (3 char)</label>
+                    <input type="text" name="countryCode">
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Teams</h3>
+<!--                    No '+'. Teams created automatically on DIVISION or COUNTRY creation-->
+                </div>
+                <ul class="standardList">
+                    {% for team in teams %}
+                    <li><a href="{{ team.link }}">{{ team.title }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Representatives</h3>
+                    {% if country_object %}
+                    <a href="/rep/new/{{ country_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for rep in reps %}
+                    <li><a href="{{ rep.link }}">{{ rep.title }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
+            
+            
+            
+    </body>
+</html>

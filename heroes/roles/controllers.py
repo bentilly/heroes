@@ -1,22 +1,81 @@
-from flask import Blueprint, session, jsonify
-from flask_restful import Api, url_for, marshal_with, reqparse
-from heroes.helpers import Api, Resource, make_response
-from models import Role
+from flask import Blueprint, render_template, redirect, request
 
-roles_bp = Blueprint('roles', __name__)
-roles_api = Api(roles_bp)
+from google.appengine.ext import ndb
 
-@roles_api.resource('/')
-class DivisionListView(Resource):
+from .models import Role
+from heroes.sports.models import Sport
 
-	def get(self):
-		roles_dbs = Role.get_dbs()
-		return make_response(roles_dbs, Role.FIELDS)
+role_bp = Blueprint('role', __name__)
 
-@roles_api.resource('/<int:role_id>/')
-class RoleView(Resource):
-	
-	def get(self, division_id):
-		role = Role.get_by_id(role_id)
-		return make_response(role, Role.FIELDS)
-		
+# RENDERING #
+
+# A ROLE PAGE.
+@role_bp.route('/<key>/')
+def role_view(key):
+	role_key = ndb.Key(urlsafe=key)
+	role = role_key.get()
+
+	#BREADCRUMB
+	# sport
+	sport = role_key.parent().get()
+
+	breadcrumb_list = [sport]
+	title = role.title
+	#END BREADCRUMB
+
+	return render_template('role.html',
+		breadcrumb = breadcrumb_list,
+		object_title=title,
+		role_object=role,
+	)
+
+#NEW ROLE PAGE
+@role_bp.route('/new/<key>')
+def new_role(key):
+	sport_key = ndb.Key(urlsafe=key)
+	sport = sport_key.get()
+
+	breadcrumb_list = [sport]
+
+	return render_template('role.html',
+		breadcrumb = breadcrumb_list,
+		object_title='New role',
+		sport_object=sport,
+	)
+
+
+
+# HANDLERS #
+
+# ADD ROLE
+@role_bp.route('/add/<parent_key>', methods=['POST'])
+def add_entry(parent_key):
+	sport_key = ndb.Key(urlsafe=parent_key)
+	sport = sport_key.get()
+
+	role = Role(name=request.form['roleName'], parent=sport_key)
+	role.put()
+
+	return redirect('/role/{}'.format(role.key.urlsafe()))
+
+
+# UPDATE ROLE
+@role_bp.route('/update/<key>', methods=['POST'])
+def update_entry(key):
+    role_key = ndb.Key(urlsafe=key)
+    role = role_key.get()
+    role.name = request.form['roleName']
+    role.put()
+
+    return redirect('/role/{}'.format(role.key.urlsafe()))
+
+
+
+
+
+
+
+
+
+
+

@@ -17,7 +17,8 @@ class Base(ndb.Model):
     @property
     def admin_fields(self):
         from ndbadmin.admin import fields
-	return fields
+        return fields
+
 
     @classmethod
     def get_by(cls, name, value):

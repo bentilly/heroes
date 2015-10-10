@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                {% if squad_object %}
+                
+<!--                NO UPDATE SQUAD-->
+                
+                {% else %}
+                <form name="squadForm" action="/squad/add/{{ team_object.key.urlsafe() }}" method=post>
+                    <label>event</label>
+                    <select name="squadEvent">
+                        {% for event in events %}
+                        <option value="{{ event.key.urlsafe() }}">{{ event.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Squad members</h3>
+                </div>
+                <!--                Created squads-->
+                <ul class="standardList">
+                    {% for member in rep_squadmembers %}
+                        {% if member.squadmember %}
+                        <li><a href="{{ member.squadmember.link }}">{{ member.squadmember.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+<!--                didnt play-->
+                <ul class="standardList inactive">
+                    {% for member in rep_squadmembers %}
+                        {% if member.squadmember %}
+<!--                        do nothing-->
+                        {% else %}
+                        <li class="inactive">{{ member.rep.title }}<a href="/squadmember/add/{{ squad_object.key.urlsafe() }}/{{ member.rep.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Matches</h3>
+                </div>
+                <table>
+                    {% for tm in team_matches %}
+                    <tr>
+                        <td>{{ tm.match.datestring }}</td>
+                        <td><strong>
+                            {% if tm.match.country1 == team_object.key.parent() %}
+                                {{ tm.match.country1.get().code }}
+                            {% else %}
+                                {{ tm.match.country2.get().code }}
+                            {% endif %}
+                        </strong></td>
+                        <td>vs</td>
+                        <td>
+                            {% if tm.match.country1 == team_object.key.parent() %}
+                                {{ tm.match.country2.get().code }}
+                            {% else %}
+                                {{ tm.match.country1.get().code }}
+                            {% endif %}
+                            
+                        </td>
+                        <td>
+                            {% if tm.team %}
+                            <a href="/matchteam/{{ tm.team.key.urlsafe() }}"><button>view team</button></a>
+                            {% else %}
+                            <a href="/matchteam/add/{{ tm.match.key.urlsafe() }}/{{ squad_object.key.urlsafe() }}"><button>add</button></a>
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            
+            </div>
+    </body>
+</html>

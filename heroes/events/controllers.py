@@ -1,69 +1,91 @@
-from flask import Blueprint, session, jsonify
+from flask import Blueprint, render_template, redirect, request
 
 from google.appengine.ext import ndb
 
-from flask_restful import Api, url_for, marshal_with, reqparse
-
-from heroes.helpers import Api, Resource, make_response, admin_required
-
-from heroes.teams.models import Team
 from .models import Event
-from .models import Sport
+from heroes.sports.models import Sport
+from heroes.matches.models import Match
 
-events_bp = Blueprint('events', __name__)
-events_api = Api(events_bp)
+import datetime
 
+event_bp = Blueprint('event', __name__)
 
+# RENDERING #
 
-@events_api.resource('/')
-class EventListView(Resource):
+# An event PAGE.
+@event_bp.route('/<key>/')
+def event_view(key):
+    event_key = ndb.Key(urlsafe=key)
+    event = event_key.get()
 
-    def get(self):
-        event_dbs = Event.query().fetch()
-        return make_response(event_dbs, Event.FIELDS)
+    match_entries = Match.query(ancestor=event_key).fetch()
 
+    #BREADCRUMB
+    # sport
+    sport = event_key.parent().get()
 
-    @admin_required
-    def post(self):
-        parser = self._make_parser(('sport_name', {'required': True}),
-                                   ('title', {'required': True}),
-                                   ('country', {'required': True}),
-                                   ('start_year', {'required': True}))
-
-
-        args = parser.parse_args()
-        event = Event(parent=Sport.sport_key(args.sport_name),
-                     title=args.title, country=args.get('country'),
-                     start_year=args.get('start_year'))
-        event.put()
-        return make_response(event, Event.FIELDS)
+    breadcrumb_list = [sport]
+    title = event.title
+    #END BREADCRUMB
 
 
-@events_api.resource('/<int:event_id>/')
-class EventView(Resource):
+    return render_template('event.html',
+            breadcrumb = breadcrumb_list,
+            object_title=title,
+            event_object=event,
+            matches=match_entries,
+        )
 
-    def get(self, event_id):
-        event = Event.get_by_id(event_id)
-        return make_response(event, Event.FIELDS)
+#NEW event PAGE
+@event_bp.route('/new/<key>')
+def new_event(key):
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
 
+    breadcrumb_list = [sport]
 
-    @admin_required
-    def put(self, event_id):
-        parser = self._make_parser(('title', {'required': True}),
-                                   ('country', {'required': True}),
-                                   ('start_year', {'required': True}))
-                                   
-        args = parser.parse_args()
-
-        event = Event.get_by_id(event_id)
-        event.title = args.title
-        event.country = args.country
-        event.start_year = args.start_year
-        event.put()
-        return make_response(event, Event.FIELDS)
+    return render_template('event.html',
+        breadcrumb = breadcrumb_list,
+        object_title='New event',
+        sport_object=sport,
+    )
 
 
-    @admin_required
-    def delete(self, event_id):
-        event = Event.get_by_id(event_id)
-        event.key.delete()
+
+# HANDLERS #
+
+# ADD event
+@event_bp.route('/add/<parent_key>', methods=['POST'])
+def add_entry(parent_key):
+	sport_key = ndb.Key(urlsafe=parent_key)
+	sport = sport_key.get()
+
+	mydate = datetime.datetime.strptime(request.form['startDate'], "%Y-%m-%d").date()
+
+	event = Event(name=request.form['eventName'], startdate=mydate, parent=sport_key)
+	event.put()
+
+	return redirect('/event/{}'.format(event.key.urlsafe()))
+
+
+# UPDATE event
+@event_bp.route('/update/<key>', methods=['POST'])
+def update_entry(key):
+    event_key = ndb.Key(urlsafe=key)
+    event = event_key.get()
+    event.name = request.form['eventName']
+    event.startdate = datetime.datetime.strptime(request.form['startDate'], "%Y-%m-%d").date()
+    event.put()
+
+    return redirect('/event/{}'.format(event.key.urlsafe()))
+
+
+
+
+
+
+
+
+
+
+
