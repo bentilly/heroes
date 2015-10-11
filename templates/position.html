@@ -24,17 +24,17 @@
                     <h1>{{ object_title }}</h1>
                 </div>
                 
-                {% if role_object %}
-                <form name="roleForm" action="/role/update/{{ role_object.key.urlsafe() }}" method=post>
-                    <label>role name</label>
-                    <input type="text" name="roleName" value="{{ role_object.name }}">
+                {% if position_object %}
+                <form name="positionForm" action="/position/update/{{ position_object.key.urlsafe() }}" method=post>
+                    <label>position name</label>
+                    <input type="text" name="positionName" value="{{ position_object.name }}">
                     <button type="submit">Save</button>
                 </form>
                 
                 {% else %}
-                <form name="roleForm" action="/role/add/{{ country_object.key.urlsafe() }}" method=post>
-                    <label>role name</label>
-                    <input type="text" name="roleName">
+                <form name="positionForm" action="/position/add/{{ country_object.key.urlsafe() }}" method=post>
+                    <label>position name</label>
+                    <input type="text" name="positionName">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

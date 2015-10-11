@@ -25,32 +25,34 @@
                 </div>
                 
                 
-                {% if squadmember_object %}
-                <form name="squadForm" action="/squadmember/update/{{ squadmember_object.key.urlsafe() }}" method=post>
-                    <label>Role in squad</label>
+<!--                NO UPDATE (YET)-->
+                {% if matchteammember_object %}
+                <form name="mtmForm" action="/matchteammember/update/{{ matchteammember_object.key.urlsafe() }}" method=post>
+                    <label>Role in match team</label>
                     <select name="roleinput">
-                        {% if squadmember_object.role %}
+                        {% if matchteammember_object.role %}
                         {% else %}
                         <option value="">-- select role --</option>
                         {% endif %}
                         {% for role in roles %}
                         <option value="{{ role.key.urlsafe() }}"
-                                {% if squadmember_object.role %}
-                                {% if squadmember_object.role.urlsafe() == role.key.urlsafe() %} selected="selected" {% endif %}
+                                {% if matchteammember_object.role %}
+                                {% if matchteammember_object.role.urlsafe() == role.key.urlsafe() %} selected="selected" {% endif %}
                                  {% endif %}
                                 >{{ role.title }}</option>
                         {% endfor %}
                     </select>
-                    <label>Position in squad</label>
+                    
+                    <label>Position in match team</label>
                     <select name="positioninput">
-                        {% if squadmember_object.position %}
+                        {% if matchteammember_object.position %}
                         {% else %}
                         <option value="">-- select position --</option>
                         {% endif %}
                         {% for position in positions %}
                         <option value="{{ position.key.urlsafe() }}"
-                                {% if squadmember_object.position %}
-                                {% if squadmember_object.position.urlsafe() == position.key.urlsafe() %} selected="selected" {% endif %}
+                                {% if matchteammember_object.position %}
+                                {% if matchteammember_object.position.urlsafe() == position.key.urlsafe() %} selected="selected" {% endif %}
                                  {% endif %}
                                 >{{ position.title }}</option>
                         {% endfor %}

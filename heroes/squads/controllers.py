@@ -34,7 +34,7 @@ def squad_view(key):
 
 	#-----SQUADMEMBERS
 	#All REPS
-	rep_entries= Rep.query(ancestor=country.key).fetch()
+	rep_entries= Rep.query(ancestor=country.key).order(Rep.firstname).fetch()
 
 	#Some SQUADMEMBERS
 	squadmembers_entries = Squadmember.query(ancestor=squad_key).fetch()

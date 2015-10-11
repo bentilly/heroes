@@ -73,6 +73,35 @@
             
             </div>
             
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Roles</h3>
+                    {% if country_object %}
+                    <a href="/role/new/{{ country_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for role in roles %}
+                    <li><a href="{{ role.link }}">{{ role.title }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Positions</h3>
+                    {% if country_object %}
+                    <a href="/position/new/{{ country_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for position in positions %}
+                    <li><a href="{{ position.link }}">{{ position.title }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
             
             
     </body>
