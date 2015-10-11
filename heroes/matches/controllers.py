@@ -137,14 +137,3 @@ def update_entry(key):
 	match.put()
 
 	return redirect('/match/{}'.format(match.key.urlsafe()))
-
-
-
-
-
-
-
-
-
-
-

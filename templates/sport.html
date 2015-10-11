@@ -134,6 +134,21 @@
                 </ul>
             
             </div>
+
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Trophies</h3>
+                    {% if sport_object %}
+                      <a href="/trophie/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for trophie in trophies %}
+                    <li><a href="{{ trophie.link }}">{{ trophie.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
             
             
         </div>
