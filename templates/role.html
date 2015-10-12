@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                {% if role_object %}
+                <form name="roleForm" action="/role/update/{{ role_object.key.urlsafe() }}" method=post>
+                    <label>role name</label>
+                    <input type="text" name="roleName" value="{{ role_object.name }}">
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="roleForm" action="/role/add/{{ country_object.key.urlsafe() }}" method=post>
+                    <label>role name</label>
+                    <input type="text" name="roleName">
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+    </body>
+</html>

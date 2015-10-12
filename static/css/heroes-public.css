@@ -1,0 +1,51 @@
+html {
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #444444;
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    margin: auto;
+    color: rgba(0, 0, 0, .8);
+}
+
+header{
+    margin: 40px 8px 40px 8px;
+}
+h1{
+    text-align: center;
+    font-weight: 500;
+    font-size: 5vw;
+    text-transform: uppercase;
+    letter-spacing: 1.8;
+    line-height: 5vw;
+}
+nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0px;
+}
+a{
+    color: rgba(0, 0, 0, .3);
+}
+a:hover{
+    color: rgba(0, 0, 0, 1);
+}
+main ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: center;
+}
+main ul li{
+    margin: 0px 8px 5px 8px;
+}
+li a{
+    color: rgba(0, 0, 0, .5);
+    font-weight: 100;
+    font-size: 16px;
+}
+

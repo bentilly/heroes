@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+<!--
+            <head>
+                <ul class="breadcrumb">
+                    <li><label>all sports</label>Home</li>
+                    <li><label>sport</label>Underwater hockey</li>
+                </ul>
+            </head>
+-->
+            
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                
+                {% if sport_object %}
+                <form name="sportForm" action="/sport/update/{{ sport_object.key.urlsafe() }}" method=post>
+                    <label>sport name</label>
+                    <input type="text" name="sportName" value="{{ sport_object.name }}">
+<!--
+                    <label>sport description</label>
+                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
+-->
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="sportForm" action="/sport/add" method=post>
+                    <label>sport name</label>
+                    <input type="text" name="sportName">
+<!--
+                    <label>sport description</label>
+                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
+-->
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+                
+            </div>
+            <div class="listContainer">
+                
+                <div class="listTitle">
+                    <h3>Countries</h3>
+                    {% if sport_object %}
+                    <a href="/country/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                
+                <ul class="standardList">
+                    {% for country in countries %}
+                    <li><a href="{{ country.link }}">{{ country.name }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
+            
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Events</h3>
+                    {% if sport_object %}
+                    <a href="/event/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                
+                <ul class="standardList">
+                    {% for event in events %}
+                    <li><a href="{{ event.link }}">{{ event.title }}</a></li>
+                    {% endfor %} 
+                </ul>
+            
+            </div>
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Divisions</h3>
+                    {% if sport_object %}
+                    <a href="/division/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for division in divisions %}
+                    <li><a href="{{ division.link }}">{{ division.name }}</a></li>
+                    {% endfor %} 
+                </ul>
+            </div>
+            
+<!--        TODO - move to child of COUNTRY
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Roles</h3>
+                    {% if sport_object %}
+                    <a href="/role/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for role in roles %}
+                    <li><a href="{{ role.link }}">{{ role.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+-->
+            
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Venues</h3>
+                    {% if sport_object %}
+                    <a href="/venue/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for venue in venues %}
+                    <li><a href="{{ venue.link }}">{{ venue.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Trophies</h3>
+                    {% if sport_object %}
+                      <a href="/trophie/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <ul class="standardList">
+                    {% for trophie in trophies %}
+                    <li><a href="{{ trophie.link }}">{{ trophie.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+            
+            
+        </div>
+
+    </body>
+</html>

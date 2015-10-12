@@ -1,28 +1,94 @@
-from flask import Blueprint, session, jsonify, render_template
+from flask import Blueprint, render_template, redirect, request
 
-from google.appengine.ext.ndb import Key
+from google.appengine.ext import ndb
 
-from heroes.helpers import Api, Resource, make_response, admin_required
+from .models import Rep
+from heroes.sports.models import Sport
 
-from heroes.events.models import Event
+rep_bp = Blueprint('rep', __name__)
 
-from .models import Representative, ReprSquadState, Squad
+# RENDERING #
 
-representatives_bp = Blueprint('representatives', __name__)
+# A REP PAGE.
+@rep_bp.route('/<key>/')
+def rep_view(key):
+    rep_key = ndb.Key(urlsafe=key)
+    rep = rep_key.get()
+
+    country = rep_key.parent().get()
 
 
-@representatives_bp.route('/<event>/<team>/')
-def represenatives_list(event, team):
-    # get Event's Squad
-    event = Key(urlsafe=event)
-    team = Key(urlsafe=team)
-    squad = Squad.query(Squad.event==event).fetch()
+    #BREADCRUMB
+    # country
+    country = rep_key.parent().get()
+    # sport
+    sport = country.key.parent().get()
 
-    # filter ReprSquadState by team
-    repr_squad_states = ReprSquadState.query(ReprSquadState.team==team).fetch()
+    breadcrumb_list = [sport, country]
+    title = rep.title
+    #END BREADCRUMB
 
-    return render_template('table.html',
-        root_item=team.get(),
-        items=repr_squad_states,
-        table_headers=['Start year', 'Title', 'Venue country'],
-        fields=['start_year', 'title', 'country_name'])
+    return render_template('rep.html',
+        breadcrumb = breadcrumb_list,
+        object_title=title,
+        rep_object=rep,
+        country_object=country,
+    )
+
+#NEW rep PAGE
+@rep_bp.route('/new/<key>')
+def new_rep(key):
+    country_key = ndb.Key(urlsafe=key)
+    country = country_key.get()
+
+    #BREADCRUMB
+    # country
+    # sport
+    sport = country.key.parent().get()
+
+    breadcrumb_list = [sport, country]
+    #END BREADCRUMB
+
+    return render_template('rep.html',
+        breadcrumb = breadcrumb_list,
+        object_title='New rep',
+        country_object=country,
+    )
+
+
+
+# HANDLERS #
+
+# ADD rep
+@rep_bp.route('/add/<parent_key>', methods=['POST'])
+def add_entry(parent_key):
+	country_key = ndb.Key(urlsafe=parent_key)
+	country = country_key.get()
+
+	rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)
+	rep.put()
+
+	return redirect('/rep/{}'.format(rep.key.urlsafe()))
+
+
+# UPDATE rep
+@rep_bp.route('/update/<key>', methods=['POST'])
+def update_entry(key):
+    rep_key = ndb.Key(urlsafe=key)
+    rep = rep_key.get()
+    rep.firstname = request.form['firstname']
+    rep.lastname = request.form['lastname']
+    rep.put()
+
+    return redirect('/rep/{}'.format(rep.key.urlsafe()))
+
+
+
+
+
+
+
+
+
+
+
