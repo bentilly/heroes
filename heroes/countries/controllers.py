@@ -7,6 +7,8 @@ from heroes.sports.models import Sport
 from heroes.divisions.models import Division
 from heroes.teams.models import Team
 from heroes.representatives.models import Rep
+from heroes.roles.models import Role
+from heroes.positions.models import Position
 
 country_bp = Blueprint('country', __name__)
 
@@ -28,7 +30,9 @@ def country_view(key):
 
 
     team_entries = Team.query(ancestor=country_key).fetch()
-    rep_entries = Rep.query(ancestor=country_key).fetch()
+    rep_entries = Rep.query(ancestor=country_key).order(Rep.firstname).fetch()
+    role_entries = Role.query(ancestor=country_key).fetch()
+    position_entries = Position.query(ancestor=country_key).fetch()
 
     return render_template('country.html',
             breadcrumb = breadcrumb_list,
@@ -36,6 +40,8 @@ def country_view(key):
             country_object=country,
             teams=team_entries,
             reps=rep_entries,
+            roles=role_entries,
+            positions=position_entries,
         )
 
 #NEW country PAGE

@@ -17,9 +17,11 @@ def role_view(key):
 
 	#BREADCRUMB
 	# sport
-	sport = role_key.parent().get()
+	sport = role_key.parent().parent().get()
+	# Country
+	country = role_key.parent().get()
 
-	breadcrumb_list = [sport]
+	breadcrumb_list = [sport, country]
 	title = role.title
 	#END BREADCRUMB
 
@@ -32,15 +34,17 @@ def role_view(key):
 #NEW ROLE PAGE
 @role_bp.route('/new/<key>')
 def new_role(key):
-	sport_key = ndb.Key(urlsafe=key)
-	sport = sport_key.get()
+	country_key = ndb.Key(urlsafe=key)
+	country = country_key.get()
 
-	breadcrumb_list = [sport]
+	sport = country_key.parent().get()
+
+	breadcrumb_list = [sport, country]
 
 	return render_template('role.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New role',
-		sport_object=sport,
+		country_object=country,
 	)
 
 
@@ -50,10 +54,9 @@ def new_role(key):
 # ADD ROLE
 @role_bp.route('/add/<parent_key>', methods=['POST'])
 def add_entry(parent_key):
-	sport_key = ndb.Key(urlsafe=parent_key)
-	sport = sport_key.get()
+	country_key = ndb.Key(urlsafe=parent_key)
 
-	role = Role(name=request.form['roleName'], parent=sport_key)
+	role = Role(name=request.form['roleName'], parent=country_key)
 	role.put()
 
 	return redirect('/role/{}'.format(role.key.urlsafe()))

@@ -6,6 +6,8 @@ import logging
 
 from .models import Squadmember
 from heroes.representatives.models import Rep
+from heroes.roles.models import Role
+from heroes.positions.models import Position
 
 squadmember_bp = Blueprint('squadmember', __name__)
 
@@ -33,11 +35,16 @@ def squadmember_view(key):
 	title = squadmember.title
 	#END BREADCRUMB
 
+	role_entries = Role.query(ancestor=country.key).fetch()
+	position_entries = Position.query(ancestor=country.key).fetch()
+
 	return render_template('squadmember.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		squadmember_object=squadmember,
 		squad_object=squad,
+		roles=role_entries,
+		positions=position_entries,
 	)
 
 #NEW squadmember PAGE
@@ -86,15 +93,24 @@ def add_entry(squad_key, rep_key):
 
 
 # UPDATE squadmember
-### NO UPDATE SQUADMEMBER (yet)
-# @squadmember_bp.route('/update/<key>', methods=['POST'])
-# def update_entry(key):
-#     squadmember_key = ndb.Key(urlsafe=key)
-#     squadmember = squadmember_key.get()
-#     squadmember.name = request.form['squadmemberName']
-#     squadmember.put()
+@squadmember_bp.route('/update/<key>', methods=['POST'])
+def update_entry(key):
 
-#     return redirect('/squadmember/{}'.format(squadmember.key.urlsafe()))
+	squadmember_key = ndb.Key(urlsafe=key)
+	squadmember = squadmember_key.get()
+
+	if request.form['roleinput']:
+		role_key = ndb.Key(urlsafe=request.form['roleinput'])
+		squadmember.role = role_key
+
+	if request.form['positioninput']:
+		position_key = ndb.Key(urlsafe=request.form['positioninput'])
+		squadmember.position = position_key
+
+
+	squadmember.put()
+
+	return redirect('/squadmember/{}'.format(squadmember.key.urlsafe()))
 
 
 

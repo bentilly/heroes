@@ -6,6 +6,7 @@ from .sports.controllers import sports_bp
 from .countries.controllers import country_bp
 from .divisions.controllers import division_bp
 from .roles.controllers import role_bp
+from .positions.controllers import position_bp
 from .teams.controllers import team_bp
 from .events.controllers import event_bp
 from .squads.controllers import squad_bp
@@ -30,6 +31,7 @@ def create_app():
     app.register_blueprint(country_bp, url_prefix='/country')
     app.register_blueprint(division_bp, url_prefix='/division')
     app.register_blueprint(role_bp, url_prefix='/role')
+    app.register_blueprint(position_bp, url_prefix='/position')
     app.register_blueprint(team_bp, url_prefix='/team')
     app.register_blueprint(event_bp, url_prefix='/event')
     app.register_blueprint(squad_bp, url_prefix='/squad')
