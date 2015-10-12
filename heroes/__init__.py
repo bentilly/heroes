@@ -18,6 +18,10 @@ from .matchteams.controllers import matchteam_bp
 from .matchteammembers.controllers import matchteammember_bp
 from .trophies.controllers import trophie_bp
 
+# public web pages
+from .heroesweb.controllers import heroesweb_bp
+
+
 import config
 
 
@@ -43,5 +47,7 @@ def create_app():
     app.register_blueprint(matchteammember_bp, url_prefix='/matchteammember')
     app.register_blueprint(trophie_bp, url_prefix='/trophie')
 
+    # public web pages
+    app.register_blueprint(heroesweb_bp, url_prefix='/public')
 
     return app

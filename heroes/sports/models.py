@@ -15,3 +15,7 @@ class Sport(Base):
     @property
     def link(self):
         return '/sport/{}/'.format(self.key.urlsafe())
+
+    @property
+    def publiclink(self):
+        return '/public/sport/{}/'.format(self.key.urlsafe())

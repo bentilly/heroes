@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes-public.css">
+    </head>
+    <body class="background-image">
+        <header>
+            <h1>{{ pagetitle }}</h1>
+            {% if filters %}
+            <nav>
+                <a  href="#">ALL</div>
+                <a  href="#">A</div><a  href="#">B</div>
+                <a  href="#">C</div><a  href="#">D</div>
+                <a  href="#">E</div><a  href="#">F</div>
+                <a  href="#">G</div><a  href="#">H</div>
+                <a  href="#">I</div><a  href="#">J</div>
+                <a  href="#">K</div><a  href="#">L</div>
+                <a  href="#">M</div><a  href="#">N</div>
+                <a  href="#">O</div><a  href="#">P</div>
+                <a  href="#">Q</div><a  href="#">R</div>
+                <a  href="#">S</div><a  href="#">T</div>
+                <a  href="#">U</div><a  href="#">V</div>
+                <a  href="#">W</div><a  href="#">X</div>
+                <a  href="#">Y</div><a  href="#">Z</div>
+            </nav>
+            {% endif %}
+        </header>
+        
+        <main>
+            <ul>
+                {% for item in itemlist %}
+                <li><a href="{{ item.publiclink }}">{{ item.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </main>
+    </body>    
+</html>

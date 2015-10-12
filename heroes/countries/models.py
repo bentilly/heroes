@@ -14,4 +14,8 @@ class Country(Base):
 
 	@property
 	def link(self):
-	    return '/country/{}/'.format(self.key.urlsafe())
+		return '/country/{}/'.format(self.key.urlsafe())
+
+	@property
+	def publiclink(self):
+		return '/public/country/{}/'.format(self.key.urlsafe())
