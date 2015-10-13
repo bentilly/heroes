@@ -3,9 +3,9 @@
 
 from google.appengine.ext import ndb
 
-from heroes.models import Base
+from heroes.models import Base, BaseExpando
 
-class Trophie(Base):
+class Trophie(BaseExpando):
     """Trophie, like Worlds Best Football Team. That trophie can change hands at any point
     depending on how the Football administration is set up.
     """

@@ -1,6 +1,10 @@
 from google.appengine.ext import ndb
 
-from heroes import fields
+
+class BaseExpando(ndb.Expando):
+    """Base class for heroes expando models.
+    """
+    revision = ndb.IntegerProperty(default=0)
 
 
 class Base(ndb.Model):
@@ -28,11 +32,3 @@ class Base(ndb.Model):
     @property
     def link(self):
         return '/{}s/{}/'.format(self.__class__.__name__.lower(), self.key.urlsafe())
-
-
-    FIELDS = {
-      'key': fields.Key,
-      'id': fields.Id,
-      'version': fields.Integer,
-      'created': fields.DateTime,
-      'modified': fields.DateTime}
