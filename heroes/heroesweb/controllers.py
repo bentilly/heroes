@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 from heroes.sports.models import Sport
 from heroes.countries.models import Country
 from heroes.representatives.models import Rep
+from heroes.squadmembers.models import Squadmember
 
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
@@ -53,3 +54,19 @@ def country_view(key):
 		pagetitle=pagetitle,
 		itemlist=reps,
 	)
+
+
+@heroesweb_bp.route('/rep/<key>/')
+def rep_profile(key):
+	rep_key = ndb.Key(urlsafe=key)
+	rep_object = rep_key.get()
+
+	squadmember_entries = Squadmember.query(Squadmember.rep==rep_key).fetch();
+
+	return render_template('public/profile.html',
+		# breadcrumb = breadcrumb_list,
+		rep=rep_object,
+		squads=squadmember_entries,
+	)
+
+
