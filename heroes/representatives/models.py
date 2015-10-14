@@ -15,3 +15,7 @@ class Rep(Base):
 	def link(self):
 		return '/rep/{}/'.format(self.key.urlsafe())
 
+	@property
+	def publiclink(self):
+		return '/public/rep/{}/'.format(self.key.urlsafe())
+
