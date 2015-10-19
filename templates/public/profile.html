@@ -12,29 +12,28 @@
             <div class="content">
                 
                 <header>
-                    <h1>Benson Taylor</h1><!--rep.title-->
+                    <h1>{{ rep.title }}</h1><!--rep.title-->
                 </header>
 
 
                 <main>
                     <!--SQUADS-->
+                    {% for member in squads %}
                     <div class="timeline-year">
-                        <label>2014</label><!--squad.event.startdate.year-->
+                        <label>{{ member.key.parent().get().event.get().startdate.year }}</label><!--squad.event.startdate.year-->
                         <div class="events">
                             <div class="event-entry">
-                                <div class="division">Mens Elite</div><!--squad.division.title-->
-                                <div class="event">2014 World Championships</div><!--squad.event.title-->
-                                <div class="venue">Eger, Hungary</div><!--squad.event.match[0].venue-->
-                                <div class="role-pos">Player / Forward</div><!--squadmember.role+squadmember.position-->
-                            </div>
-                            <div class="event-entry">
-                                <div class="division">Mens Elite</div><!--squad.division.title-->
-                                <div class="event">2014 World Championships</div><!--squad.event.title-->
-                                <div class="venue">Eger, Hungary</div><!--squad.event.match[0].venue-->
-                                <div class="role-pos">Player / Forward</div><!--squadmember.role+squadmember.position-->
+                                <div class="division">{{ member.key.parent().parent().get().division.get().title }}</div><!--squad.division.title-->
+                                <div class="event">{{ member.key.parent().get().title }}</div><!--squad.event.title-->
+<!--                                <div class="venue">Eger, Hungary</div>  too hard for now-->
+                                <div class="role-pos">
+                                    {% if member.role %}{{ member.role.get().title }} / {% endif %}
+                                    {% if member.position %}{{ member.position.get().title }}{% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </main>
                 
             </div>
