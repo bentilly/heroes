@@ -1,0 +1,64 @@
+{% extends "base_admin.html" %}
+{% block content%}
+<div id="contentParent">
+    <div class="attributeContainer">
+        <nav>
+            <ul>
+                <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                {% for crumb in breadcrumb %}
+                <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div class="objectTitle">
+            <h1>{{ object_title }}</h1>
+        </div>
+        {% if tropthy_object %}
+        <form name="trophyForm" action="/event/update/{{ event_object.key.urlsafe() }}" method=post>
+            <label>event name</label>
+            <input type="text" name="eventName" value="{{ event_object.name }}">
+            <label>start date</label>
+            <input type="date" name="startDate" value="{{ event_object.startdatestring }}">
+            <button type="submit">Save</button>
+        </form>
+        
+        {% else %}
+        <form name="trophyForm" action="/trophy/new/{{ sport_object.key.urlsafe() }}/" method="POST">
+            <label>trophy name</label>
+            <input type="text" name="name" />
+            <button type="submit">Save</button>
+        </form>
+        {% endif %}
+        
+    </div>
+    
+    <!--<div class="listContainer">
+        <div class="listTitle">
+            <h3>Matches</h3>
+            {% if event_object %}
+            <a href="/match/new/{{ event_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+            {% endif %}
+        </div>
+        <table>
+            <tr>
+                <th>date</th>
+                <th>division</th>
+                <th>c1</th>
+                <th></th>
+                <th>c2</th>
+            </tr>
+            {% for match in matches %}
+            <tr>
+                <td>{{ match.datestring }}</td>
+                <td>{{ match.division.get().name }}</td>
+                <td>{{ match.country1.get().code }}</td>
+                <td>vs</td>
+                <td>{{ match.country2.get().code }}</td>
+                <td><button onclick="window.location='{{ match.link }}';">view</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+    </div>-->
+</div>
+{% endblock %}

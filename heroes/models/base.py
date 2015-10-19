@@ -5,6 +5,18 @@ class BaseExpando(ndb.Expando):
     """Base class for heroes expando models.
     """
     revision = ndb.IntegerProperty(default=0)
+    revision_created = ndb.DateProperty(auto_now_add=True)
+
+    @classmethod
+    def create_new_revision(cls, date=None, **kwargs):
+        # get latest revsion of model.
+        new_entry = cls(**kwargs)
+        last_entry = cls.query().order(-cls.revision).fetch(limit=1)
+        if last_entry:
+            new_entry.revision = last_entry[0].revision + 1
+            if date:
+                new_entry.revision_created = date
+        return new_entry
 
 
 class Base(ndb.Model):
