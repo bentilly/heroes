@@ -58,8 +58,6 @@ def new_sport():
 
 
 
-
-
 # HANDLERS #
 
 # ADD SPORT
@@ -80,8 +78,3 @@ def update_entry(key):
     sport.put()
 
     return redirect('/sport/{}'.format(sport.key.urlsafe()))
-
-
-
-
-

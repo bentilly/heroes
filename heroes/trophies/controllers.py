@@ -2,29 +2,41 @@
 """
 from flask import Blueprint, render_template, redirect, request
 
-from .models import Trophie
+from google.appengine.ext import ndb
 
-trophie_bp = Blueprint('trophie', __name__)
+from .models import Trophy
+
+trophy_bp = Blueprint('trophy', __name__)
 
 
-@trophie_bp.route('/new/')
-@trophie_bp.route('/new/<sport_key>/')
-def new_trophie(sport_key=None):
+@trophy_bp.route('/new/')
+@trophy_bp.route('/new/<sport_key>/', methods=['GET', 'POST'])
+def new_trophy_page(sport_key=None):
+    """Display 'New Trophie' page and create new trophie in db.
+    """
+    data = {'object_title': 'Trophy'}
     if sport_key is not None:
-        pass
-    return render_template('trophie.html')
+        sport = ndb.Key(urlsafe=sport_key).get()
+        data['breadcrumb'] = [sport]
+        data['sport_object'] = sport
+        # display page.
+    if request.method == 'POST':
+        # store data.
+        trophy = Trophy.create_new_revision(**request.form.to_dict())
+        trophy.put()
+    return render_template('trophy.html', **data)
 
 
-@trophie_bp.route('/<key>')
+@trophy_bp.route('/<key>')
 def read_trophie():
     pass
 
 
-@trophie_bp.route('/<key>')
+@trophy_bp.route('/<key>')
 def update_trophie():
     pass
 
 
-@trophie_bp.route('/<key>')
+@trophy_bp.route('/<key>')
 def delete_trophie():
     pass
