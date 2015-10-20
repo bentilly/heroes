@@ -19,3 +19,8 @@ indexes:
   ancestor: yes
   properties:
   - name: firstname
+
+- kind: Squadmember
+  properties:
+  - name: rep
+  - name: role

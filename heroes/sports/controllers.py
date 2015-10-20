@@ -68,7 +68,7 @@ def add_entry():
     sport = Sport(name=request.form['sportName'])
     sport.put()
 
-    return redirect('/sport/{}'.format(sport.key.urlsafe()))
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
 
 
 # UPDATE SPORT
@@ -79,7 +79,7 @@ def update_entry(key):
     sport.name = request.form['sportName']
     sport.put()
 
-    return redirect('/sport/{}'.format(sport.key.urlsafe()))
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
 
 
 

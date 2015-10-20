@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -29,7 +29,7 @@
 <!--                NO UPDATE SQUAD-->
                 
                 {% else %}
-                <form name="squadForm" action="/squad/add/{{ team_object.key.urlsafe() }}" method=post>
+                <form name="squadForm" action="/admin/squad/add/{{ team_object.key.urlsafe() }}" method=post>
                     <label>event</label>
                     <select name="squadEvent">
                         {% for event in events %}
@@ -41,12 +41,6 @@
                 {% endif %}
                 
             </div>
-            
-            
-            
-            
-            
-            
             
             <div class="listContainer">
                 <div class="listTitle">
@@ -66,7 +60,7 @@
                         {% if member.squadmember %}
 <!--                        do nothing-->
                         {% else %}
-                        <li class="inactive">{{ member.rep.title }}<a href="/squadmember/add/{{ squad_object.key.urlsafe() }}/{{ member.rep.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        <li class="inactive">{{ member.rep.title }}<a href="/admin/squadmember/add/{{ squad_object.key.urlsafe() }}/{{ member.rep.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -101,9 +95,9 @@
                         </td>
                         <td>
                             {% if tm.team %}
-                            <a href="/matchteam/{{ tm.team.key.urlsafe() }}"><button>view team</button></a>
+                            <a href="/admin/matchteam/{{ tm.team.key.urlsafe() }}"><button>view team</button></a>
                             {% else %}
-                            <a href="/matchteam/add/{{ tm.match.key.urlsafe() }}/{{ squad_object.key.urlsafe() }}"><button>add</button></a>
+                            <a href="/admin/matchteam/add/{{ tm.match.key.urlsafe() }}/{{ squad_object.key.urlsafe() }}"><button>add</button></a>
                             {% endif %}
                             
                         </td>

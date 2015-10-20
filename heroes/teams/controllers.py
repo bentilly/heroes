@@ -99,7 +99,7 @@ def update_entry(key):
     team.name = request.form['teamName']
     team.put()
 
-    return redirect('/team/{}'.format(team.key.urlsafe()))
+    return redirect('/admin/team/{}'.format(team.key.urlsafe()))
 
 
 

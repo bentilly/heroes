@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -25,7 +25,7 @@
                 </div>
                 
                 {% if match_object %}
-                <form name="matchForm" action="/match/update/{{ match_object.key.urlsafe() }}" method=post>
+                <form name="matchForm" action="/admin/match/update/{{ match_object.key.urlsafe() }}" method=post>
                     <label>match date</label>
                     <input type="date" name="matchdate" value="{{ match_object.dateproperty }}">
                     
@@ -79,7 +79,7 @@
                 </form>
                 
                 {% else %}
-                <form name="matchForm" action="/match/add/{{ event_object.key.urlsafe() }}" method=post>
+                <form name="matchForm" action="/admin/match/add/{{ event_object.key.urlsafe() }}" method=post>
                     <label>match date</label>
                     <input type="date" name="matchdate" value="{{ event_object.startdatestring }}">
                     <label>start time date</label>

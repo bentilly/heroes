@@ -39,6 +39,6 @@ class Match(Base):
 
 	@property
 	def link(self):
-		return '/match/{}/'.format(self.key.urlsafe())
+		return '/admin/match/{}/'.format(self.key.urlsafe())
 
 

@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -25,7 +25,7 @@
                 </div>
                 
                  {% if rep_object %}
-                <form name="repForm" action="/rep/update/{{ rep_object.key.urlsafe() }}" method=post>
+                <form name="repForm" action="/admin/rep/update/{{ rep_object.key.urlsafe() }}" method=post>
                     <label>first name</label>
                     <input type="text" name="firstname" value="{{ rep_object.firstname }}">
                     <label>last name</label>
@@ -34,7 +34,7 @@
                 </form>
                 
                 {% else %}
-                <form name="repForm" action="/rep/add/{{ country_object.key.urlsafe() }}" method=post>
+                <form name="repForm" action="/admin/rep/add/{{ country_object.key.urlsafe() }}" method=post>
                     <label>first name</label>
                     <input type="text" name="firstname">
                     <label>last name</label>

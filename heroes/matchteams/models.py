@@ -17,5 +17,5 @@ class Matchteam(Base):
 
 	@property
 	def link(self):
-		return '/matchteam/{}/'.format(self.key.urlsafe())
+		return '/admin/matchteam/{}/'.format(self.key.urlsafe())
 

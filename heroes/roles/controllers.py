@@ -59,7 +59,7 @@ def add_entry(parent_key):
 	role = Role(name=request.form['roleName'], parent=country_key)
 	role.put()
 
-	return redirect('/role/{}'.format(role.key.urlsafe()))
+	return redirect('/admin/role/{}'.format(role.key.urlsafe()))
 
 
 # UPDATE ROLE
@@ -70,7 +70,7 @@ def update_entry(key):
     role.name = request.form['roleName']
     role.put()
 
-    return redirect('/role/{}'.format(role.key.urlsafe()))
+    return redirect('/admin/role/{}'.format(role.key.urlsafe()))
 
 
 

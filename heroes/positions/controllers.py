@@ -59,7 +59,7 @@ def add_entry(parent_key):
 	position = Position(name=request.form['positionName'], parent=country_key)
 	position.put()
 
-	return redirect('/position/{}'.format(position.key.urlsafe()))
+	return redirect('/admin/position/{}'.format(position.key.urlsafe()))
 
 
 # UPDATE position
@@ -70,7 +70,7 @@ def update_entry(key):
     position.name = request.form['positionName']
     position.put()
 
-    return redirect('/position/{}'.format(position.key.urlsafe()))
+    return redirect('/admin/position/{}'.format(position.key.urlsafe()))
 
 
 
