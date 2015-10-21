@@ -14,3 +14,8 @@ class Trophy(BaseExpando):
     description = ndb.TextProperty()
 
     owner = ndb.KeyProperty()
+
+
+    @property
+    def link(self):
+        return '/trophy/update/{}/'.format(self.uid)

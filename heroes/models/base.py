@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from google.appengine.ext import ndb
 
 
@@ -6,17 +8,45 @@ class BaseExpando(ndb.Expando):
     """
     revision = ndb.IntegerProperty(default=0)
     revision_created = ndb.DateProperty(auto_now_add=True)
+    uid = ndb.StringProperty(required=True)
+    latest = ndb.BooleanProperty(required=True, default=True)
 
     @classmethod
     def create_new_revision(cls, date=None, **kwargs):
-        # get latest revsion of model.
+        #XXX: make this transactional with "@ndb.transactional()" decorator.
+        if not kwargs.get('uid'):
+            # if not 'uid' provided - new model will be created
+            kwargs['uid'] = str(uuid4())
+            #TODO: get parent of last revision.
+
+        # create new revision of model.
         new_entry = cls(**kwargs)
-        last_entry = cls.query().order(-cls.revision).fetch(limit=1)
+
+        # get latest revision of model based on uid.
+        last_entry = cls.get_latest_revision(kwargs['uid'])
         if last_entry:
-            new_entry.revision = last_entry[0].revision + 1
+            # increment revision number.
+            last_entry.latest = False
+            last_entry.put()
+            new_entry.revision = last_entry.revision + 1
             if date:
                 new_entry.revision_created = date
+        new_entry.put()
         return new_entry
+
+
+    @classmethod
+    def get_latest_revision(cls, uid):
+        last_entry = cls.query(cls.uid == uid, cls.latest == True).fetch(limit=1)
+        if last_entry:
+            return last_entry[0]
+        return None
+
+
+    @classmethod
+    def get_latest_revisions(cls, ancestor=None):
+        entries_qry = cls.query(cls.latest == True, ancestor=ancestor)
+        return entries_qry.fetch()
 
 
 class Base(ndb.Model):
