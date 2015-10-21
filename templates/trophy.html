@@ -13,15 +13,12 @@
         <div class="objectTitle">
             <h1>{{ object_title }}</h1>
         </div>
-        {% if tropthy_object %}
-        <form name="trophyForm" action="/event/update/{{ event_object.key.urlsafe() }}" method=post>
-            <label>event name</label>
-            <input type="text" name="eventName" value="{{ event_object.name }}">
-            <label>start date</label>
-            <input type="date" name="startDate" value="{{ event_object.startdatestring }}">
+        {% if trophy_object %}
+        <form name="trophyForm" action="/trophy/update/{{ trophy_object.uid }}/" method="POST">
+            <label>trophy name</label>
+            <input type="text" name="name" value="{{ trophy_object.name }}">
             <button type="submit">Save</button>
         </form>
-        
         {% else %}
         <form name="trophyForm" action="/trophy/new/{{ sport_object.key.urlsafe() }}/" method="POST">
             <label>trophy name</label>

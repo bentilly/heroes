@@ -16,14 +16,17 @@ def new_trophy_page(sport_key=None):
     """
     data = {'object_title': 'Trophy'}
     if sport_key is not None:
-        sport = ndb.Key(urlsafe=sport_key).get()
+        sport_key = ndb.Key(urlsafe=sport_key)
+        sport = sport_key.get()
         data['breadcrumb'] = [sport]
         data['sport_object'] = sport
         # display page.
     if request.method == 'POST':
         # store data.
-        trophy = Trophy.create_new_revision(**request.form.to_dict())
-        trophy.put()
+        entry_data = request.form.to_dict()
+        if sport_key:
+            entry_data['parent'] = sport_key
+        trophy = Trophy.create_new_revision(**entry_data)
     return render_template('trophy.html', **data)
 
 
@@ -32,9 +35,20 @@ def read_trophie():
     pass
 
 
-@trophy_bp.route('/<key>')
-def update_trophie():
-    pass
+@trophy_bp.route('/update/<uid>/', methods=['GET', 'POST'])
+def update_trophy(uid):
+    # get latest revision of trophy.
+    trophy = Trophy.get_latest_revision(uid)
+    data = {'object_title': 'Trophy',
+            'breadcrumb': [trophy.key.parent().get()],
+            'trophy_object': trophy}
+    if request.method == 'POST':
+        entry_data = request.form.to_dict()
+        entry_data['uid'] = uid
+        entry_data['parent'] = trophy.key.parent()
+        trophy = Trophy.create_new_revision(**entry_data)
+        data['trophy_object'] = trophy
+    return render_template('trophy.html', **data)
 
 
 @trophy_bp.route('/<key>')

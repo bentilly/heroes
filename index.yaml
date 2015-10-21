@@ -19,3 +19,9 @@ indexes:
   ancestor: yes
   properties:
   - name: firstname
+
+- kind: Trophy
+  properties:
+  - name: uid
+  - name: revision
+    direction: desc

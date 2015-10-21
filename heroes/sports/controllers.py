@@ -8,6 +8,7 @@ from heroes.divisions.models import Division
 from heroes.roles.models import Role
 from heroes.events.models import Event
 from heroes.venues.models import Venue
+from heroes.trophies.models import Trophy
 
 
 
@@ -37,6 +38,7 @@ def sport_view(key):
     role_entries = Role.query(ancestor=sport_key).fetch() #TODO - move to child of COUNTRY
     event_entries = Event.query(ancestor=sport_key).fetch()
     venue_entries = Venue.query(ancestor=sport_key).fetch()
+    trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
     
 
     return render_template('sport.html',
@@ -47,6 +49,7 @@ def sport_view(key):
             #roles=role_entries,  #TODO - move to child of COUNTRY
             events=event_entries,
             venues=venue_entries,
+            trophies=trophy_entries,
         )
 
 #NEW SPORT PAGE
