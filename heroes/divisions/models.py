@@ -13,5 +13,5 @@ class Division(Base):
 
 	@property
 	def link(self):
-		return '/division/{}/'.format(self.key.urlsafe())
+		return '/admin/division/{}/'.format(self.key.urlsafe())
 

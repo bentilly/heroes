@@ -128,7 +128,7 @@ def add_entry(team_key, event_key):
 
 	squad = Squad(parent=team_key, event=event_key)
 	squad.put()
-	return redirect('/team/{}'.format(team_key.urlsafe()))
+	return redirect('/admin/team/{}'.format(team_key.urlsafe()))
 
 
 # UPDATE squad

@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -26,7 +26,7 @@
                 
                 
                 {% if squadmember_object %}
-                <form name="squadForm" action="/squadmember/update/{{ squadmember_object.key.urlsafe() }}" method=post>
+                <form name="squadForm" action="/admin/squadmember/update/{{ squadmember_object.key.urlsafe() }}" method=post>
                     <label>Role in squad</label>
                     <select name="roleinput">
                         {% if squadmember_object.role %}

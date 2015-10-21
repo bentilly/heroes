@@ -68,7 +68,7 @@ def add_entry(parent_key):
 	rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)
 	rep.put()
 
-	return redirect('/rep/{}'.format(rep.key.urlsafe()))
+	return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
 
 
 # UPDATE rep
@@ -80,7 +80,7 @@ def update_entry(key):
     rep.lastname = request.form['lastname']
     rep.put()
 
-    return redirect('/rep/{}'.format(rep.key.urlsafe()))
+    return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
 
 
 

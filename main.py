@@ -5,9 +5,13 @@ from heroes import create_app
 
 app = create_app()
 
-@app.route('/')
+# @app.route('/')
+# def index():
+#     return redirect('/sport/all')
+
+@app.route('/admin')
 def index():
-    return redirect('/sport/all')
+    return redirect('admin/sport/all')
 
 
 @app.errorhandler(404)

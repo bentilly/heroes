@@ -89,7 +89,7 @@ def add_entry(squad_key, rep_key):
 	squadmember = Squadmember(rep=rep_key, parent=squad_key)
 	squadmember.put()
 
-	return redirect('/squad/{}'.format(squad_key.urlsafe()))
+	return redirect('/admin/squad/{}'.format(squad_key.urlsafe()))
 
 
 # UPDATE squadmember
@@ -110,7 +110,7 @@ def update_entry(key):
 
 	squadmember.put()
 
-	return redirect('/squadmember/{}'.format(squadmember.key.urlsafe()))
+	return redirect('/admin/squadmember/{}'.format(squadmember.key.urlsafe()))
 
 
 

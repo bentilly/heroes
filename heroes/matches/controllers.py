@@ -111,7 +111,7 @@ def add_entry(parent_key):
 
 	match.put()
 
-	return redirect('/match/{}'.format(match.key.urlsafe()))
+	return redirect('/admin/match/{}'.format(match.key.urlsafe()))
 
 
 # UPDATE match
@@ -136,4 +136,4 @@ def update_entry(key):
 
 	match.put()
 
-	return redirect('/match/{}'.format(match.key.urlsafe()))
+	return redirect('/admin/match/{}'.format(match.key.urlsafe()))

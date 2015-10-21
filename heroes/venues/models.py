@@ -12,5 +12,5 @@ class Venue(Base):
 
 	@property
 	def link(self):
-		return '/venue/{}/'.format(self.key.urlsafe())
+		return '/admin/venue/{}/'.format(self.key.urlsafe())
 

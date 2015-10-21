@@ -25,3 +25,8 @@ indexes:
   - name: uid
   - name: revision
     direction: desc
+
+- kind: Squadmember
+  properties:
+  - name: rep
+  - name: role

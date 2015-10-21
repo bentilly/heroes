@@ -18,5 +18,5 @@ class Squadmember(Base):
 
 	@property
 	def link(self):
-		return '/squadmember/{}/'.format(self.key.urlsafe())
+		return '/admin/squadmember/{}/'.format(self.key.urlsafe())
 

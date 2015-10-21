@@ -18,17 +18,17 @@
 
                 <main>
                     <!--SQUADS-->
-                    {% for member in squads %}
+                    {% for rs in rep_squads %}
                     <div class="timeline-year">
-                        <label>{{ member.key.parent().get().event.get().startdate.year }}</label><!--squad.event.startdate.year-->
+                        <label>{{ rs.date.year }}</label><!--squad.event.startdate.year-->
                         <div class="events">
                             <div class="event-entry">
-                                <div class="division">{{ member.key.parent().parent().get().division.get().title }}</div><!--squad.division.title-->
-                                <div class="event">{{ member.key.parent().get().title }}</div><!--squad.event.title-->
+                                <div class="division">{{ rs.member.key.parent().parent().get().division.get().title }}</div><!--squad.division.title-->
+                                <div class="event">{{ rs.member.key.parent().get().title }}</div><!--squad.event.title-->
 <!--                                <div class="venue">Eger, Hungary</div>  too hard for now-->
                                 <div class="role-pos">
-                                    {% if member.role %}{{ member.role.get().title }} / {% endif %}
-                                    {% if member.position %}{{ member.position.get().title }}{% endif %}
+                                    {% if rs.member.role %}{{ rs.member.role.get().title }} / {% endif %}
+                                    {% if rs.member.position %}{{ rs.member.position.get().title }}{% endif %}
                                 </div>
                             </div>
                         </div>
