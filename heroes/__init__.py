@@ -45,7 +45,7 @@ def create_app():
     app.register_blueprint(match_bp, url_prefix='/admin/match')
     app.register_blueprint(matchteam_bp, url_prefix='/admin/matchteam')
     app.register_blueprint(matchteammember_bp, url_prefix='/admin/matchteammember')
-    app.register_blueprint(trophie_bp, url_prefix='/admin/trophie')
+    app.register_blueprint(trophie_bp, url_prefix='/admin/trophy')
 
     # public web pages
     app.register_blueprint(heroesweb_bp, url_prefix='/')
