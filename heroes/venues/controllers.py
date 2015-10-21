@@ -57,7 +57,7 @@ def add_entry(parent_key):
 	venue = Venue(name=request.form['venueName'], parent=sport_key)
 	venue.put()
 
-	return redirect('/venue/{}'.format(venue.key.urlsafe()))
+	return redirect('/admin/venue/{}'.format(venue.key.urlsafe()))
 
 
 # UPDATE venue
@@ -68,7 +68,7 @@ def update_entry(key):
     venue.name = request.form['venueName']
     venue.put()
 
-    return redirect('/venue/{}'.format(venue.key.urlsafe()))
+    return redirect('/admin/venue/{}'.format(venue.key.urlsafe()))
 
 
 

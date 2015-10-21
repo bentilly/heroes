@@ -13,5 +13,5 @@ class Position(Base):
 
 	@property
 	def link(self):
-		return '/position/{}/'.format(self.key.urlsafe())
+		return '/admin/position/{}/'.format(self.key.urlsafe())
 

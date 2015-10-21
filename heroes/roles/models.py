@@ -12,5 +12,5 @@ class Role(Base):
 
 	@property
 	def link(self):
-		return '/role/{}/'.format(self.key.urlsafe())
+		return '/admin/role/{}/'.format(self.key.urlsafe())
 

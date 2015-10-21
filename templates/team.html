@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -24,7 +24,7 @@
                     <h1>{{ team_object.key.parent().get().code }} {{ team_object.division.get().name }}</h1> <!-- TODO: add team.title to model -->
                 </div>
                 
-                <form name="teamForm" action="/team/update/{{ team_object.key.urlsafe() }}" method=post>
+                <form name="teamForm" action="/admin/team/update/{{ team_object.key.urlsafe() }}" method=post>
                     <label>team name</label>
                     <input type="text" name="teamName" value="{{ team_object.name }}">
                     
@@ -52,7 +52,7 @@
                         {% if event.squad %}
 <!--                        do nothing-->
                         {% else %}
-                        <li class="inactive">{{ event.event.title }}<a href="/squad/add/{{ team_object.key.urlsafe() }}/{{ event.event.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        <li class="inactive">{{ event.event.title }}<a href="/admin/squad/add/{{ team_object.key.urlsafe() }}/{{ event.event.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>

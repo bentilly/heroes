@@ -83,7 +83,7 @@ def add_entry(parent_key):
         team = Team(parent=country.key, division=division.key)
         team.put()
 
-    return redirect('/country/{}'.format(country.key.urlsafe()))
+    return redirect('/admin/country/{}'.format(country.key.urlsafe()))
 
 
 # UPDATE country
@@ -95,7 +95,7 @@ def update_entry(key):
     country.code = request.form['countryCode']
     country.put()
 
-    return redirect('/country/{}'.format(country.key.urlsafe()))
+    return redirect('/admin/country/{}'.format(country.key.urlsafe()))
 
 
 

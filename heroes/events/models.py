@@ -19,5 +19,5 @@ class Event(Base):
 
 	@property
 	def link(self):
-		return '/event/{}/'.format(self.key.urlsafe())
+		return '/admin/event/{}/'.format(self.key.urlsafe())
 

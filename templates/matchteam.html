@@ -14,7 +14,7 @@
             <div class="attributeContainer">
                 <nav>
                     <ul>
-                        <li><a href="/">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% for crumb in breadcrumb %}
                         <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
                         {% endfor %}
@@ -45,7 +45,7 @@
                         {% if member.matchteammember %}
 <!--                        do nothing-->
                         {% else %}
-                        <li class="inactive">{{ member.squadmember.title }}<a href="/matchteammember/add/{{ member.squadmember.key.urlsafe() }}/{{ matchteam_object.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></a></li>
+                        <li class="inactive">{{ member.squadmember.title }}<a href="/admin/matchteammember/add/{{ member.squadmember.key.urlsafe() }}/{{ matchteam_object.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>

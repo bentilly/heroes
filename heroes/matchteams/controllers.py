@@ -87,7 +87,7 @@ def add_entry(match_key, squad_key):
 	matchteam = Matchteam(squad=squad_key, match=match_key)
 	matchteam.put()
 
-	return redirect('/matchteam/{}'.format(matchteam.key.urlsafe()))
+	return redirect('/admin/matchteam/{}'.format(matchteam.key.urlsafe()))
 
 
 # UPDATE matchteam
