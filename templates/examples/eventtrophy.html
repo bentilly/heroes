@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="">Underwater Hockey&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        <li><a href="event.html">2015 Senior Mens World Championship&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>World Cup - Senior Men</h1>
+                </div>
+                
+                <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Results</h3>
+                    
+<!-- *******    Click '+' to add a result. 
+                Add a <select> to the bottom of the list. 
+                You could use a little bit of JS to add form fields if you like, or reload the page.
+                If you use JS please use raw JS. Dont use a framework. Im trying to avoid comitting to JQuery or Angular or... etc yet.
+-->
+<!-- *******    NOTE: If we end up looking at a framework Id like to explore D3.js. Looks very cool  -->                
+
+                    <a href=""><i class="fa fa-plus"></i></a>
+                </div>
+                <ul class="standardList">
+                    <li><label>1: </label>
+                     <select>
+                        <option value="" selected>NZL</option>
+                        <option value="">FRA</option>
+                        <option value="">USA</option>
+                        <option value="">CAN</option>
+                        <option value="">JPN</option>
+                    </select>
+                    </li>
+                    <li><label>2: </label>
+                     <select>
+                        <option value="">NZL</option>
+                        <option value="">FRA</option>
+                        <option value="">USA</option>
+                        <option value="" selected>CAN</option>
+                        <option value="">JPN</option>
+                    </select>
+                    </li>
+                    <li><label>3: </label>
+                     <select>
+                        <option value="" selected>NZL</option>
+                        <option value="">FRA</option>
+                        <option value="">USA</option>
+                        <option value="">CAN</option>
+                        <option value="" selected>JPN</option>
+                    </select>
+                    </li>
+                    <li><label>4: </label>
+                     <select>
+                        <option value="" selected>NZL</option>
+                        <option value="">FRA</option>
+                        <option value="" selected>USA</option>
+                        <option value="">CAN</option>
+                        <option value="">JPN</option>
+                    </select>
+                    </li>
+                </ul>
+                <button type="submit">Save</button>
+                    
+<!-- *******    I was thinking of storing a list of COUNTRY object in the EVENTTROPHY object
+                https://cloud.google.com/appengine/docs/python/ndb/properties#repeated
+                
+                The order is preserved so this might be a very simple way of storing results.
+                We wont be able to do (eg) "2nd =" but Im ok with that.
+
+                Maybe something like:
+
+                class Eventtrophy(Base):
+                    #Parent = Event
+	                trophy = ndb.KeyProperty(kind=Trophie, required=True)
+                    results = ndb.KeyProperty(kind=Country, repeated=True)
+
+-->
+                
+                    
+            </div>
+                
+                
+                
+            </div>
+    </body>
+</html>
