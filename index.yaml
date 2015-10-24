@@ -20,6 +20,12 @@ indexes:
   properties:
   - name: firstname
 
+- kind: Trophy
+  properties:
+  - name: uid
+  - name: revision
+    direction: desc
+
 - kind: Squadmember
   properties:
   - name: rep
