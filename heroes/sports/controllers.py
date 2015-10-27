@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, redirect, request
 
 from google.appengine.ext import ndb
+from google.appengine.api import users
+
+import logging
 
 from .models import Sport
 from heroes.countries.models import Country
@@ -9,7 +12,7 @@ from heroes.roles.models import Role
 from heroes.events.models import Event
 from heroes.venues.models import Venue
 from heroes.trophies.models import Trophy
-
+from heroes.users.models import Editor
 
 
 
@@ -21,11 +24,49 @@ sports_bp = Blueprint('sports', __name__)
 # HOME PAGE. A list of sports
 @sports_bp.route('/all')
 def sports_list():
+    currentuser = users.get_current_user()
+    registered_user = Editor.query(Editor.userid==currentuser.user_id()).fetch(1)
+
+    if registered_user:
+        logoutlink = users.create_logout_url("/")
+        sports_entries = Sport.query().fetch()
+
+        return render_template('home.html',
+                object_title='Heroes',
+                sports=sports_entries,
+                logoutlink=logoutlink,
+                user=currentuser,
+            )
+    else:
+        return render_template('registerEditor.html',
+            )
+
+#REGISTER EDITOR 
+@sports_bp.route('/register', methods=['POST'])
+def register_editor():
+    currentuser = users.get_current_user()
+    editor = Editor(
+        userid=currentuser.user_id(),
+        firstname=request.form['firstName'],
+        lastname=request.form['lastName'],
+        phone=request.form['phone'],
+        country=request.form['country'],
+        sport=request.form['sport'],
+
+        )
+
+    editor.put()
+    # return redirect('/admin/sport/all')  Happens to fast. put() has not completed
+    logoutlink = users.create_logout_url("/")
     sports_entries = Sport.query().fetch()
     return render_template('home.html',
             object_title='Heroes',
             sports=sports_entries,
+            logoutlink=logoutlink,
+            user=currentuser,
         )
+
+
 
 # A SPORT PAGE.
 @sports_bp.route('/<key>/')

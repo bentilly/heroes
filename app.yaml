@@ -7,7 +7,7 @@ threadsafe: yes
 handlers:
 - url: /admin/.*
   script: main.app
-  login: admin
+  login: required
 
 - url: .*
   script: main.app
