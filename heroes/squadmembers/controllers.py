@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, redirect, request
 from google.appengine.ext import ndb
 from google.appengine.api import images
 
+from heroes.helpers import get_image_url
 
 from heroes.positions.models import Position
 from heroes.representatives.models import Rep
@@ -34,12 +35,16 @@ def squadmember_view(key):
     role_entries = Role.query(ancestor=country.key).fetch()
     position_entries = Position.query(ancestor=country.key).fetch()
 
+    photo_url = get_image_url(key, 'photo')
+    logging.error(photo_url)
+
     return render_template('squadmember.html',
         breadcrumb = breadcrumb_list,
         object_title=title,
         squadmember_object=squadmember,
         squad_object=squad,
         roles=role_entries,
+        photo_url=photo_url,
         positions=position_entries,
     )
 
