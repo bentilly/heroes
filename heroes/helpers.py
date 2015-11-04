@@ -1,3 +1,7 @@
+from google.appengine.api import images
+from google.appengine.ext import ndb
+
+
 def admin_required(func):
     """Requires App Engine admin credentials.
     """
@@ -9,5 +13,9 @@ def admin_required(func):
     return decorated_view
 
 
-def get_enitity_by_key(key):
+def get_entity_by_key(key):
     return ndb.Key(urlsafe=key).get()
+
+
+def get_image_url(entry_key, attr_name):
+    return '/image/{}/{}/'.format(entry_key, attr_name)

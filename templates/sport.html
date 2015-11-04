@@ -11,14 +11,6 @@
     <body>
         
         <div id="contentParent">
-<!--
-            <head>
-                <ul class="breadcrumb">
-                    <li><label>all sports</label>Home</li>
-                    <li><label>sport</label>Underwater hockey</li>
-                </ul>
-            </head>
--->
             
             <div class="attributeContainer">
                 <nav>
@@ -35,10 +27,6 @@
                 <form name="sportForm" action="/admin/sport/update/{{ sport_object.key.urlsafe() }}" method=post>
                     <label>sport name</label>
                     <input type="text" name="sportName" value="{{ sport_object.name }}">
-<!--
-                    <label>sport description</label>
-                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
--->
                     <button type="submit">Save</button>
                 </form>
                 
@@ -46,10 +34,6 @@
                 <form name="sportForm" action="/admin/sport/add" method=post>
                     <label>sport name</label>
                     <input type="text" name="sportName">
-<!--
-                    <label>sport description</label>
-                    <textarea rows="4" cols="30" name="sportDescription"></textarea>
--->
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}
@@ -102,23 +86,6 @@
                     {% endfor %} 
                 </ul>
             </div>
-            
-<!--        TODO - move to child of COUNTRY
-            <div class="listContainer">
-                <div class="listTitle">
-                    <h3>Roles</h3>
-                    {% if sport_object %}
-                    <a href="/role/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
-                    {% endif %}
-                </div>
-                <ul class="standardList">
-                    {% for role in roles %}
-                    <li><a href="{{ role.link }}">{{ role.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            
-            </div>
--->
             
             <div class="listContainer">
                 <div class="listTitle">
