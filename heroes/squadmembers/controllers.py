@@ -3,6 +3,7 @@ import logging
 from flask import Blueprint, render_template, redirect, request
 
 from google.appengine.ext import ndb
+from google.appengine.api import images
 
 
 from heroes.positions.models import Position
@@ -103,9 +104,9 @@ def update_entry(key):
         squadmember.position = position_key
 
 
-    squadmember.put()
     photo = request.files.get('photo')
     if photo:
-        pass
+        squadmember.photo = images.resize(photo.read(), 800, 800)
+    squadmember.put()
 
     return redirect('/admin/squadmember/{}'.format(squadmember.key.urlsafe()))
