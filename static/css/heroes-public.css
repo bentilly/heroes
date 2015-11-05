@@ -2,7 +2,7 @@ html {
 }
 body {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     color: #444444;
     display: flex;
     flex-direction: column;
@@ -22,18 +22,48 @@ h1{
     letter-spacing: 1.8;
     line-height: 5vw;
 }
-nav{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 0px;
+
+h2{
+    margin: 0px 0px 15px 7px;
+    font-size: 18px;
 }
+h2.subtitle{
+    text-align: center;
+    font-size: 22px;
+}
+.people h2{
+    width: 100%;
+    text-align: center;
+}
+
+
 a{
     color: rgba(0, 0, 0, .3);
 }
 a:hover{
     color: rgba(0, 0, 0, 1);
 }
+main{
+    width: 100%;
+    justify-content: center;
+}
+
+main.country{
+    display: flex;
+}
+.teams{
+    border-right: 1px solid #CCCCCC;
+    margin-right: 20px;
+    padding-right: 20px;
+    flex-shrink: 0;
+}
+.people{
+}
+.teams ul{
+    flex-direction: column;
+}
+
+
 main ul{
     display: flex;
     flex-wrap: wrap;
@@ -45,7 +75,7 @@ main ul li{
 }
 li a{
     color: rgba(0, 0, 0, .5);
-    font-weight: 100;
+    font-weight: 400;
     font-size: 16px;
 }
 

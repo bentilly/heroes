@@ -20,3 +20,7 @@ class Squadmember(Base):
 	def link(self):
 		return '/admin/squadmember/{}/'.format(self.key.urlsafe())
 
+	# @property
+	# def publiclink(self):
+	# 	return '/rep/{}/'.format(self.rep.urlsafe())
+

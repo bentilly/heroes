@@ -3,11 +3,14 @@ from google.appengine.ext import ndb
 
 import logging
 import operator
+from operator import itemgetter
 
 from heroes.sports.models import Sport
 from heroes.countries.models import Country
 from heroes.representatives.models import Rep
 from heroes.squadmembers.models import Squadmember
+from heroes.teams.models import Team
+from heroes.squads.models import Squad
 
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
@@ -48,14 +51,43 @@ def country_view(key):
 
 	sport = country_key.parent().get()
 
-	# breadcrumb_list = []
 	pagetitle = country.title+"  "+sport.title
 	reps = Rep.query(ancestor=country_key).order(Rep.firstname).fetch()
+	teams = Team.query(ancestor=country_key).fetch()
 
-	return render_template('public/heroesweb.html',
-		# breadcrumb = breadcrumb_list,
+
+
+	return render_template('public/countryHome.html',
 		pagetitle=pagetitle,
 		itemlist=reps,
+		teamlist=teams,
+	)
+
+@heroesweb_bp.route('team/<key>/')
+def team_view(key):
+	team_key = ndb.Key(urlsafe=key)
+	team = team_key.get()
+
+	squads = Squad.query(ancestor=team_key).fetch()
+	latestSquad = squads[0]
+	for squad in squads:
+		if squad.eventdate > latestSquad.eventdate:
+			latestSquad = squad
+
+	squadmembers = Squadmember.query(ancestor=latestSquad.key).fetch()
+	members = []
+	for sm in squadmembers:
+		rep = sm.rep.get()
+		member = {"publiclink":rep.publiclink, "title":rep.title}
+
+		members.append(member)
+
+	members_sorted = sorted(members, key=itemgetter('title'))
+
+	return render_template('public/team.html',
+		pagetitle=team.title,
+		subtitle=latestSquad.event.get().title,
+		itemlist=members_sorted,
 	)
 
 

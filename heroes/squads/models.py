@@ -9,10 +9,18 @@ class Squad(Base):
     event = ndb.KeyProperty(kind=Event, required=True)
 
     @property
+    def publictitle(self):
+        return 'a squad title'
+
+    @property
     def title(self):
         return self.event.get().title
 
     @property
     def link(self):
         return '/admin/squad/{}/'.format(self.key.urlsafe())
+
+    @property
+    def eventdate(self):
+        return self.event.get().startdate
 
