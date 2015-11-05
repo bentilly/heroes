@@ -141,14 +141,3 @@ def add_entry(team_key, event_key):
 #     squad.put()
 
 #     return redirect('/squad/{}'.format(squad.key.urlsafe()))
-
-
-
-
-
-
-
-
-
-
-
