@@ -1,11 +1,132 @@
+/*** FLEXBOX--------*/
+
+/*PARENT CONTAINER*/
+
+/*Add flexbox to a parent element. Default to vertical layout*/
+.flexc{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.flexr{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+/*Direction*/
+.flexc.cr{
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+.flexr.rr{
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+/*Justification along axis*/
+.flexc.js, .flexr.js{
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.flexc.jc, .flexr.jc{
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+.flexc.je, .flexr.je{
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+}
+
+/*Spacing and wrapping alnod axis*/
+.flexc.sb, .flexr.sb{
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.flexc.w, .flexr.w{
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+
+/*Positioning across axis*/
+
+.flexc.xs, .flexr.xs{
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+}
+.flexc.xc, .flexr.xc{
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.flexc.xe, .flexr.xe{
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+}
+
+
+/*CHILD ELEMENTS*/
+.flexchild.ns{
+    -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+            flex-shrink: 0;
+}
+.flexchild.g{
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+}
+.flexchild.ng{
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+}
+
+
+/*THE REST------------ */
+
 html {
 }
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     color: #444444;
-    display: flex;
-    flex-direction: column;
     width: 90vw;
     margin: auto;
     color: rgba(0, 0, 0, .8);
@@ -45,28 +166,25 @@ a:hover{
 }
 main{
     width: 100%;
-    justify-content: center;
 }
 
 main.country{
-    display: flex;
+    
 }
 .teams{
     border-right: 1px solid #CCCCCC;
     margin-right: 20px;
     padding-right: 20px;
-    flex-shrink: 0;
+
 }
 .people{
 }
 .teams ul{
-    flex-direction: column;
+
 }
 
 
 main ul{
-    display: flex;
-    flex-wrap: wrap;
     list-style-type: none;
     justify-content: center;
 }

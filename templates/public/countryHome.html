@@ -12,8 +12,8 @@
             <h1>{{ pagetitle }}</h1>
         </header>
         
-        <main class="country">
-            <div class="teams">
+        <main class="country flexr">
+            <div class="teams flexchild ns">
                 <h2>TEAMS</h2>
                 <ul>
                     {% for team in teamlist %}
@@ -22,9 +22,9 @@
                 </ul>
             </div>
             
-            <div class="people">
+            <div class="people flexc xc flexchild g">
                 <h2>HEROES</h2>
-                <ul>
+                <ul class="flexr jc w">
                     {% for item in itemlist %}
                     <li><a href="{{ item.publiclink }}">{{ item.title }}</a></li>
                     {% endfor %}

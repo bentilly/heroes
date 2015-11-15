@@ -5,21 +5,23 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes-public.css">
         <link rel="stylesheet" href="/static/css/heroes-profile.css">
     </head>
+    
     <body>
         <div class="content-container">
             <div class="content">
                 
-                <header>
+                <header class="">
                     <h1>{{ rep.title }}</h1><!--rep.title-->
                 </header>
 
 
-                <main>
+                <main class="">
                     <!--SQUADS-->
                     {% for rs in rep_squads %}
-                    <div class="timeline-year">
+                    <div class="timeline-year flexr">
                         <label>{{ rs.date.year }}</label><!--squad.event.startdate.year-->
                         <div class="events">
                             <div class="event-entry">

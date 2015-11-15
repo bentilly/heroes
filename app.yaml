@@ -1,5 +1,5 @@
 application: sports-heroes
-version: 0-2-test
+version: 0-3-test
 runtime: python27
 api_version: 1
 threadsafe: yes
