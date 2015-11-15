@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, redirect, request
 from google.appengine.ext import ndb
+from google.appengine.api import images
+
+from heroes.helpers import get_image_url
 
 import logging
 import operator
@@ -44,6 +47,8 @@ def sport_view(key):
 		itemlist=countries,
 	)
 
+
+# COUNTRY ---------
 @heroesweb_bp.route('country/<key>/')
 def country_view(key):
 	country_key = ndb.Key(urlsafe=key)
@@ -63,6 +68,7 @@ def country_view(key):
 		teamlist=teams,
 	)
 
+# TEAM ---------
 @heroesweb_bp.route('team/<key>/')
 def team_view(key):
 	team_key = ndb.Key(urlsafe=key)
@@ -78,7 +84,8 @@ def team_view(key):
 	members = []
 	for sm in squadmembers:
 		rep = sm.rep.get()
-		member = {"publiclink":rep.publiclink, "title":rep.title}
+		photo = get_image_url(sm.key.urlsafe(), 'photo')
+		member = {"publiclink":rep.publiclink, "title":rep.title, "photo_url":photo}
 
 		members.append(member)
 
@@ -90,7 +97,7 @@ def team_view(key):
 		itemlist=members_sorted,
 	)
 
-
+# PROFILE ---------
 @heroesweb_bp.route('rep/<key>/')
 def rep_profile(key):
 	rep_key = ndb.Key(urlsafe=key)
