@@ -25,6 +25,11 @@ indexes:
   - name: rep
   - name: role
 
+- kind: Squadmember
+  ancestor: yes
+  properties:
+  - name: rep
+
 - kind: Trophy
   properties:
   - name: uid

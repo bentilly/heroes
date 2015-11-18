@@ -18,7 +18,6 @@ class Squadmember(Base):
     def title(self):
         return self.rep.get().firstname + " " + self.rep.get().lastname
 
-
     @property
     def link(self):
         return '/admin/squadmember/{}/'.format(self.key.urlsafe())

@@ -8,27 +8,25 @@ body {
 }
 
 .content-container{
-    display: flex;
     height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+}
+header{
+
 }
 header h1{
+    text-align: left;
     color: #999999;
     font-weight: 300;
     letter-spacing: 2;
-    font-size: 40px;
-    padding: 0px 30px 0px 30px;
-    margin-top: 50px;
+    font-size: 5vw;
+    padding: 0px 30px 0px 0px;
+    margin-top: 30px;
 }
 main{
-    padding: 50px 0px 0px 30px;
-    background-repeat: repeat-y;
-    background-position: 50 0;
+    padding: 20px 0px 0px 0px;
+    max-width: 400px;
 }
 .timeline-year{
-    display: flex;
     background: none;
 }
 .timeline-year label{
