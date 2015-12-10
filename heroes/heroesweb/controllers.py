@@ -84,8 +84,13 @@ def team_view(key):
 	members = []
 	for sm in squadmembers:
 		rep = sm.rep.get()
-		photo = get_image_url(sm.key.urlsafe(), 'photo')
-		member = {"publiclink":rep.publiclink, "title":rep.title, "photo_url":photo}
+
+		# photo = get_image_url(sm.key.urlsafe(), 'photo')
+
+		# photo = images.get_serving_url(sm.photo)
+
+
+		member = {"publiclink":rep.publiclink, "title":rep.title}
 
 		members.append(member)
 

@@ -14,6 +14,8 @@ class Squadmember(Base):
 
     photo = ndb.BlobProperty()
 
+    photo_key = ndb.BlobKeyProperty()
+
     @property
     def title(self):
         return self.rep.get().firstname + " " + self.rep.get().lastname
