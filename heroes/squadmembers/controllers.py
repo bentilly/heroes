@@ -1,9 +1,15 @@
 import logging
 
 from flask import Blueprint, render_template, redirect, request
+from werkzeug import parse_options_header
 
 from google.appengine.ext import ndb
+
+# For photos
 from google.appengine.api import images
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.ext.blobstore import BlobKey
 
 from heroes.helpers import get_image_url
 
@@ -35,8 +41,14 @@ def squadmember_view(key):
     role_entries = Role.query(ancestor=country.key).fetch()
     position_entries = Position.query(ancestor=country.key).fetch()
 
-    photo_url = get_image_url(key, 'photo')
-    logging.error(photo_url)
+    # photo
+    try:
+        image_url = images.get_serving_url(squadmember.photo_key)
+    except:
+        image_url = "avatar"
+
+    form_action = "/admin/squadmember/update/" +  key
+    upload_url = blobstore.create_upload_url(form_action)
 
     return render_template('squadmember.html',
         breadcrumb = breadcrumb_list,
@@ -44,8 +56,9 @@ def squadmember_view(key):
         squadmember_object=squadmember,
         squad_object=squad,
         roles=role_entries,
-        photo_url=photo_url,
+        photo_url=image_url,
         positions=position_entries,
+        upload_url=upload_url,
     )
 
 #NEW squadmember PAGE
@@ -108,10 +121,33 @@ def update_entry(key):
         position_key = ndb.Key(urlsafe=request.form['positioninput'])
         squadmember.position = position_key
 
+    
+    # was a photo uploaded
+    f = None
+    try:
+        f = request.files['photo']
+    except:
+        pass
 
-    photo = request.files.get('photo')
-    if photo:
-        squadmember.photo = images.resize(photo.read(), 800, 800)
+    # delete old photo
+    if f:
+        try:
+            blob_key = squadmember.photo_key
+            blob = blobstore.BlobInfo.get(blob_key)
+            blob.delete()
+        except:
+            logging.info("BT: no photo to delete")
+
+    # Record new blobkey
+    try:
+        header = f.headers['Content-Type']
+        parsed_header = parse_options_header(header)
+        blob_key = parsed_header[1]['blob-key']
+        squadmember.photo_key = BlobKey(blob_key)
+        logging.info("BT: saved new blobkey")
+    except:
+        logging.info("BT: didnt save new blobkey")
+
     squadmember.put()
 
     return redirect('/admin/squadmember/{}'.format(squadmember.key.urlsafe()))

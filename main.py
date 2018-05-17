@@ -4,6 +4,7 @@ from heroes import create_app
 
 
 app = create_app()
+#NEXT heroes/__init__.py
 
 # @app.route('/')
 # def index():
@@ -12,7 +13,7 @@ app = create_app()
 @app.route('/admin')
 def index():
     return redirect('admin/sport/all')
-
+#NEXT heroes/__init__.py
 
 @app.errorhandler(404)
 def page_not_found(e):

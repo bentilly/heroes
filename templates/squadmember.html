@@ -26,7 +26,7 @@
                 
                 
                 {% if squadmember_object %}
-                <form name="squadForm" action="/admin/squadmember/update/{{ squadmember_object.key.urlsafe() }}" method=post
+                <form name="squadForm" action="{{ upload_url }}" method=post
                       enctype="multipart/form-data">
                     <label>Role in squad</label>
                     <select name="roleinput">
@@ -56,11 +56,17 @@
                                 >{{ position.title }}</option>
                         {% endfor %}
                     </select>
+                    
+                    
                     <label>Photo</label>
                     <input type="file" name="photo" id="photo">
+                    
+                    
                     <button type="submit">Save</button>
                 </form>
+
                 <img src="{{ photo_url }}">
+                
                 {% endif %}
             </div>
     </body>
