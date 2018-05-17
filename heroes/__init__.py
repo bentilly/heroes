@@ -33,6 +33,7 @@ def create_app():
                 static_folder=os.path.join(cur_dir, 'static'),
                 template_folder=os.path.join(cur_dir, 'templates'))
     app.register_blueprint(sports_bp, url_prefix='/admin/sport')
+    #NEXT sports/controllers.py
     app.register_blueprint(country_bp, url_prefix='/admin/country')
     app.register_blueprint(division_bp, url_prefix='/admin/division')
     app.register_blueprint(role_bp, url_prefix='/admin/role')
@@ -51,5 +52,6 @@ def create_app():
 
     # public web pages
     app.register_blueprint(heroesweb_bp, url_prefix='/')
+    #NEXT heroes/heroesweb/controllers.py
 
     return app

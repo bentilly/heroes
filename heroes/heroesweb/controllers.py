@@ -18,8 +18,20 @@ from heroes.squads.models import Squad
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
 # RENDERING : public website#
-
+# HOME ------------------
 @heroesweb_bp.route('/')
+def heroes_home():
+	#find UWH + NZL
+	sport = Sport.query(Sport.name == 'Underwater Hockey').fetch(1)
+	countries = Country.query(ancestor=sport[0].key).fetch()
+
+	for country in countries:
+		if country.code == 'NZL':
+			return redirect(country.publiclink)
+
+
+# ALL SPORTS ---------------
+@heroesweb_bp.route('allSports')
 def sports_all_view():
 
 	# breadcrumb_list = []
@@ -32,6 +44,7 @@ def sports_all_view():
 		itemlist=sports,
 	)
 
+# A SPORT ------------------
 @heroesweb_bp.route('sport/<key>/')
 def sport_view(key):
 	sport_key = ndb.Key(urlsafe=key)

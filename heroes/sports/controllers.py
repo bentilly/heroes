@@ -24,13 +24,12 @@ sports_bp = Blueprint('sports', __name__)
 # HOME PAGE. A list of sports
 @sports_bp.route('/all')
 def sports_list():
+
+    logoutlink = users.create_logout_url("/")
     currentuser = users.get_current_user()
-    registered_user = Editor.query(Editor.userid==currentuser.user_id()).fetch(1)
-
-    if registered_user:
-        logoutlink = users.create_logout_url("/")
+    
+    if users.is_current_user_admin():
         sports_entries = Sport.query().fetch()
-
         return render_template('home.html',
                 object_title='Heroes',
                 sports=sports_entries,
@@ -38,7 +37,11 @@ def sports_list():
                 user=currentuser,
             )
     else:
-        return render_template('registerEditor.html',
+        #need no admin page. Needs to include log out link
+        #self.response.write('You are not an administrator.')
+        return render_template('notAdmin.html',
+                logoutlink=logoutlink,
+                user=currentuser,
             )
 
 #REGISTER EDITOR 

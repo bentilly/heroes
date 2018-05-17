@@ -1,5 +1,5 @@
 application: sports-heroes
-version: 0-4-test
+version: 1-0-0
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -8,9 +8,11 @@ handlers:
 - url: /admin/.*
   script: main.app
   login: required
+#NEXT main.py
 
 - url: .*
   script: main.app
+#NEXT main.py
 
 libraries:
 - name: jinja2
