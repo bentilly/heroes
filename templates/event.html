@@ -30,6 +30,8 @@
                     <input type="text" name="eventName" value="{{ event_object.name }}">
                     <label>start date</label>
                     <input type="date" name="startDate" value="{{ event_object.startdatestring }}">
+                    <label>host city</label>
+                    <input type="text" name="hostCity" value="{{ event_object.hostCity }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -39,6 +41,8 @@
                     <input type="text" name="eventName">
                     <label>start date</label>
                     <input type="date" name="startDate">
+                    <label>host city</label>
+                    <input type="text" name="hostCity">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

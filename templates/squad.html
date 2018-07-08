@@ -50,7 +50,12 @@
                 <ul class="standardList">
                     {% for member in rep_squadmembers %}
                         {% if member.squadmember %}
-                        <li><a href="{{ member.squadmember.link }}">{{ member.squadmember.title }}</a></li>
+                        <li>
+                            <a href="{{ member.squadmember.link }}">{{ member.squadmember.title }}</a>
+                            <a href="/admin/squadmember/remove/{{ member.squadmember.key.urlsafe() }}">
+                                <i class="fa fa-minus-circle minusmember"></i>
+                            </a>
+                        </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -60,7 +65,12 @@
                         {% if member.squadmember %}
 <!--                        do nothing-->
                         {% else %}
-                        <li class="inactive">{{ member.rep.title }}<a href="/admin/squadmember/add/{{ squad_object.key.urlsafe() }}/{{ member.rep.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
+                        <li class="inactive">
+                            {{ member.rep.title }}
+                            <a href="/admin/squadmember/add/{{ squad_object.key.urlsafe() }}/{{ member.rep.key.urlsafe() }}">
+                                <i class="fa fa-plus addmember"></i>
+                            </a>
+                        </li>
                         {% endif %}
                     {% endfor %}
                 </ul>

@@ -77,10 +77,10 @@ def sport_view(key):
     sport_key = ndb.Key(urlsafe=key)
     sport = sport_key.get()
 
-    country_entries = Country.query(ancestor=sport_key).fetch()
-    division_entries = Division.query(ancestor=sport_key).fetch()
+    country_entries = Country.query(ancestor=sport_key).order(Country.name).fetch()
+    division_entries = Division.query(ancestor=sport_key).order(Division.name).fetch()
     role_entries = Role.query(ancestor=sport_key).fetch() #TODO - move to child of COUNTRY
-    event_entries = Event.query(ancestor=sport_key).fetch()
+    event_entries = Event.query(ancestor=sport_key).order(Event.startdate).fetch()
     venue_entries = Venue.query(ancestor=sport_key).fetch()
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
     

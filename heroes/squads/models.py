@@ -12,9 +12,15 @@ class Squad(Base):
     def publictitle(self):
         return 'a squad title'
 
+    # EVENT stuff
     @property
     def title(self):
         return self.event.get().title
+
+    @property
+    def eventHost(self):
+        return self.event.get().hostCity
+    
 
     @property
     def link(self):
@@ -23,4 +29,9 @@ class Squad(Base):
     @property
     def eventdate(self):
         return self.event.get().startdate
+
+    @property
+    def teamName(self):
+        return self.key.parent().get().title
+    
 

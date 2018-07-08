@@ -13,25 +13,24 @@ indexes:
 - kind: Country
   ancestor: yes
   properties:
-  - name: code
+  - name: name
+
+- kind: Division
+  ancestor: yes
+  properties:
+  - name: name
+
+- kind: Event
+  ancestor: yes
+  properties:
+  - name: startdate
 
 - kind: Rep
   ancestor: yes
   properties:
   - name: firstname
 
-- kind: Squadmember
-  properties:
-  - name: rep
-  - name: role
-
-- kind: Squadmember
+- kind: Team
   ancestor: yes
   properties:
-  - name: rep
-
-- kind: Trophy
-  properties:
-  - name: uid
-  - name: revision
-    direction: desc
+  - name: division

@@ -6,6 +6,9 @@ from heroes.representatives.models import Rep
 from heroes.roles.models import Role
 from heroes.positions.models import Position
 
+# for photos
+from google.appengine.api import images
+
 class Squadmember(Base):
     #Parent = SQUAD
     rep = ndb.KeyProperty(kind=Rep, required=True)
@@ -17,9 +20,32 @@ class Squadmember(Base):
     photo_key = ndb.BlobKeyProperty()
 
     @property
+    def publiclink(self):
+        return '/sm/{}/'.format(self.key.urlsafe())
+
+    @property
     def title(self):
         return self.rep.get().firstname + " " + self.rep.get().lastname
 
     @property
     def link(self):
         return '/admin/squadmember/{}/'.format(self.key.urlsafe())
+
+    @property
+    def roleName(self):
+            return self.role.get().name
+
+    @property
+    def positionName(self):
+            return self.position.get().name
+
+    @property
+    def photoUrl(self):
+        # photo
+        try:
+            image_url = images.get_serving_url(self.photo_key)
+        except:
+            image_url = "/static/img/nzlPlaceholder.png"
+
+        return image_url
+    

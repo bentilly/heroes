@@ -1,0 +1,160 @@
+/*** NZL UWH home page--------*/
+
+html {
+	background-color: black;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #444444;
+    color: rgba(0, 0, 0, .8);
+    padding-left: 20px;
+    padding-right: 20px;
+    background-image: url("../../static/img/blackTowel.jpg");
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+/*HEADER*/
+header{
+	text-align: center;
+	padding-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 620px;
+	border-bottom: 1px solid;
+	border-bottom-color: rgba(255, 255, 255, .2);
+	background: none;
+}
+header h1{
+	font-family: Roboto;
+	font-weight: 500;
+	font-size: 22px;
+	color: #FFFFFF;
+	padding: 5px 0px 20px 0px;
+}
+
+/*MAIN*/
+main, footer{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 620px;
+	background: none;
+}
+
+/*TEAM LIST*/
+.team{
+	margin-bottom: 70px;
+}
+div.team-title{
+	color: #FFFFFF;
+	margin-top: 20px;
+	font-size: 14px;
+	font-weight: 300;
+}
+div.team-title h2{
+	font-weight: 500;
+	font-size: 28px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+/*PHOTO GRID*/
+div.team-photo-grid{
+	display: grid;
+	grid-template-columns:  33.333% 33.333% 33.333%;
+	grid-gap: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+div.team-photo-grid a{
+	color: #444444;
+}
+.grid-item{
+
+}
+.item-photo {
+  background-color: #444;
+  color: #fff;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+.image-holder{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	overflow: hidden;
+}
+
+.image-holder img{
+	width: 100%;
+}
+
+.item-caption{
+	text-align: center;
+	background-color: white;
+	padding: 5px 5px 8px 5px;
+}
+.player-name{
+	font-family: Roboto;
+	font-weight: 500;
+	font-size: 14px;
+}
+.player-role{
+	font-family: Roboto;
+	font-weight: 300;
+	font-size: 10px;
+	color: #666666;
+	text-transform: uppercase;
+}
+
+footer{
+	text-align: center;
+	padding:20px 0px 40px 0px;
+	opacity: .4;
+
+	border-top: 1px solid;
+	border-top-color: rgba(255, 255, 255, .6);
+}
+footer p{
+	color: white;
+	font-size: 10px;
+	font-weight: 400;
+}
+
+
+
+
+
+@media only screen and (max-width: 500px) {
+	body{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	div.team-photo-grid{
+		/*go 2 column for narrow screens*/
+		grid-template-columns:  50% 50%;
+		margin-right: 10px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
