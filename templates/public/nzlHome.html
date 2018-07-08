@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UWH Heroes</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes-flex.css">
+        <link rel="stylesheet" href="/static/css/nzl-home.css?v=1.0.3">
+        <!-- increment "...?v=1.0.0" to break browser cache -->
+
+        <!-- Add reletive paths for local testing -->
+        <!-- <link rel="stylesheet" href="../../static/css/sanitize.css">
+        <link rel="stylesheet" href="../../static/css/heroes-flex.css">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css"> -->
+    </head>
+    <body>
+        <header>
+            <img src="../../static/img/uwh-fern-rev.svg" />
+            <h1>New Zealand<br />Underwater Hockey Teams</h1>
+        </header>
+        
+        <main>
+
+
+        <!-- REPEAT FOR EACH SQUAD -->
+        {% for heroSquad in heroSquads %}
+         <section class="team">
+             <div class="team-title">
+                 <h2>{{ heroSquad.squad.teamName }}</h2>
+                 <p>{{ heroSquad.squad.title }}</p>
+                 <p>{{ heroSquad.squad.eventHost}}</p>
+                 <p>{{ heroSquad.squad.eventdate.strftime('%-d %B %Y') }}</p>
+             </div>
+
+             <div class="team-photo-grid">
+                {% for sm in heroSquad.squadMembers %}
+                <a href="{{ sm.publiclink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="{{ sm.photoUrl }}">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">{{ sm.title }}</p>
+                        <p class="player-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+
+
+    </main>
+
+    <footer>
+        <p>UWH Heroes is bought to you by</p>
+        <a href="http://uwh.co.nz"><img src="../../static/img/uwh_logo_small3.png">
+    </footer>
+
+</body>    
+</html>

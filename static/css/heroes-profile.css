@@ -1,0 +1,64 @@
+html {
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #444444;
+    color: rgba(0, 0, 0, .8);
+}
+
+.content-container{
+    height: 100%;
+}
+header{
+
+}
+header h1{
+    text-align: left;
+    color: #999999;
+    font-weight: 300;
+    letter-spacing: 2;
+    font-size: 5vw;
+    padding: 0px 30px 0px 0px;
+    margin-top: 30px;
+}
+main{
+    padding: 20px 0px 0px 0px;
+    max-width: 400px;
+}
+.timeline-year{
+    background: none;
+}
+.timeline-year label{
+    height: 27px;
+    width: 60px;
+    text-align: center;
+    padding-top: 2px;
+    background-color: #bbbbbb;
+    color: #ffffff;
+    font-weight: 300;
+    letter-spacing: 1;
+    font-size: 16px;
+    border-radius: 30px;
+}
+
+.events{
+    margin-left: 20px;
+}
+.event-entry{
+    margin-bottom: 20px;
+}
+.division{
+    text-transform: uppercase;
+    font-weight: 500
+}
+.venue,
+.role-pos{
+    font-size: 14px;
+    color: #999999;
+}
+
+
+
+
+

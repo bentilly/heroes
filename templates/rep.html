@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                 {% if rep_object %}
+                <form name="repForm" action="/admin/rep/update/{{ rep_object.key.urlsafe() }}" method=post>
+                    <label>first name</label>
+                    <input type="text" name="firstname" value="{{ rep_object.firstname }}">
+                    <label>last name</label>
+                    <input type="text" name="lastname" value="{{ rep_object.lastname }}">
+                    <button type="submit">Save</button>
+                </form>
+                
+                {% else %}
+                <form name="repForm" action="/admin/rep/add/{{ country_object.key.urlsafe() }}" method=post>
+                    <label>first name</label>
+                    <input type="text" name="firstname">
+                    <label>last name</label>
+                    <input type="text" name="lastname">
+                    <button type="submit">Save</button>
+                </form>
+                {% endif %}
+
+            </div>
+
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Player Stats</h3>
+                </div>
+                {% if rep_object %}
+                
+                {% if rep_object.stats %}
+                {% for stat in rep_object.stats %}
+                <div>
+                    [ {{ stat.sort }} ] {{ stat.label }}  : {{ stat.value }}
+                    <a href="/admin/rep/removestat/{{ rep_object.key.urlsafe() }}/{{ loop.index }}">
+                        <i class="fa fa-minus-circle minusmember"></i>
+                    </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <form name="repStatForm" action="/admin/rep/addstat/{{ rep_object.key.urlsafe() }}" method=post>
+                    <div class="repStat">
+                        <label>label</label>
+                        <input type="text" name="statlabel">
+                        <label>value</label>
+                        <input type="text" name="statvalue">
+                        <label>sort</label>
+                        <input type="text" name="statsort">
+                    </div>
+                    <button type="submit">Add stat</button>
+                </form>
+                {% endif %}
+            
+            </div>
+
+
+
+            
+    </body>
+</html>

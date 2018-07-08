@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes-public.css">
+        <link rel="stylesheet" href="/static/css/heroes-profile.css">
+    </head>
+    
+    <body>
+        <div class="content-container">
+            <div class="content">
+                
+                <header class="">
+                    <h1>{{ rep.title }}</h1><!--rep.title-->
+                </header>
+
+
+                <main class="">
+                    <!--SQUADS-->
+                    {% for rs in rep_squads %}
+                    <div class="timeline-year flexr">
+                        <label>{{ rs.date.year }}</label><!--squad.event.startdate.year-->
+                        <div class="events">
+                            <div class="event-entry">
+                                <div class="division">{{ rs.member.key.parent().parent().get().division.get().title }}</div><!--squad.division.title-->
+                                <div class="event">{{ rs.member.key.parent().get().title }}</div><!--squad.event.title-->
+<!--                                <div class="venue">Eger, Hungary</div>  too hard for now-->
+                                <div class="role-pos">
+                                    {% if rs.member.role %}{{ rs.member.role.get().title }} / {% endif %}
+                                    {% if rs.member.position %}{{ rs.member.position.get().title }}{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </main>
+                
+            </div>
+        </div>
+    </body>    
+</html>

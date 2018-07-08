@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li><a href="/admin">Home&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% for crumb in breadcrumb %}
+                        <li><a href="{{ crumb.link }}">{{ crumb.title }}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ object_title }}</h1>
+                </div>
+                
+                
+                {% if squadmember_object %}
+                <form name="squadForm" action="{{ upload_url }}" method=post
+                      enctype="multipart/form-data">
+                    <label>Role in squad</label>
+                    <select name="roleinput">
+                        {% if squadmember_object.role %}
+                        {% else %}
+                        <option value="">-- select role --</option>
+                        {% endif %}
+                        {% for role in roles %}
+                        <option value="{{ role.key.urlsafe() }}"
+                                {% if squadmember_object.role %}
+                                {% if squadmember_object.role.urlsafe() == role.key.urlsafe() %} selected="selected" {% endif %}
+                                 {% endif %}
+                                >{{ role.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <label>Position in squad</label>
+                    <select name="positioninput">
+                        {% if squadmember_object.position %}
+                        {% else %}
+                        <option value="">-- select position --</option>
+                        {% endif %}
+                        {% for position in positions %}
+                        <option value="{{ position.key.urlsafe() }}"
+                                {% if squadmember_object.position %}
+                                {% if squadmember_object.position.urlsafe() == position.key.urlsafe() %} selected="selected" {% endif %}
+                                 {% endif %}
+                                >{{ position.title }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    
+                    <label>Photo</label>
+                    <input type="file" name="photo" id="photo">
+                    
+                    
+                    <button type="submit">Save</button>
+                </form>
+
+                <img src="{{ photo_url }}">
+                
+                {% endif %}
+            </div>
+    </body>
+</html>

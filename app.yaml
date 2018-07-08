@@ -1,22 +1,21 @@
 application: sports-heroes
-version: 1
+version: 1-0-5-urls
 runtime: python27
 api_version: 1
-threadsafe: true
-
-libraries:
-- name: webapp2
-  version: latest
-- name: jinja2
-  version: latest
+threadsafe: yes
 
 handlers:
-- url: /stylesheets
-  static_dir: stylesheets
+- url: /admin/.*
+  script: main.app
+  login: required
+#NEXT main.py
 
-- url: /admin.*
-  script: admin.app
-  login: admin
+- url: .*
+  script: main.app
+#NEXT main.py
 
-- url: /.*
-  script: heroes.app
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"

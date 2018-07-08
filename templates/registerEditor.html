@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <nav>
+                    <ul>
+                        <li>.</li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>Please register to edit Sports Heroes</h1>
+                </div>
+                <form name="userRegForm" action="/admin/sport/register" method=post>
+                    <label>first name</label>
+                    <input type="text" name="firstName">
+                    <label>last name</label>
+                    <input type="text" name="lastName">
+                    <label>phone number</label>
+                    <input type="text" name="phone">
+                    <label>country</label>
+                    <input type="text" name="country">
+                    <label>sport</label>
+                    <input type="text" name="sport">
+                    <button type="submit">Register</button>
+                </form>
+                
+            </div>
+    </body>
+</html>
