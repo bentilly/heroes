@@ -62,7 +62,7 @@ def add_entry(parent_key):
 
 	mydate = datetime.datetime.strptime(request.form['startDate'], "%Y-%m-%d").date()
 
-	event = Event(name=request.form['eventName'], startdate=mydate, parent=sport_key)
+	event = Event(name=request.form['eventName'], startdate=mydate, hostCity=request.form['hostCity'], parent=sport_key)
 	event.put()
 
 	return redirect('/admin/event/{}'.format(event.key.urlsafe()))
@@ -75,6 +75,7 @@ def update_entry(key):
     event = event_key.get()
     event.name = request.form['eventName']
     event.startdate = datetime.datetime.strptime(request.form['startDate'], "%Y-%m-%d").date()
+    event.hostCity = request.form['hostCity']
     event.put()
 
     return redirect('/admin/event/{}'.format(event.key.urlsafe()))

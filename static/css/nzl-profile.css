@@ -1,0 +1,148 @@
+body{
+	font-family: Roboto, sans-serif;
+	color: white;
+	font-weight: 400;
+	/*padding-bottom: 100px;*/
+}
+
+
+header h1{
+	font-size: 20px;
+	padding: 5px 0px 15px 0px;
+}
+header img{
+	width: 50px;
+}
+.breadcrumb{
+	/*font-family: 'Roboto', sans-serif;*/
+    /*font-weight: 400;*/
+    font-size: 14px;
+	text-align: left;
+	border-top: 1px solid;
+	border-top-color: rgba(255, 255, 255, .2);
+	padding: 5px 0px;
+}
+.breadcrumb a{
+	color: #777777;
+	font-size: 18px;
+	padding-top: 1px;
+	padding-right: 20px;
+}
+.breadcrumb a:hover{
+	color: #6A9CE4;
+}
+main{
+	margin-top: 30px;
+}
+h1.player-name{
+	/*font-family: Roboto, sans-serif;*/
+	/*font-weight: 400;*/
+	font-size: 40px;
+	color: #FFFFFF;
+}
+h3{
+	/*font-family: Roboto, sans-serif;*/
+	font-weight: 300;
+	font-size: 16px;
+	/*color: #FFFFFF;*/
+	text-transform: uppercase;
+	margin-bottom: -5px;
+}
+.photo-stats{
+	/*font-family: Roboto, sans-serif;*/
+	/*font-weight: 400;*/
+	font-size: 14px;
+	/*color: #FFFFFF;*/
+	margin-top: 30px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid;
+	border-bottom-color: rgba(255, 255, 255, .2);
+	padding-bottom: 40px;
+}
+.player-photo{
+	width: 50%;
+}
+.player-photo img{
+	width: 100%;
+}
+
+.player-stats{
+	margin-left: 20px;
+}
+.stat-label{
+	opacity: 0.66;
+	/*font-family: Roboto, sans-serif;*/
+	/*font-weight: 400;*/
+	font-size: 12px;
+	/*color: #FFFFFF;*/
+	text-transform: uppercase;
+}
+.stat-value{
+	/*font-family: Roboto, sans-serif;*/
+	/*font-weight: 400;*/
+	font-size: 22px;
+	/*color: #FFFFFF;*/
+	margin-bottom: 15px;
+}
+.player-history{
+	border-bottom: 1px solid;
+	border-bottom-color: rgba(255, 255, 255, .2);
+	padding-bottom: 40px;
+}
+.history-item{
+	margin:20px 0px 20px 0px;
+}
+.item-info h4{
+	font-size: 20px;
+	font-weight: 500;
+}
+p.player-team-role{
+	font-size: 18px;
+	font-weight: 300;
+	margin-bottom: 5px;
+}
+p.event{
+	font-size: 13px;
+	font-weight: 300;
+}
+.history-photo{
+	width: 120px;
+}
+.history-photo img{
+	width: 100%;
+}
+
+
+
+
+@media only screen and (max-width: 500px) {
+	h1.player-name{
+		font-size: 32px;
+	}
+	.item-info h4{
+		font-size: 16px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

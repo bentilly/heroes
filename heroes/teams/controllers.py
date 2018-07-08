@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request
 
 from google.appengine.ext import ndb
+import logging
 
 from .models import Team
 from heroes.sports.models import Sport
@@ -30,10 +31,11 @@ def team_view(key):
 
     #All EVENTS
     event_entries= Event.query(ancestor=sport.key).fetch()
+    event_entries.sort(key=sortOnTitle, reverse=True)
 
     #Some SQUADS
     squad_entries = Squad.query(ancestor=team_key).fetch()
-
+    squad_entries.sort(key=sortOnTitle, reverse=True)
 
     #EVENT SQUADS
     event_squads = []
@@ -56,6 +58,9 @@ def team_view(key):
             squads=squad_entries,
             event_squads=event_squads
         )
+
+def sortOnTitle(object):
+    return object.title
 
 #NEW TEAM PAGE
 #Team = Country + Division. Create automatically on COUNTRY or DIVISION creation

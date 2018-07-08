@@ -151,3 +151,32 @@ def update_entry(key):
     squadmember.put()
 
     return redirect('/admin/squadmember/{}'.format(squadmember.key.urlsafe()))
+
+
+
+
+# REMOVE squadmember
+@squadmember_bp.route('/remove/<squadmember_key>/', methods=['GET'])
+def remove_entry(squadmember_key):
+    squadmember_key = ndb.Key(urlsafe=squadmember_key)
+    squad_key = squadmember_key.parent().get().key
+    squadmember_key.delete()
+
+    # TODO delete any photos 
+
+    return redirect('/admin/squad/{}'.format(squad_key.urlsafe()))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

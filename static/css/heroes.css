@@ -105,6 +105,9 @@ ul.inactive{
 li i.addmember{
     margin-left: 10px;
 }
+li i.minusmember{
+    margin-left: 10px;
+}
 li.inactive{
     color: #DDDDDD;
 }
@@ -162,7 +165,11 @@ table button{
     margin-top: 0px;
     padding: 1px 5px 1px 5px;
 }
-
+.repStat{
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
 
 
 

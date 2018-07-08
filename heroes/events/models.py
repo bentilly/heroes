@@ -8,6 +8,8 @@ import logging
 class Event(Base):
 	name = ndb.StringProperty(required=True)
 	startdate = ndb.DateProperty(required=True)
+	# hostCity should be replaced by VENUE
+	hostCity = ndb.StringProperty(required=False)
 
 	@property
 	def startdatestring(self):
