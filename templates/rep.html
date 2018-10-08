@@ -30,6 +30,9 @@
                     <input type="text" name="firstname" value="{{ rep_object.firstname }}">
                     <label>last name</label>
                     <input type="text" name="lastname" value="{{ rep_object.lastname }}">
+                    <label>uid</label>
+                    <input type="text" name="uid" value="{{ rep_object.uid }}">
+                    <p>Used for public URL, eg uwhheroes.co.nz/rep/floydpepper</p>
                     <button type="submit">Save</button>
                 </form>
                 
@@ -39,6 +42,9 @@
                     <input type="text" name="firstname">
                     <label>last name</label>
                     <input type="text" name="lastname">
+                    <label>uid</label>
+                    <input type="text" name="uid">
+                    <p class="note">Used for public URL, eg uwhheroes.co.nz/rep/floydpepper</p>
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

@@ -1,4 +1,6 @@
 from google.appengine.ext import ndb
+import datetime
+import pytz
 
 from heroes import fields
 from heroes.models import Base
@@ -40,5 +42,20 @@ class Match(Base):
 	@property
 	def link(self):
 		return '/admin/match/{}/'.format(self.key.urlsafe())
+
+	@property
+	def dateAsQuebec(self):
+		tz_utc = pytz.timezone("UTC")
+		matchdate_utc = tz_utc.localize(self.date)
+		matchdate_quebec = matchdate_utc.astimezone(pytz.timezone("Canada/Eastern"))
+		return matchdate_quebec.strftime('%Y-%m-%d')
+
+	@property
+	def timeAsQuebec(self):
+		tz_utc = pytz.timezone("UTC")
+		matchdate_utc = tz_utc.localize(self.date)
+		matchdate_quebec = matchdate_utc.astimezone(pytz.timezone("Canada/Eastern"))
+		return matchdate_quebec.strftime('%H:%M')
+	
 
 

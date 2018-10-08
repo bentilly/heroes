@@ -74,7 +74,7 @@ def add_entry(parent_key):
     sport_key = ndb.Key(urlsafe=parent_key)
     sport = sport_key.get()
 
-    country = Country(name=request.form['countryName'], code=request.form['countryCode'], parent=sport_key)
+    country = Country(name=request.form['countryName'], code=request.form['countryCode'], flagemoji=request.form['flagEmoji'], parent=sport_key)
     country.put()
 
     #Update TEAMS
@@ -93,6 +93,7 @@ def update_entry(key):
     country = country_key.get()
     country.name = request.form['countryName']
     country.code = request.form['countryCode']
+    country.flagemoji = request.form['flagEmoji']
     country.put()
 
     return redirect('/admin/country/{}'.format(country.key.urlsafe()))

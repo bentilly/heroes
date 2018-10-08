@@ -20,6 +20,15 @@ class Squadmember(Base):
     photo_key = ndb.BlobKeyProperty()
 
     @property
+    def replink(self):
+        rep_uid = self.rep.get().uid
+        if rep_uid:
+            return '/rep/{}/'.format(self.rep.get().uid)
+        else:
+            # if no uid, return key
+            return self.rep.get().publiclink
+
+    @property
     def publiclink(self):
         return '/sm/{}/'.format(self.key.urlsafe())
 
