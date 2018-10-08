@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/sanitize.css">
         <link rel="stylesheet" href="/static/css/heroes-flex.css">
-        <link rel="stylesheet" href="/static/css/nzl-home.css?v=1.0.3">
+        <link rel="stylesheet" href="/static/css/nzl-home.css?v=1.0.4">
         <!-- increment "...?v=1.0.0" to break browser cache -->
 
         <!-- Add reletive paths for local testing -->
@@ -34,9 +34,25 @@
                  <p>{{ heroSquad.squad.eventdate.strftime('%-d %B %Y') }}</p>
              </div>
 
+             {% if heroSquad.nextMatchIn %}
+             <div class="next-game">
+                <h5>Next game in:</h5>
+                <div class="time-flags flexr">
+                    <p class="time-to-go">
+                        {% if heroSquad.nextMatchIn.d > 0 %}
+                        {{ heroSquad.nextMatchIn.d }}<span>days</span>
+                        {% endif %}
+
+                        {{ heroSquad.nextMatchIn.h }}<span>hrs</span>{{ heroSquad.nextMatchIn.m }}<span>min</span></p>
+                        
+                    <!-- <div class="flags"> 🇧🇷 </div> -->
+                </div>
+             </div>
+             {% endif %}
+
              <div class="team-photo-grid">
                 {% for sm in heroSquad.squadMembers %}
-                <a href="{{ sm.publiclink }}">
+                <a href="{{ sm.replink }}">
                 <div class="grid-item">
                     <div class="item-photo">
                         <div class="image-holder">

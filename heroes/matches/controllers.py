@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, request
 from google.appengine.ext import ndb
 import logging
 import datetime
+import pytz
 
 from .models import Match
 from heroes.sports.models import Sport
@@ -82,9 +83,18 @@ def new_match(key):
 def add_entry(parent_key):
 	event_key = ndb.Key(urlsafe=parent_key)
 
+### MATCH DATE
 	datetimestring = request.form['matchdate']+"-"+request.form['matchstarttime']
+	matchdate_raw = datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+	# add timezone Canada/Eastern
+	timezone = pytz.timezone("Canada/Eastern") #OMG! get rid of this. Add selector in UI or something cleverer
+	matchdate_quebec = timezone.localize(matchdate_raw) #date tagged with timezone
+	# convert to UTC
+	matchdate_utc = matchdate_quebec.astimezone(pytz.timezone("UTC"))
+	#remove time zone for storage
+	matchdate_save = matchdate_utc.replace(tzinfo=None)
 
-	matchdate = datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+### THE REST
 	matchvenue = ndb.Key(urlsafe=request.form['matchvenue'])
 	matchdivison = ndb.Key(urlsafe=request.form['matchdivision'])
 	matchcountry1 = ndb.Key(urlsafe=request.form['matchcountry1'])
@@ -99,7 +109,7 @@ def add_entry(parent_key):
 		matchcountry2score = int(request.form['c2score'])
 
 	match = Match(
-		date=matchdate, 
+		date=matchdate_save, 
 		venue=matchvenue, 
 		division=matchdivison, 
 		country1=matchcountry1, 
@@ -120,9 +130,18 @@ def update_entry(key):
 	match_key = ndb.Key(urlsafe=key)
 	match = match_key.get()
 
+### MATCH DATE
 	datetimestring = request.form['matchdate']+"-"+request.form['matchstarttime']
-	
-	match.date=datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+	matchdate_raw = datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+	# add timezone Canada/Eastern
+	timezone = pytz.timezone("Canada/Eastern") #OMG! get rid of this. Add selector in UI or something cleverer
+	matchdate_quebec = timezone.localize(matchdate_raw) #date tagged with timezone
+	# convert to UTC
+	matchdate_utc = matchdate_quebec.astimezone(pytz.timezone("UTC"))
+	#remove time zone for storage
+	matchdate_save = matchdate_utc.replace(tzinfo=None)
+
+### THE REST
 	match.venue=ndb.Key(urlsafe=request.form['matchvenue'])
 	match.division=ndb.Key(urlsafe=request.form['matchdivision'])
 	match.country1=ndb.Key(urlsafe=request.form['matchcountry1'])
@@ -137,3 +156,34 @@ def update_entry(key):
 	match.put()
 
 	return redirect('/admin/match/{}'.format(match.key.urlsafe()))
+
+
+
+
+# matchdate_n = datetime.datetime.strptime(datetimestring, "%Y-%m-%d-%H:%M")
+# # add timezone Canada/Eastern
+# # for display ... Pacific/Auckland
+# # hard code for now...
+# timezone = pytz.timezone("Canada/Eastern") #OMG! get rid of this. Add selector in UI or something cleverer
+# matchdate_a = timezone.localize(matchdate_n) #date tagged with timezone
+
+# # store as UTC
+# logging.info("********** CANADA")
+# logging.info(matchdate_a)
+
+
+# matchdate_nz = matchdate_a.astimezone(pytz.timezone("Pacific/Auckland"))
+# logging.info("********** NZ")
+# logging.info(matchdate_nz)
+
+# matchdate_utc = matchdate_a.astimezone(pytz.timezone("UTC"))
+# logging.info("********** UTC")
+# logging.info(matchdate_utc)
+
+# matchdate_save = matchdate_utc.replace(tzinfo=None)
+# logging.info(matchdate_save)
+
+
+
+
+

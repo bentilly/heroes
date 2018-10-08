@@ -7,6 +7,8 @@ from heroes.models import Base
 class Rep(Base):
 	firstname = ndb.StringProperty(required=True)
 	lastname = ndb.StringProperty(required=True)
+	uid = ndb.StringProperty(required=False)
+	# used for urls, eg uwhheroes.co.nz/rep/uid
 	stats = ndb.PickleProperty()
 
 

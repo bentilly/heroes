@@ -25,6 +25,12 @@ indexes:
   properties:
   - name: startdate
 
+- kind: Match
+  ancestor: yes
+  properties:
+  - name: division
+  - name: date
+
 - kind: Rep
   ancestor: yes
   properties:
