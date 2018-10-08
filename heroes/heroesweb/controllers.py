@@ -6,6 +6,7 @@ from heroes.helpers import get_image_url
 
 import logging
 import operator
+import datetime
 from operator import itemgetter
 
 from heroes.sports.models import Sport
@@ -14,6 +15,7 @@ from heroes.representatives.models import Rep
 from heroes.squadmembers.models import Squadmember
 from heroes.teams.models import Team
 from heroes.squads.models import Squad
+from heroes.matches.models import Match
 
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
@@ -33,7 +35,7 @@ def heroes_home():
 
 			for team in allNZLteams:
 				# if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
-				if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women':
+				if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
 					squads = Squad.query(ancestor=team.key).fetch()
 					# error if no squads
 					latestSquad = squads[0]
@@ -48,15 +50,48 @@ def heroes_home():
 					squadMembers.sort(key=sortSquadMembersOnName)
 					squadMembers.sort(key=sortSquadMembersOnRole)
 
-					heroSquad = {"squad":latestSquad, "squadMembers":squadMembers}
+					heroSquad = {"squad":latestSquad, "squadMembers":squadMembers, "nextMatchIn":None}
 					heroSquads.append(heroSquad)
 					
 			heroSquads.sort(key=getSquadTitle)
+
+			#Next next match for each heroSquad in heroSquads
+			now = datetime.datetime.now() #now is UTC. match.date is also UTC
+
+			for heroSquad in heroSquads:
+				squad = heroSquad["squad"]
+				event_key = squad.event
+				division = squad.key.parent().get().division
+				country = squad.key.parent().parent()
+
+				divisionMatches = Match.query(Match.division == division, ancestor=event_key).order(Match.date).fetch()
+
+				for match in divisionMatches:
+					if match.country1 == country or match.country2 == country:
+						if match.date > now:
+							delta = match.date - now
+							days = delta.days
+							hours = strfdelta(delta, "{hours}")
+							minutes = strfdelta(delta, "{minutes}")
+
+							deltaDisplay = {"d":delta.days, "h":hours, "m":minutes}
+							heroSquad["nextMatchIn"] = deltaDisplay
+
+							break
+
+
 
 			# render nzlHome template
 			return render_template('public/nzlHome.html',
 				heroSquads = heroSquads,
 			)
+
+#format a time delta
+def strfdelta(tdelta, fmt):
+    d = {"days": tdelta.days}
+    d["hours"], rem = divmod(tdelta.seconds, 3600)
+    d["minutes"], d["seconds"] = divmod(rem, 60)
+    return fmt.format(**d)
 
 def sortSquadMembersOnName(sm):
 	name = sm.title
@@ -84,6 +119,58 @@ def getSquadTitle(elem):
 	s = elem['squad']
 	return s.teamName
 
+
+# PROFILE of SQUADMEMBER ---------
+@heroesweb_bp.route('rep/<key>/')
+def rep_profile(key):
+	# check if key is a rep uid
+	reps = Rep.query(Rep.uid == key).fetch(1)
+	if reps:
+		rep = reps[0]
+		rep_key = rep.key
+	else: #it better be a rep key
+		rep_key = ndb.Key(urlsafe=key)
+		# squadmember = sm_key.get()
+		# rep_key = squadmember.rep
+		rep = rep_key.get()
+
+
+	#SORT stats
+	if rep.stats:
+		rep.stats.sort(key=sortRepStats)
+
+	squadmembers = Squadmember.query(Squadmember.rep==rep_key).fetch()
+	# sort squadmembers on year
+	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
+	squadmember = squadmembers[0]
+
+	return render_template('public/nzlSquadmember.html',
+		squadmember = squadmember,
+		rep = rep,
+		squadmembers = squadmembers,
+	)
+
+
+def sortRepStats(stat):
+    sortid = stat["sort"]
+    return sortid
+
+def sortSquadMembersByDate(sm):
+	sortvalue = sm.key.parent().get().eventdate.year
+	return sortvalue
+
+
+
+
+
+
+
+
+####################
+
+# OLD STUFF - THIS MIGHT COME IN HAND LATER
+
+#####################
 
 # ALL SPORTS ---------------
 # @heroesweb_bp.route('allSports')
@@ -169,45 +256,3 @@ def getSquadTitle(elem):
 # 		subtitle=latestSquad.event.get().title,
 # 		itemlist=members_sorted,
 # 	)
-
-# PROFILE of SQUADMEMBER ---------
-@heroesweb_bp.route('sm/<key>/')
-def sm_profile(key):
-	sm_key = ndb.Key(urlsafe=key)
-	squadmember = sm_key.get()
-	rep_key = squadmember.rep
-	rep = rep_key.get()
-
-
-	#SORT stats
-	if rep.stats:
-		rep.stats.sort(key=sortRepStats)
-
-	squadmembers = Squadmember.query(Squadmember.rep==rep_key).fetch()
-
-	# sort squadmembers on year
-	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
-
-	return render_template('public/nzlSquadmember.html',
-		squadmember = squadmember,
-		rep = rep,
-		squadmembers = squadmembers,
-	)
-
-
-def sortRepStats(stat):
-    sortid = stat["sort"]
-    return sortid
-
-def sortSquadMembersByDate(sm):
-	sortvalue = sm.key.parent().get().eventdate.year
-	return sortvalue
-
-
-
-
-
-
-
-
-

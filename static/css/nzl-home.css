@@ -124,8 +124,38 @@ footer p{
 	font-size: 10px;
 	font-weight: 400;
 }
-
-
+.next-game{
+	margin-top: 20px;
+}
+.next-game h5{
+	color: white;
+	font-size: 10px;
+	font-weight: 400;
+	text-transform: uppercase;
+	margin-bottom: -8px;
+}
+p.time-to-go{
+	color: white;
+	font-size: 30px;
+	font-weight: 500;
+}
+p.time-to-go span{
+	font-size: 14px;
+	text-transform: uppercase;
+	margin-right: 12px;
+}
+.flags{
+	color: hotpink;
+	margin-left: 20px;
+	margin-top: 11px;
+}
+.flags img{
+	height: 25px;
+	margin-right: 10px;
+}
+span.flag-emoji{
+	font-size: 40px;
+}
 
 
 

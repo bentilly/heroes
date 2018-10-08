@@ -72,13 +72,25 @@ def new_rep(key):
 # ADD rep
 @rep_bp.route('/add/<parent_key>', methods=['POST'])
 def add_entry(parent_key):
-	country_key = ndb.Key(urlsafe=parent_key)
-	country = country_key.get()
+    country_key = ndb.Key(urlsafe=parent_key)
+    country = country_key.get()
 
-	rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)
-	rep.put()
+    if request.form['uid'] == "None" or request.form['uid'] == "":
+        logging.info("ADD >>>>>>>>>>>>>> UID empty - SKIP")
+        rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)
 
-	return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
+    else:
+        rep_check = Rep.query(Rep.uid == request.form['uid']).fetch(1)
+        if rep_check:
+            logging.info("ADD >>>>>>>>>>>>>> UID is a duplicate. DID NOT ADD UID")
+            rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)   
+        else:
+            logging.info("ADD >>>>>>>>>>>>>> UID unique - ADD TO REP")
+            rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], uid=request.form['uid'], parent=country_key) 
+
+    rep.put()
+
+    return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
 
 
 # UPDATE rep
@@ -88,8 +100,30 @@ def update_entry(key):
     rep = rep_key.get()
     rep.firstname = request.form['firstname']
     rep.lastname = request.form['lastname']
-    rep.put()
 
+    # UID
+    if request.form['uid'] == "None":
+        logging.info(">>>>>>>>>>>>>> UID empty - SKIP")
+    else:
+        if rep.uid != request.form['uid']:  #if its changed...
+            logging.info(">>>>>>>>>>>>>> UID different...")
+            rep_check = Rep.query(Rep.uid == request.form['uid']).fetch(1)
+            if rep_check:
+                logging.info(">>>>>>>>>>>>>> New UID a duplicate - DID NOT SAVE")
+                # bounce back
+                #TODO add error message
+                return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
+
+            else:
+                #its changed and unique
+                logging.info(">>>>>>>>>>>>>> UID unique - UPDATE AND SAVE")
+                rep.uid = request.form['uid']
+
+        else:
+            logging.info(">>>>>>>>>>>>>> UID the same as before - DID NOT UPDATE UID BUT DID SAVE THE REST")
+
+
+    rep.put()
     return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
 
 # ADD rep STATS

@@ -7,6 +7,7 @@ class Country(Base):
 	name = ndb.StringProperty(required=True)
 	#three letter country code
 	code = ndb.StringProperty(required=True)
+	flagemoji = ndb.StringProperty(required=False)
 
 	@property
 	def title(self):
