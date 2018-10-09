@@ -28,44 +28,142 @@
                 <!-- TODO: font awesome house icon -->
                 
                 <a href="/"><i class="fas fa-home"></i></a>
-                <p>TEAM DROPDOWN</p>
+                <p>TEAMS</p>
 
             </div>
         </header>
         
         <main>
-            <h3>Team (actuall SQUAD)</h3>
-            <h1 class="player-name">2006 Elite Men (division name?)</h1>
-            <h2>World Championships, Sheffield, England</h2>
-            <div class="photo-stats flexr">
-                <div class="player-photo"><img src="{{ squadmember.photoUrl }}"></div>
-                <div class="player-stats flexchild g">
-                    {% if rep.stats %}
-                    {% for stat in rep.stats %}
-                    <div class="stat-label">{{ stat.label }}</div>
-                    <div class="stat-value">{{ stat.value }}</div>
-                    {% endfor %}
-                    {% endif %}
+            <h3>Team profile</h3>
+            <h1 class="player-name">2006 Elite Men</h1>
+            <h2 class="team-label"><span>1st place</span> : World Championships, Sheffield, England</h2>
 
+             <div class="team-photo-grid">
+                <!-- {% for sm in heroSquad.squadMembers %} -->
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="../../static/img/floydpepper.jpg">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">Floyd Pepper</p>
+                        <p class="player-role">Player - Forward</p>
+                    </div>
                 </div>
+                </a>
+
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="../../static/img/floydpepper.jpg">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">Floyd Pepper</p>
+                        <p class="player-role">Player - Forward</p>
+                    </div>
+                </div>
+                </a>
+
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="../../static/img/floydpepper.jpg">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">Floyd Pepper</p>
+                        <p class="player-role">Player - Forward</p>
+                    </div>
+                </div>
+                </a>
+
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="../../static/img/floydpepper.jpg">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">Floyd Pepper</p>
+                        <p class="player-role">Player - Forward</p>
+                    </div>
+                </div>
+                </a>
+                <!-- {% endfor %} -->
             </div>
 
-            <h3>History</h3>
+
+
+
+            <div class="photo-stats flexr">
+                <div class="team-photo"><img src="../../static/img/MensTeam06.jpg"></div>
+            </div>
+
+            <h3>Team History</h3>
             <div class="player-history">
 
-                {% for sm in squadmembers %}
+                <!-- {% for sm in squadmembers %} -->
                 <div class="history-item flexr">
                     <div class="item-info flexchild g">
-                        <h4>{{ sm.key.parent().get().eventdate.year }} {{ squadmember.key.parent().get().teamName }}</h4>
-                        <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
-                        <p class="event">{{ sm.key.parent().get().event.get().name }}</p>
-                        <p class="event">{{ sm.key.parent().get().event.get().hostCity }}</p>
+                        <h4>2018 Elite Men</h4>
+                        <!-- <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p> -->
+                        <p class="event">1st place</p>
+                        <p class="event">World Championships</p>
+                        <p class="event">Quebec City, Canada</p>
                     </div>
                     <div class="history-photo">
-                        <img src="{{ sm.photoUrl }}">
+                        <img src="../../static/img/MensTeam06.jpg">
                     </div>
                 </div>
-                {% endfor %}
+
+
+                <div class="history-item flexr">
+                    <div class="item-info flexchild g">
+                        <h4>2017 Elite Men</h4>
+                        <!-- <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p> -->
+                        <p class="event">2nd place</p>
+                        <p class="event">Trans Tasman Championships</p>
+                        <p class="event">Auckland, New Zealand</p>
+                    </div>
+                    <div class="history-photo">
+                        <img src="../../static/img/MensTeam06.jpg">
+                    </div>
+                </div>
+
+
+                <div class="history-item flexr">
+                    <div class="item-info flexchild g">
+                        <h4>2016 Elite Men</h4>
+                        <!-- <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p> -->
+                        <p class="event">5th place</p>
+                        <p class="event">World Championships</p>
+                        <p class="event">Stelenbosch, South Africa</p>
+                    </div>
+                    <div class="history-photo">
+                        <img src="../../static/img/MensTeam06.jpg">
+                    </div>
+                </div>
+
+
+                <div class="history-item flexr">
+                    <div class="item-info flexchild g">
+                        <h4>2015 Elite Men</h4>
+                        <!-- <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p> -->
+                        <p class="event">2st place</p>
+                        <p class="event">Southern Hemisphere Championships</p>
+                        <p class="event">Melbourn, Australia</p>
+                    </div>
+                    <div class="history-photo">
+                        <img src="../../static/img/MensTeam06.jpg">
+                    </div>
+                </div>
+                <!-- {% endfor %} -->
 
             </div>
 
