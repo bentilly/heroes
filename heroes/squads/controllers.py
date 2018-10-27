@@ -4,6 +4,14 @@ from google.appengine.ext import ndb
 
 import logging
 
+# For photos
+from google.appengine.api import images
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.ext.blobstore import BlobKey
+from heroes.helpers import get_image_url
+from werkzeug import parse_options_header
+
 from .models import Squad
 from heroes.events.models import Event
 from heroes.squadmembers.models import Squadmember
@@ -79,6 +87,15 @@ def squad_view(key):
 
 		team_matches.append(team_match)
 
+	#-----PHOTO for this squad
+	try:
+		image_url = images.get_serving_url(squad.photo_key)
+	except:
+		image_url = "avatar"
+
+	form_action = "/admin/squad/uploadPhoto/" +  key
+	upload_url = blobstore.create_upload_url(form_action)
+
 
 	return render_template('squad.html',
 		breadcrumb = breadcrumb_list,
@@ -89,6 +106,8 @@ def squad_view(key):
 		team_matches=team_matches,
 		matchteams=matchteam_entries,
 		rep_squadmembers=rep_squadmembers,
+		photo_url=image_url,
+		upload_url = upload_url,
 	)
 
 #NEW squad PAGE
@@ -131,13 +150,65 @@ def add_entry(team_key, event_key):
 	return redirect('/admin/team/{}'.format(team_key.urlsafe()))
 
 
-# UPDATE squad
-#### NO UPDATE SQUAD
-# @squad_bp.route('/update/<key>', methods=['POST'])
-# def update_entry(key):
-#     squad_key = ndb.Key(urlsafe=key)
-#     squad = squad_key.get()
-#     squad.name = request.form['squadName']
-#     squad.put()
+# UPLOAD squad photo
+@squad_bp.route('/uploadPhoto/<key>', methods=['POST'])
+def upload_squad_photo(key):
 
-#     return redirect('/squad/{}'.format(squad.key.urlsafe()))
+	squad_key = ndb.Key(urlsafe=key)
+	squad = squad_key.get()
+
+
+	# TODO: may be deleting photo if no file selected
+	# was a photo uploaded
+	f = None
+	try:
+		f = request.files['photo']
+	except:
+		pass
+
+	# delete old photo
+	if f:
+		try:
+			blob_key = squad.photo_key
+			blob = blobstore.BlobInfo.get(blob_key)
+			blob.delete()
+			logging.info("SQUAD: deleted old photo")
+		except:
+			logging.info("SQUAD: no photo to delete")
+
+	# Record new blobkey
+	try:
+		header = f.headers['Content-Type']
+		parsed_header = parse_options_header(header)
+		blob_key = parsed_header[1]['blob-key']
+		squad.photo_key = BlobKey(blob_key)
+		logging.info("SQUAD: saved new blobkey for TEAM PHOTO")
+		squad.put()
+
+	except:
+		logging.info("SQUAD: didnt save new TEAM PHOTO")
+
+
+	return redirect('/admin/squad/{}'.format(squad_key.urlsafe()))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

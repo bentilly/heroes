@@ -16,7 +16,6 @@ class Squadmember(Base):
     position = ndb.KeyProperty(kind=Position)
 
     photo = ndb.BlobProperty()
-
     photo_key = ndb.BlobKeyProperty()
 
     @property

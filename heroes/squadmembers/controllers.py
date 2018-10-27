@@ -10,7 +10,6 @@ from google.appengine.api import images
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext.blobstore import BlobKey
-
 from heroes.helpers import get_image_url
 
 from heroes.positions.models import Position
@@ -61,36 +60,6 @@ def squadmember_view(key):
         upload_url=upload_url,
     )
 
-#NEW squadmember PAGE
-#---- not doing this yet
-# @squadmember_bp.route('/new/<key>')
-# def new_squadmember(key):
-#   squad_key = ndb.Key(urlsafe=key)
-#   squad = squad_key.get()
-
-#   # COUNTRY > TEAM > SQUAD = 2 x parent
-#   rep_entries = Rep.query(ancestor=squad_key.parent().parent()).fetch()
-
-#   #BREADCRUMB
-#   # squad - above
-#   #team
-#   team = squad.key.parent().get()
-#   # country
-#   country = squad.key.parent().parent().get()
-#   # sport
-#   sport = squad.key.parent().parent().parent().get()
-
-#   breadcrumb_list = [sport, country, team, squad]
-#   #END BREADCRUMB
-
-
-#   return render_template('squadmember.html',
-#       object_title='Add squad members',
-#       squad_object=squad,
-#       reps = rep_entries,
-#   )
-
-
 
 # HANDLERS #
 
@@ -122,6 +91,7 @@ def update_entry(key):
         squadmember.position = position_key
 
     
+    # TODO: seems to be deleting photo if no file selected
     # was a photo uploaded
     f = None
     try:
@@ -136,7 +106,7 @@ def update_entry(key):
             blob = blobstore.BlobInfo.get(blob_key)
             blob.delete()
         except:
-            logging.info("BT: no photo to delete")
+            logging.info("SQUADMEMBER: no photo to delete")
 
     # Record new blobkey
     try:
@@ -144,9 +114,9 @@ def update_entry(key):
         parsed_header = parse_options_header(header)
         blob_key = parsed_header[1]['blob-key']
         squadmember.photo_key = BlobKey(blob_key)
-        logging.info("BT: saved new blobkey")
+        logging.info("SQUADMEMBER: saved new blobkey")
     except:
-        logging.info("BT: didnt save new blobkey")
+        logging.info("SQUADMEMBER: didnt save new blobkey")
 
     squadmember.put()
 

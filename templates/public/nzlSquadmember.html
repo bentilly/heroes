@@ -1,36 +1,52 @@
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UWH Heroes</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>UWH Heroes</title>
 
-        <!-- <link rel="stylesheet" href="/static/css/sanitize.css">
-        <link rel="stylesheet" href="/static/css/heroes-flex.css">
-        <link rel="stylesheet" href="/static/css/nzl-home.css?v=1.0.3">
-        <link rel="stylesheet" href="/static/css/nzl-profile.css?v=1.0.1"> -->
-        <!-- increment "...?v=1.0.0" to break browser cache -->
+        <!-- FONTS -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
 
-        <!-- Add reletive paths for local testing -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
         <link rel="stylesheet" href="../../static/css/sanitize.css">
         <link rel="stylesheet" href="../../static/css/heroes-flex.css">
-        <link rel="stylesheet" href="../../static/css/nzl-home.css">
-        <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.1">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.1">
+        <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.2">
+
+        <!-- JAVASCRIPT -->
+        <script type="text/javascript">
+            function toggleTeamNav() {
+                var x = document.getElementById("teamNav");
+                if (x.style.display === "flex") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "flex";
+                }
+            }
+        </script>
     </head>
+    
     <body>
-        <header>
+         <header>
             <a href="../../">
                 <img src="../../static/img/uwh-fern-rev.svg" />
                 <h1>New Zealand Underwater Hockey Teams</h1>
             </a>
             <div class="breadcrumb flexr">
-                <!-- TODO: font awesome house icon -->
                 
-                <a href="/"><i class="fas fa-home"></i></a>
-                <p>{{ squadmember.key.parent().get().eventdate.year }} {{ squadmember.key.parent().get().teamName }}</p>
+                <a href="/" class="icon-link"><i class="fas fa-home"></i></a>
+                <p><a onclick="toggleTeamNav()">TEAMS</a></p>
 
             </div>
+            <nav class="team-nav flexr w" id="teamNav">
+                {% for squad in squads %}
+                    <a href="{{ squad.publiclink }}">{{ squad.divisionName }}</a>
+                {% endfor %}
+                <!-- <a class="tier-one-team" href="#">Elite Men</a>
+                <a href="#">Masters Men</a> -->
+            </nav>
         </header>
         
         <main>

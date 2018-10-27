@@ -22,11 +22,15 @@ header img{
 	border-top-color: rgba(255, 255, 255, .2);
 	padding: 5px 0px;
 }
-.breadcrumb a{
+.breadcrumb a.icon-link{
 	color: #777777;
 	font-size: 18px;
 	padding-top: 1px;
 	padding-right: 20px;
+}
+.breadcrumb a{
+	color: white;
+	
 }
 .breadcrumb a:hover{
 	color: #6A9CE4;

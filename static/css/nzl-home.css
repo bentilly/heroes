@@ -157,7 +157,41 @@ span.flag-emoji{
 	font-size: 40px;
 }
 
+/*TEAM MENU*/
+nav.team-nav{
+	margin-left: 33px;
+	margin-bottom: 10px;
+	/*display: flex;*/
+	display: none;
+}
+nav.team-nav a{
+	display: block;
+	/*width: 200px;*/
+	/*text-align: left;*/
+	color: rgba(255, 255, 255, .6);
+	font-weight: 300;
+	font-size: 13px;
+	padding: 2px 8px 2px 8px;
+	margin: 5px 5px 5px 5px;
+	background-color: rgba(255, 255, 255, .1);
+	border-radius: 20px;
+}
+nav.team-nav a.tier-one-team{
+	font-weight: 500;
+	color: rgba(255, 255, 255, .75);
+	font-size: 14px;
+}
+nav.team-nav a:hover{
+	color: #006DFF;
+	background-color: rgba(255, 255, 255, 1);
+}
 
+a.teamHistory{
+	color: white;
+}
+a.teamHistory:hover{
+	color: #6A9CE4;
+}
 
 @media only screen and (max-width: 500px) {
 	body{

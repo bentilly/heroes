@@ -37,7 +37,8 @@ def heroes_home():
 				# if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
 				if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
 					squads = Squad.query(ancestor=team.key).fetch()
-					# error if no squads
+					# TODO: this throws an error if no squads - fix
+					# TODO: Probably a better way to do this with sorting or something
 					latestSquad = squads[0]
 
 					for squad in squads:
@@ -79,11 +80,23 @@ def heroes_home():
 
 							break
 
+			# Get latest squad for every team. Used in menu
+			latestSquads = []
+			for team in allNZLteams:
+				squads = Squad.query(ancestor=team.key).fetch()
+				latestSquad = squads[0]
+
+				for squad in squads:
+					if squad.eventdate > latestSquad.eventdate:
+						latestSquad = squad
+
+				latestSquads.append(latestSquad)
 
 
 			# render nzlHome template
 			return render_template('public/nzlHome.html',
 				heroSquads = heroSquads,
+				squads = latestSquads,
 			)
 
 #format a time delta
@@ -120,6 +133,52 @@ def getSquadTitle(elem):
 	return s.teamName
 
 
+# PROFILE of SQUAD (and team history) --------- 
+@heroesweb_bp.route('squad/<key>/')
+def squad_profile(key):
+	squad_key = ndb.Key(urlsafe=key)
+	squad = squad_key.get()
+	# trace parents - if not used, delete
+	team = squad_key.parent().get()
+	country = team.key.parent().get()
+
+
+	# get all the sqad members
+	squadMembers = Squadmember.query(ancestor=squad_key).fetch()
+	# sort squadMembers. 1. Captain, 2. Vice Captain, 3. Players, 4 Coach, 5, Manager
+	squadMembers.sort(key=sortSquadMembersOnName)
+	squadMembers.sort(key=sortSquadMembersOnRole)
+
+
+	# get all the other squads of this team
+	teamSquads = Squad.query(ancestor=team.key).fetch()
+	# TODO: sort them by event date
+
+
+	# get the latest squad for all teams for this sport/country - to build the menu
+	menuTeams = Team.query(ancestor=country.key).fetch()
+	menuSquads = []
+	for t in menuTeams:
+		allsquads = Squad.query(ancestor=t.key).fetch()
+		latestSquad = allsquads[0]
+
+		for asq in allsquads:
+			if asq.eventdate > latestSquad.eventdate:
+				latestSquad = asq
+
+		menuSquads.append(latestSquad)
+
+	# render the page
+	return render_template('public/nzlTeam.html',
+		squad = squad,
+		squadmembers = squadMembers,
+		teamsquads = teamSquads, #for history
+		menusquads = menuSquads, #for menu
+	)
+
+
+
+
 # PROFILE of SQUADMEMBER ---------
 @heroesweb_bp.route('rep/<key>/')
 def rep_profile(key):
@@ -128,7 +187,7 @@ def rep_profile(key):
 	if reps:
 		rep = reps[0]
 		rep_key = rep.key
-	else: #it better be a rep key
+	else: #it better be a NDB key object
 		rep_key = ndb.Key(urlsafe=key)
 		# squadmember = sm_key.get()
 		# rep_key = squadmember.rep
@@ -144,10 +203,26 @@ def rep_profile(key):
 	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
 	squadmember = squadmembers[0]
 
+	# MENU Get latest squad for every team.
+	country = rep_key.parent().get()
+	allNZLteams = Team.query(ancestor=country.key).fetch()
+
+	latestSquads = []
+	for team in allNZLteams:
+		squads = Squad.query(ancestor=team.key).fetch()
+		latestSquad = squads[0]
+
+		for squad in squads:
+			if squad.eventdate > latestSquad.eventdate:
+				latestSquad = squad
+
+		latestSquads.append(latestSquad)
+
 	return render_template('public/nzlSquadmember.html',
 		squadmember = squadmember,
 		rep = rep,
 		squadmembers = squadmembers,
+		squads = latestSquads,
 	)
 
 
