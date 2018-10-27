@@ -12,7 +12,7 @@
 
         <link rel="stylesheet" href="../../static/css/sanitize.css">
         <link rel="stylesheet" href="../../static/css/heroes-flex.css">
-        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.1">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.13">
         <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.2">
 
         <!-- JAVASCRIPT -->
@@ -51,12 +51,12 @@
         
         <main>
 
-
+        <h2 class="latestTeamsTitle">Latest Teams</h2>
         <!-- REPEAT FOR EACH SQUAD -->
         {% for heroSquad in heroSquads %}
          <section class="team">
              <div class="team-title">
-                 <h2>{{ heroSquad.squad.teamName }}</h2>
+                 <h2><a href="{{ heroSquad.squad.publiclink }}">{{ heroSquad.squad.teamName }}</a></h2>
                  <p>{{ heroSquad.squad.title }}</p>
                  <p>{{ heroSquad.squad.eventHost}}</p>
                  <p>{{ heroSquad.squad.eventdate.strftime('%-d %B %Y') }}</p>

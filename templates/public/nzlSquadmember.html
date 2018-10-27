@@ -72,7 +72,7 @@
                 {% for sm in squadmembers %}
                 <div class="history-item flexr">
                     <div class="item-info flexchild g">
-                        <h4>{{ sm.key.parent().get().eventdate.year }} {{ squadmember.key.parent().get().teamName }}</h4>
+                        <h4><a href="{{ sm.key.parent().get().publiclink }}" class="teamHistory">{{ sm.key.parent().get().eventdate.year }} {{ squadmember.key.parent().get().teamName }}</a></h4>
                         <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
                         <p class="event">{{ sm.key.parent().get().event.get().name }}</p>
                         <p class="event">{{ sm.key.parent().get().event.get().hostCity }}</p>

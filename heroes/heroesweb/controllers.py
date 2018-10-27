@@ -80,57 +80,25 @@ def heroes_home():
 
 							break
 
-			# Get latest squad for every team. Used in menu
-			latestSquads = []
-			for team in allNZLteams:
-				squads = Squad.query(ancestor=team.key).fetch()
-				latestSquad = squads[0]
+			# Get latest squad for every team. Used in MENU
+			menuSquads = []
+			for t in allNZLteams:
+				allsquads = Squad.query(ancestor=t.key).fetch()
+				latestSquad = allsquads[0]
 
-				for squad in squads:
-					if squad.eventdate > latestSquad.eventdate:
-						latestSquad = squad
+				for asq in allsquads:
+					if asq.eventdate > latestSquad.eventdate:
+						latestSquad = asq
+						# TODO: Can I sort by date and pick the first?
 
-				latestSquads.append(latestSquad)
-
+				menuSquads.append(latestSquad)
+				menuSquads.sort(key=sortSquadDivision)
 
 			# render nzlHome template
 			return render_template('public/nzlHome.html',
 				heroSquads = heroSquads,
-				squads = latestSquads,
+				squads = menuSquads,
 			)
-
-#format a time delta
-def strfdelta(tdelta, fmt):
-    d = {"days": tdelta.days}
-    d["hours"], rem = divmod(tdelta.seconds, 3600)
-    d["minutes"], d["seconds"] = divmod(rem, 60)
-    return fmt.format(**d)
-
-def sortSquadMembersOnName(sm):
-	name = sm.title
-	return name
-
-def sortSquadMembersOnRole(sm):
-	roleKey = 3
-	try:
-		role = sm.roleName
-
-		if role == "Captain":
-			roleKey = 1
-		if role == "Vice Captain":
-			roleKey = 2
-		if role == "Coach":
-			roleKey = 4
-		if role == "Manager":
-			roleKey = 5
-	except:
-		roleKey = 3
-
-	return roleKey
-
-def getSquadTitle(elem):
-	s = elem['squad']
-	return s.teamName
 
 
 # PROFILE of SQUAD (and team history) --------- 
@@ -167,6 +135,7 @@ def squad_profile(key):
 				latestSquad = asq
 
 		menuSquads.append(latestSquad)
+		menuSquads.sort(key=sortSquadDivision)
 
 	# render the page
 	return render_template('public/nzlTeam.html',
@@ -207,24 +176,30 @@ def rep_profile(key):
 	country = rep_key.parent().get()
 	allNZLteams = Team.query(ancestor=country.key).fetch()
 
-	latestSquads = []
-	for team in allNZLteams:
-		squads = Squad.query(ancestor=team.key).fetch()
-		latestSquad = squads[0]
+	# Get latest squad for every team. Used in MENU
+	menuSquads = []
+	for t in allNZLteams:
+		allsquads = Squad.query(ancestor=t.key).fetch()
+		latestSquad = allsquads[0]
 
-		for squad in squads:
-			if squad.eventdate > latestSquad.eventdate:
-				latestSquad = squad
+		for asq in allsquads:
+			if asq.eventdate > latestSquad.eventdate:
+				latestSquad = asq
+				# TODO: Can I sort by date and pick the first?
+				# TODO: this is used on every page. Should be abstracted
 
-		latestSquads.append(latestSquad)
+		menuSquads.append(latestSquad)
+		menuSquads.sort(key=sortSquadDivision)
 
 	return render_template('public/nzlSquadmember.html',
 		squadmember = squadmember,
 		rep = rep,
 		squadmembers = squadmembers,
-		squads = latestSquads,
+		squads = menuSquads,
 	)
 
+
+# HELPERS -----------------------------------------------
 
 def sortRepStats(stat):
     sortid = stat["sort"]
@@ -234,100 +209,44 @@ def sortSquadMembersByDate(sm):
 	sortvalue = sm.key.parent().get().eventdate.year
 	return sortvalue
 
+#format a time delta
+def strfdelta(tdelta, fmt):
+    d = {"days": tdelta.days}
+    d["hours"], rem = divmod(tdelta.seconds, 3600)
+    d["minutes"], d["seconds"] = divmod(rem, 60)
+    return fmt.format(**d)
+
+def sortSquadMembersOnName(sm):
+	name = sm.title
+	return name
+
+def sortSquadMembersOnRole(sm):
+	roleKey = 3
+	try:
+		role = sm.roleName
+
+		if role == "Captain":
+			roleKey = 1
+		if role == "Vice Captain":
+			roleKey = 2
+		if role == "Coach":
+			roleKey = 4
+		if role == "Manager":
+			roleKey = 5
+	except:
+		roleKey = 3
+
+	return roleKey
+
+def getSquadTitle(elem):
+	s = elem['squad']
+	return s.teamName
+
+def sortSquadDivision(s):
+	return s.divisionName
 
 
 
 
 
 
-
-####################
-
-# OLD STUFF - THIS MIGHT COME IN HAND LATER
-
-#####################
-
-# ALL SPORTS ---------------
-# @heroesweb_bp.route('allSports')
-# def sports_all_view():
-
-# 	# breadcrumb_list = []
-# 	pagetitle = "Sports Heroes"
-# 	sports = Sport.query().fetch()
-
-# 	return render_template('public/heroesweb.html',
-# 		# breadcrumb = breadcrumb_list,
-# 		pagetitle=pagetitle,
-# 		itemlist=sports,
-# 	)
-
-# A SPORT ------------------
-# @heroesweb_bp.route('sport/<key>/')
-# def sport_view(key):
-# 	sport_key = ndb.Key(urlsafe=key)
-# 	sport = sport_key.get()
-
-# 	# breadcrumb_list = []
-# 	pagetitle = sport.title
-# 	countries = Country.query(ancestor=sport_key).order(Country.code).fetch()
-
-# 	return render_template('public/heroesweb.html',
-# 		# breadcrumb = breadcrumb_list,
-# 		pagetitle=pagetitle,
-# 		itemlist=countries,
-# 	)
-
-
-# # COUNTRY ---------
-# @heroesweb_bp.route('country/<key>/')
-# def country_view(key):
-# 	country_key = ndb.Key(urlsafe=key)
-# 	country = country_key.get()
-
-# 	sport = country_key.parent().get()
-
-# 	pagetitle = country.title+"  "+sport.title
-# 	reps = Rep.query(ancestor=country_key).order(Rep.firstname).fetch()
-# 	teams = Team.query(ancestor=country_key).fetch()
-
-
-
-# 	return render_template('public/countryHome.html',
-# 		pagetitle=pagetitle,
-# 		itemlist=reps,
-# 		teamlist=teams,
-# 	)
-
-# TEAM ---------
-# @heroesweb_bp.route('team/<key>/')
-# def team_view(key):
-# 	team_key = ndb.Key(urlsafe=key)
-# 	team = team_key.get()
-
-# 	squads = Squad.query(ancestor=team_key).fetch()
-# 	latestSquad = squads[0]
-# 	for squad in squads:
-# 		if squad.eventdate > latestSquad.eventdate:
-# 			latestSquad = squad
-
-# 	squadmembers = Squadmember.query(ancestor=latestSquad.key).fetch()
-# 	members = []
-# 	for sm in squadmembers:
-# 		rep = sm.rep.get()
-
-# 		# photo = get_image_url(sm.key.urlsafe(), 'photo')
-
-# 		# photo = images.get_serving_url(sm.photo)
-
-
-# 		member = {"publiclink":rep.publiclink, "title":rep.title}
-
-# 		members.append(member)
-
-# 	members_sorted = sorted(members, key=itemgetter('title'))
-
-# 	return render_template('public/team.html',
-# 		pagetitle=team.title,
-# 		subtitle=latestSquad.event.get().title,
-# 		itemlist=members_sorted,
-# 	)

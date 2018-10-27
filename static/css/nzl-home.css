@@ -188,9 +188,24 @@ nav.team-nav a:hover{
 
 a.teamHistory{
 	color: white;
+	border-bottom: 0.5px dashed #555555;
 }
 a.teamHistory:hover{
 	color: #6A9CE4;
+	border-bottom: 1px solid #6A9CE4;
+}
+.latestTeamsTitle{
+	font-size: 16;
+	font-weight: 300;
+	text-transform: uppercase;
+}
+div.team-title a{
+	color: white;
+	border-bottom: 0.5px dashed #555555;
+}
+div.team-title a:hover{
+	color: #6A9CE4;
+	border-bottom: 1px solid #6A9CE4;
 }
 
 @media only screen and (max-width: 500px) {
