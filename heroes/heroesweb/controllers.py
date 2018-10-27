@@ -92,7 +92,7 @@ def heroes_home():
 						# TODO: Can I sort by date and pick the first?
 
 				menuSquads.append(latestSquad)
-				menuSquads.sort(key=sortSquadDivision)
+				menuSquads.sort(key=sortSquadOnDivision)
 
 			# render nzlHome template
 			return render_template('public/nzlHome.html',
@@ -120,6 +120,8 @@ def squad_profile(key):
 
 	# get all the other squads of this team
 	teamSquads = Squad.query(ancestor=team.key).fetch()
+	teamSquads.sort(key=sortSquadOnDate, reverse=True)
+
 	# TODO: sort them by event date
 
 
@@ -135,7 +137,7 @@ def squad_profile(key):
 				latestSquad = asq
 
 		menuSquads.append(latestSquad)
-		menuSquads.sort(key=sortSquadDivision)
+		menuSquads.sort(key=sortSquadOnDivision)
 
 	# render the page
 	return render_template('public/nzlTeam.html',
@@ -189,7 +191,7 @@ def rep_profile(key):
 				# TODO: this is used on every page. Should be abstracted
 
 		menuSquads.append(latestSquad)
-		menuSquads.sort(key=sortSquadDivision)
+		menuSquads.sort(key=sortSquadOnDivision)
 
 	return render_template('public/nzlSquadmember.html',
 		squadmember = squadmember,
@@ -242,10 +244,11 @@ def getSquadTitle(elem):
 	s = elem['squad']
 	return s.teamName
 
-def sortSquadDivision(s):
+def sortSquadOnDivision(s):
 	return s.divisionName
 
-
+def sortSquadOnDate(s):
+	return s.eventdate
 
 
 
