@@ -1,5 +1,5 @@
 application: sports-heroes
-version: 1-0-10-teamOnHomePage
+version: 1-0-10-teamonhomepage
 runtime: python27
 api_version: 1
 threadsafe: yes
