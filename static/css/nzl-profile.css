@@ -22,11 +22,15 @@ header img{
 	border-top-color: rgba(255, 255, 255, .2);
 	padding: 5px 0px;
 }
-.breadcrumb a{
+.breadcrumb a.icon-link{
 	color: #777777;
 	font-size: 18px;
 	padding-top: 1px;
 	padding-right: 20px;
+}
+.breadcrumb a{
+	color: white;
+	
 }
 .breadcrumb a:hover{
 	color: #6A9CE4;
@@ -62,7 +66,13 @@ h3{
 .player-photo{
 	width: 50%;
 }
+.team-photo{
+	width: 100%;
+}
 .player-photo img{
+	width: 100%;
+}
+.team-photo img{
 	width: 100%;
 }
 
@@ -106,10 +116,17 @@ p.event{
 	font-weight: 300;
 }
 .history-photo{
-	width: 120px;
+	width: 250px;
 }
 .history-photo img{
 	width: 100%;
+}
+
+h2.team-label{
+	margin: 0px;
+	margin-top: -10px;
+	font-size: 18px;
+	font-weight: 400;
 }
 
 
@@ -122,6 +139,13 @@ p.event{
 	.item-info h4{
 		font-size: 16px;
 	}
+	h2.team-label{
+		font-size: 14px;
+		margin-top: -8px;
+	}
+	.history-photo{
+	width: 150px;
+}
 }
 
 

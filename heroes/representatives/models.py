@@ -5,6 +5,7 @@ from heroes.models import Base
 
 
 class Rep(Base):
+	# PARENT is COUNTRY
 	firstname = ndb.StringProperty(required=True)
 	lastname = ndb.StringProperty(required=True)
 	uid = ndb.StringProperty(required=False)

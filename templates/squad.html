@@ -25,8 +25,28 @@
                 </div>
                 
                 {% if squad_object %}
+
+
+
+
                 
-<!--                NO UPDATE SQUAD-->
+                
+                    <form name="squadPhotoForm" action="{{ upload_url }}" method=post enctype="multipart/form-data">
+
+                        <label>Photo</label>
+                        <input type="file" name="photo" id="photo">
+                        <button type="submit">Upload</button>
+
+                    </form>
+
+                    <img src="{{ photo_url }}">
+
+
+
+
+
+
+
                 
                 {% else %}
                 <form name="squadForm" action="/admin/squad/add/{{ team_object.key.urlsafe() }}" method=post>
