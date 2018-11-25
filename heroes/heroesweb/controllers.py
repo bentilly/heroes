@@ -21,7 +21,6 @@ heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
 # RENDERING : public website#
 # HOME ------------------
-# SHOW: Elite Men, Elite Women
 @heroesweb_bp.route('/')
 def heroes_home():
 	#find UWH + NZL
@@ -29,13 +28,15 @@ def heroes_home():
 	countries = Country.query(ancestor=sport[0].key).fetch()
 
 	for country in countries:
-		if country.code == 'NZL':
+		if country.code == 'NZL': #replace 'NZL' later with DB branch or URL
 			heroSquads = []
 			allNZLteams = Team.query(ancestor=country.key).fetch()
 
+			############## LOAD TEAMS BASED ON FLAG IN DB (TEAM)
+
 			for team in allNZLteams:
 				# if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
-				if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
+				if team.showOnHomePage == True:
 					squads = Squad.query(ancestor=team.key).fetch()
 					# TODO: this throws an error if no squads - fix
 					# TODO: Probably a better way to do this with sorting or something

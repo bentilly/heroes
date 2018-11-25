@@ -7,9 +7,9 @@ from heroes.divisions.models import Division
 
 class Team(Base):
     name = ndb.StringProperty(required=False)
-    # country = ndb.KeyProperty(kind=Country, required=True)
     # COUNTRY IS PARENT
     division = ndb.KeyProperty(kind=Division, required=True)
+    showOnHomePage = ndb.BooleanProperty(default=False)
 
     @property
     def title(self):

@@ -26,8 +26,7 @@
                 
                 
                 {% if squadmember_object %}
-                <form name="squadForm" action="{{ upload_url }}" method=post
-                      enctype="multipart/form-data">
+                <form name="squadForm" action="{{ upload_url }}" method=post enctype="multipart/form-data">
                     <label>Role in squad</label>
                     <select name="roleinput">
                         {% if squadmember_object.role %}

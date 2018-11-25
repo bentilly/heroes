@@ -27,6 +27,10 @@
                 <form name="teamForm" action="/admin/team/update/{{ team_object.key.urlsafe() }}" method=post>
                     <label>team name</label>
                     <input type="text" name="teamName" value="{{ team_object.name }}">
+                    <br /><br />
+                    <input type="checkbox" name="showOnHomeCB" value="showOnHome" 
+                        {% if team_object.showOnHomePage %} checked {% endif %} 
+                    >Show latest squad on home page<br>
                     
                     <button type="submit">Save</button>
                 </form>
