@@ -27,6 +27,12 @@
                 <form name="sportForm" action="/admin/sport/update/{{ sport_object.key.urlsafe() }}" method=post>
                     <label>sport name</label>
                     <input type="text" name="sportName" value="{{ sport_object.name }}">
+                    <label>sport code</label>
+                    <input type="text" name="sportCode" value="{{ sport_object.code }}">
+                    <br /><br />
+                    <input type="checkbox" name="publishSport" value="published" 
+                        {% if sport_object.published %} checked {% endif %} 
+                    >Publish this sport<br>
                     <button type="submit">Save</button>
                 </form>
                 
@@ -34,6 +40,8 @@
                 <form name="sportForm" action="/admin/sport/add" method=post>
                     <label>sport name</label>
                     <input type="text" name="sportName">
+                    <label>sport code</label>
+                    <input type="text" name="sportCode"">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

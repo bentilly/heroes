@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sports heroes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes.css">
+    </head>
+    <body>
+        
+        <div id="contentParent">
+            <div class="attributeContainer">
+                <div>
+                    <h1>Sports Heroes</h1>
+                </div>
+            </div>
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Sports</h3>
+                </div>
+                <ul class="standardList">
+                    
+                    {% for sport in allSports %}
+                    <li><a href="#">{{ sport.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            
+            </div>
+        </div>
+
+    </body>
+</html>

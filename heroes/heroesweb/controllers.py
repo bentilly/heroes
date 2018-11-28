@@ -20,9 +20,23 @@ from heroes.matches.models import Match
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
 # RENDERING : public website#
-# HOME ------------------
-@heroesweb_bp.route('/')
-def heroes_home():
+# Sports Heroes HOME ------------------
+
+@heroesweb_bp.route('/') 
+def sh_home():
+	all_sports = Sport.query(Sport.published == True).fetch()
+	return render_template('public/sh-home.html',
+        allSports=all_sports,
+    )
+
+
+
+#===========================================================================================#
+
+#Currently ROOT but need to break so we can do multi sport / countries
+
+@heroesweb_bp.route('/uhwnz') 
+def uwhnz_home():
 	#find UWH + NZL
 	sport = Sport.query(Sport.name == 'Underwater Hockey').fetch(1)
 	countries = Country.query(ancestor=sport[0].key).fetch()

@@ -7,6 +7,8 @@ from heroes.models import Base
 class Sport(Base):
     name = ndb.StringProperty(required=True)
     description = ndb.TextProperty()
+    code = ndb.StringProperty(required=True) #short name to use in URLs TODO: work out how to update database
+    published = ndb.BooleanProperty(default=False) #whether to show on the website or not
 
     @property
     def title(self):
