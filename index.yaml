@@ -15,6 +15,12 @@ indexes:
   properties:
   - name: name
 
+- kind: Country
+  ancestor: yes
+  properties:
+  - name: published
+  - name: name
+
 - kind: Division
   ancestor: yes
   properties:

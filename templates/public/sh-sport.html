@@ -11,23 +11,33 @@
     <body>
         
         <div id="contentParent">
+            
             <div class="attributeContainer">
-                <div>
-                    <h1>Sports Heroes</h1>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </nav>
+                <div class="objectTitle">
+                    <h1>{{ sport.name }}</h1>
                 </div>
             </div>
+
             <div class="listContainer">
+                
                 <div class="listTitle">
-                    <h3>Sports</h3>
+                    <h3>Countries</h3>
                 </div>
+                
                 <ul class="standardList">
-                    
-                    {% for sport in allSports %}
-                    <li><a href="{{ sport.publiclink }}">{{ sport.name }}</a></li>
-                    {% endfor %}
+                    {% for country in countries %}
+                    <li><a href="{{ country.publiclink }}">{{ country.flagemoji }} {{ country.name }}</a></li>
+                    {% endfor %} 
                 </ul>
             
             </div>
+            
+            
         </div>
 
     </body>

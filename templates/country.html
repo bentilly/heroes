@@ -35,6 +35,10 @@
                     <input type="text" name="countryCode" value="{{ country_object.code }}">
                     <label>flag emoji</label>
                     <input type="text" name="flagEmoji" value="{{ country_object.flagemoji }}">
+                    <br /><br />
+                    <input type="checkbox" name="publishCountry" value="published" 
+                        {% if country_object.published %} checked {% endif %} 
+                    >Publish this country<br>
                     <button type="submit">Save</button>
                 </form>
                 

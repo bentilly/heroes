@@ -5,11 +5,11 @@ from heroes.models import Base
 
 
 class Rep(Base):
-	# PARENT is COUNTRY
+	# ANCESTRY: Sport > Country > Rep
 	firstname = ndb.StringProperty(required=True)
 	lastname = ndb.StringProperty(required=True)
 	uid = ndb.StringProperty(required=False)
-	# used for urls, eg uwhheroes.co.nz/rep/uid
+	# used for nice urls, eg uwhheroes.co.nz/rep/uid
 	stats = ndb.PickleProperty()
 
 

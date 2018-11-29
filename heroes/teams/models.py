@@ -9,7 +9,7 @@ class Team(Base):
     name = ndb.StringProperty(required=False)
     # COUNTRY IS PARENT
     division = ndb.KeyProperty(kind=Division, required=True)
-    showOnHomePage = ndb.BooleanProperty(default=False)
+    show_on_home_page = ndb.BooleanProperty(default=False)
 
     @property
     def title(self):

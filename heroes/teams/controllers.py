@@ -80,7 +80,7 @@ def update_entry(key):
     except:
         pass
 
-    team.showOnHomePage = homepage
+    team.show_on_home_page = homepage
     
     team.put()
 

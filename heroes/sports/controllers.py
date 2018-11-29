@@ -67,7 +67,6 @@ def sport_view(key):
             sport_object = sport,
             countries=country_entries,
             divisions=division_entries,
-            #roles=role_entries,  #TODO - move to child of COUNTRY
             events=event_entries,
             venues=venue_entries,
             trophies=trophy_entries,
@@ -105,6 +104,7 @@ def update_entry(key):
     sport = sport_key.get()
     sport.name = request.form['sportName']
     sport.code = request.form['sportCode'] #TODO must be unique
+    
     #Check box
     published = False
     try:

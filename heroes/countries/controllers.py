@@ -94,6 +94,18 @@ def update_entry(key):
     country.name = request.form['countryName']
     country.code = request.form['countryCode']
     country.flagemoji = request.form['flagEmoji']
+
+     #Check box
+    published = False
+    try:
+        if request.form['publishCountry']:
+            published = True
+        pass
+    except:
+        pass
+
+    country.published = published
+    
     country.put()
 
     return redirect('/admin/country/{}'.format(country.key.urlsafe()))

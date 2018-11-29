@@ -23,102 +23,93 @@ heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 # Sports Heroes HOME ------------------
 
 @heroesweb_bp.route('/') 
-def sh_home():
+def render_sh_home():
 	all_sports = Sport.query(Sport.published == True).fetch()
 	return render_template('public/sh-home.html',
         allSports=all_sports,
     )
 
 
+# A SPORT home page
+@heroesweb_bp.route('sport/<key>/')
+def sport_home(key):
+	sport_key = ndb.Key(urlsafe=key)
+	sport = sport_key.get()
+	countries = Country.query(Country.published == True, ancestor=sport_key).order(Country.name).fetch()
 
-#===========================================================================================#
+	return render_template('public/sh-sport.html',
+		sport = sport,
+		countries=countries,
+	)
 
-#Currently ROOT but need to break so we can do multi sport / countries
 
-@heroesweb_bp.route('/uhwnz') 
-def uwhnz_home():
-	#find UWH + NZL
-	sport = Sport.query(Sport.name == 'Underwater Hockey').fetch(1)
-	countries = Country.query(ancestor=sport[0].key).fetch()
+# A SPORT/COUNTRY home page
+# eg: Underwater Hockey, New Zealand
 
-	for country in countries:
-		if country.code == 'NZL': #replace 'NZL' later with DB branch or URL
-			heroSquads = []
-			allNZLteams = Team.query(ancestor=country.key).fetch()
+@heroesweb_bp.route('country/<key>/')
+def render_country_home(key):
+	country_key = ndb.Key(urlsafe=key)
+	country = country_key.get()
 
-			############## LOAD TEAMS BASED ON FLAG IN DB (TEAM)
+	hero_squads = []
+	hero_teams = Team.query(Team.show_on_home_page == True, ancestor=country.key).fetch()
 
-			for team in allNZLteams:
-				# if team.title == 'NZL Elite Men' or team.title == 'NZL Elite Women' or team.title == 'NZL Mens Masters':
-				if team.showOnHomePage == True:
-					squads = Squad.query(ancestor=team.key).fetch()
-					# TODO: this throws an error if no squads - fix
-					# TODO: Probably a better way to do this with sorting or something
-					latestSquad = squads[0]
+	for team in hero_teams:
+		squads = Squad.query(ancestor=team.key).fetch()
+		# TODO: this throws an error if no squads - fix
+		# TODO: Probably a better way to do this with sorting or something
+		latest_squad = squads[0]
+		for squad in squads:
+			if squad.eventdate > latest_squad.eventdate:
+				latest_squad = squad
 
-					for squad in squads:
-						if squad.eventdate > latestSquad.eventdate:
-							latestSquad = squad
+		squad_members = Squadmember.query(ancestor=latest_squad.key).fetch()
+		# sort squadMembers. 1. Captain, 2. Vice Captain, 3. Players, 4 Coach, 5, Manager
+		squad_members.sort(key=sortSquadMembersOnName)
+		squad_members.sort(key=sortSquadMembersOnRole)
 
-					
-					squadMembers = Squadmember.query(ancestor=latestSquad.key).fetch()
-					# sort squadMembers. 1. Captain, 2. Vice Captain, 3. Players, 4 Coach, 5, Manager
-					squadMembers.sort(key=sortSquadMembersOnName)
-					squadMembers.sort(key=sortSquadMembersOnRole)
+		hero_squad = {"squad":latest_squad, "squad_members":squad_members, "next_match_in":None}
+		hero_squads.append(hero_squad)
+			
+	hero_squads.sort(key=getSquadTitle)  #TODO: Update name case format (get_squad_title)
 
-					heroSquad = {"squad":latestSquad, "squadMembers":squadMembers, "nextMatchIn":None}
-					heroSquads.append(heroSquad)
-					
-			heroSquads.sort(key=getSquadTitle)
+	#Next next match for each hero_squad in hero_squads
+	now = datetime.datetime.now() #now is UTC. match.date is also UTC
 
-			#Next next match for each heroSquad in heroSquads
-			now = datetime.datetime.now() #now is UTC. match.date is also UTC
+	for hero_squad in hero_squads:
+		squad = hero_squad["squad"]
+		event_key = squad.event
+		division = squad.key.parent().get().division
+		country = squad.key.parent().parent()
 
-			for heroSquad in heroSquads:
-				squad = heroSquad["squad"]
-				event_key = squad.event
-				division = squad.key.parent().get().division
-				country = squad.key.parent().parent()
+		division_matches = Match.query(Match.division == division, ancestor=event_key).order(Match.date).fetch()
 
-				divisionMatches = Match.query(Match.division == division, ancestor=event_key).order(Match.date).fetch()
+		for match in division_matches:
+			if match.country1 == country or match.country2 == country:
+				if match.date > now:
+					delta = match.date - now
+					days = delta.days
+					hours = strfdelta(delta, "{hours}")
+					minutes = strfdelta(delta, "{minutes}")
 
-				for match in divisionMatches:
-					if match.country1 == country or match.country2 == country:
-						if match.date > now:
-							delta = match.date - now
-							days = delta.days
-							hours = strfdelta(delta, "{hours}")
-							minutes = strfdelta(delta, "{minutes}")
+					delta_display = {"d":delta.days, "h":hours, "m":minutes}
+					hero_squad["nextMatchIn"] = delta_display
 
-							deltaDisplay = {"d":delta.days, "h":hours, "m":minutes}
-							heroSquad["nextMatchIn"] = deltaDisplay
+					break
 
-							break
+		# MENU ======== Get latest squad for every team that has a squad.
+		menu_squads = get_menu_squads(country)
 
-			# Get latest squad for every team. Used in MENU
-			menuSquads = []
-			for t in allNZLteams:
-				allsquads = Squad.query(ancestor=t.key).fetch()
-				latestSquad = allsquads[0]
-
-				for asq in allsquads:
-					if asq.eventdate > latestSquad.eventdate:
-						latestSquad = asq
-						# TODO: Can I sort by date and pick the first?
-
-				menuSquads.append(latestSquad)
-				menuSquads.sort(key=sortSquadOnDivision)
-
-			# render nzlHome template
-			return render_template('public/nzlHome.html',
-				heroSquads = heroSquads,
-				squads = menuSquads,
-			)
+		# render nzlHome template
+		return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
+			heroSquads = hero_squads,
+			squads = menu_squads,
+		)
 
 
 # PROFILE of SQUAD (and team history) --------- 
 @heroesweb_bp.route('squad/<key>/')
-def squad_profile(key):
+def render_squad_profile(key):
 	squad_key = ndb.Key(urlsafe=key)
 	squad = squad_key.get()
 	# trace parents - if not used, delete
@@ -139,27 +130,15 @@ def squad_profile(key):
 
 	# TODO: sort them by event date
 
-
-	# get the latest squad for all teams for this sport/country - to build the menu
-	menuTeams = Team.query(ancestor=country.key).fetch()
-	menuSquads = []
-	for t in menuTeams:
-		allsquads = Squad.query(ancestor=t.key).fetch()
-		latestSquad = allsquads[0]
-
-		for asq in allsquads:
-			if asq.eventdate > latestSquad.eventdate:
-				latestSquad = asq
-
-		menuSquads.append(latestSquad)
-		menuSquads.sort(key=sortSquadOnDivision)
+	# MENU ======== Get latest squad for every team that has a squad.
+	menu_squads = get_menu_squads(country.key)
 
 	# render the page
 	return render_template('public/nzlTeam.html',
 		squad = squad,
 		squadmembers = squadMembers,
 		teamsquads = teamSquads, #for history
-		menusquads = menuSquads, #for menu
+		menusquads = menu_squads, #for menu
 	)
 
 
@@ -167,7 +146,7 @@ def squad_profile(key):
 
 # PROFILE of SQUADMEMBER ---------
 @heroesweb_bp.route('rep/<key>/')
-def rep_profile(key):
+def render_rep_profile(key):
 	# check if key is a rep uid
 	reps = Rep.query(Rep.uid == key).fetch(1)
 	if reps:
@@ -189,34 +168,39 @@ def rep_profile(key):
 	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
 	squadmember = squadmembers[0]
 
-	# MENU Get latest squad for every team.
-	country = rep_key.parent().get()
-	allNZLteams = Team.query(ancestor=country.key).fetch()
-
-	# Get latest squad for every team. Used in MENU
-	menuSquads = []
-	for t in allNZLteams:
-		allsquads = Squad.query(ancestor=t.key).fetch()
-		latestSquad = allsquads[0]
-
-		for asq in allsquads:
-			if asq.eventdate > latestSquad.eventdate:
-				latestSquad = asq
-				# TODO: Can I sort by date and pick the first?
-				# TODO: this is used on every page. Should be abstracted
-
-		menuSquads.append(latestSquad)
-		menuSquads.sort(key=sortSquadOnDivision)
+	# MENU ======== Get latest squad for every team that has a squad.
+	country_key = rep_key.parent()
+	menu_squads = get_menu_squads(country_key)
 
 	return render_template('public/nzlSquadmember.html',
 		squadmember = squadmember,
 		rep = rep,
 		squadmembers = squadmembers,
-		squads = menuSquads,
+		squads = menu_squads,
 	)
 
 
-# HELPERS -----------------------------------------------
+# HELPERS ================================================================================
+
+def get_menu_squads(country_key):
+	teams = Team.query(ancestor=country_key).fetch()
+	menu_squads = []
+	for t in teams:
+		allsquads = Squad.query(ancestor=t.key).fetch()
+
+		if allsquads: #empty list returns False
+			latest_squad = allsquads[0]
+
+			for asq in allsquads:
+				if asq.eventdate > latest_squad.eventdate:
+					latest_squad = asq
+					# TODO: Can I sort by date and pick the first?
+
+			menu_squads.append(latest_squad)
+
+	menu_squads.sort(key=sortSquadOnDivision) #TODO: Update name case format (sort_squad_on_division)
+	return menu_squads
+
 
 def sortRepStats(stat):
     sortid = stat["sort"]

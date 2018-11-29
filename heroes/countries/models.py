@@ -8,6 +8,7 @@ class Country(Base):
 	#three letter country code
 	code = ndb.StringProperty(required=True)
 	flagemoji = ndb.StringProperty(required=False)
+	published = ndb.BooleanProperty(default=False) #whether to show on the website or not
 
 	@property
 	def title(self):
