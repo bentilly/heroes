@@ -63,8 +63,8 @@ def sport_view(key):
     
 
     return render_template('sport.html',
-            object_title=sport.name,
-            sport_object = sport,
+            objectTitle=sport.name,
+            sportObject = sport,
             countries=country_entries,
             divisions=division_entries,
             events=event_entries,
@@ -89,7 +89,7 @@ def add_entry():
 
     # TODO: Form not complete
     sport = Sport(name=request.form['sportName'], code=request.form['sportCode'])
-    #TODO sport.code must be unique
+    # TODO sport.code must be unique
 
     sport.put()
 
@@ -119,33 +119,3 @@ def update_entry(key):
     sport.put()
 
     return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
-
-
-
-
-#REGISTER EDITOR 
-# dont do this anymore. Might in the future
-
-# @sports_bp.route('/register', methods=['POST'])
-# def register_editor():
-#     currentuser = users.get_current_user()
-#     editor = Editor(
-#         userid=currentuser.user_id(),
-#         firstname=request.form['firstName'],
-#         lastname=request.form['lastName'],
-#         phone=request.form['phone'],
-#         country=request.form['country'],
-#         sport=request.form['sport'],
-
-#         )
-
-#     editor.put()
-#     # return redirect('/admin/sport/all')  Happens to fast. put() has not completed
-#     logoutlink = users.create_logout_url("/")
-#     sports_entries = Sport.query().fetch()
-#     return render_template('home.html',
-#             object_title='Heroes',
-#             sports=sports_entries,
-#             logoutlink=logoutlink,
-#             user=currentuser,
-#         )

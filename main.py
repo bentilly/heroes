@@ -6,10 +6,6 @@ from heroes import create_app
 app = create_app()
 #NEXT heroes/__init__.py
 
-# @app.route('/')
-# def index():
-#     return redirect('/sport/all')
-
 @app.route('/admin')
 def index():
     return redirect('admin/sport/all')

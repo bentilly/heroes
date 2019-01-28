@@ -24,6 +24,10 @@ heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
 @heroesweb_bp.route('/') 
 def render_sh_home():
+	# Lets see if I can detect the url
+	logging.info("#############   BASE URL")
+	logging.info(request.url)
+
 	all_sports = Sport.query(Sport.published == True).fetch()
 	return render_template('public/sh-home.html',
         allSports=all_sports,
@@ -80,12 +84,12 @@ def render_country_home(key):
 		squad = hero_squad["squad"]
 		event_key = squad.event
 		division = squad.key.parent().get().division
-		country = squad.key.parent().parent()
+		country_key = squad.key.parent().parent()
 
 		division_matches = Match.query(Match.division == division, ancestor=event_key).order(Match.date).fetch()
 
 		for match in division_matches:
-			if match.country1 == country or match.country2 == country:
+			if match.country1 == country_key or match.country2 == country_key:
 				if match.date > now:
 					delta = match.date - now
 					days = delta.days
@@ -97,14 +101,14 @@ def render_country_home(key):
 
 					break
 
-		# MENU ======== Get latest squad for every team that has a squad.
-		menu_squads = get_menu_squads(country)
+	# MENU ======== Get latest squad for every team that has a squad.
+	menu_squads = get_menu_squads(country_key)
 
-		# render nzlHome template
-		return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
-			heroSquads = hero_squads,
-			squads = menu_squads,
-		)
+	# render nzlHome template
+	return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
+		heroSquads = hero_squads,
+		squads = menu_squads,
+	)
 
 
 # PROFILE of SQUAD (and team history) --------- 
