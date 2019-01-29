@@ -39,6 +39,8 @@
                     <input type="checkbox" name="publishCountry" value="published" 
                         {% if country_object.published %} checked {% endif %} 
                     >Publish this country<br>
+                    <label>External URL entrypoint</label>
+                    <input type="text" name="externalUrl" value="{{ country_object.external_url }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -50,6 +52,8 @@
                     <input type="text" name="countryCode">
                     <label>flag emoji</label>
                     <input type="text" name="flagEmoji">
+                    <label>External URL entrypoint</label>
+                    <input type="text" name="externalUrl">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}
