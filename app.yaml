@@ -2,7 +2,7 @@
 # application: sports-heroes #PRODUCTION dont break!!!
 # ===============
 application: dev-sports-heroes #Development site
-version: 1-1-4-urls
+version: 1-1-5-templates1
 runtime: python27
 api_version: 1
 threadsafe: yes
