@@ -102,10 +102,19 @@ def render_sh_home():
 def render_sport_home(sport):
 	countries = Country.query(Country.published == True, ancestor=sport.key).order(Country.name).fetch()
 
-	return render_template('public/sh-sport.html',
-		sport = sport,
-		countries=countries,
-	)
+	# Check for custom template using brute force. Probably a cleaner way to do this!
+	try:
+		template_path = "public/"+sport.code+"/sport.html"
+		return render_template(template_path,
+			sport = sport,
+			countries=countries,
+		)
+	except:
+		template_path = "public/sh-sport.html"
+		return render_template(template_path,
+			sport = sport,
+			countries=countries,
+		)
 
 
 
@@ -159,11 +168,21 @@ def render_country_home(country):
 	# MENU ======== Get latest squad for every team that has a squad.
 	menu_squads = get_menu_squads(country.key)
 
-	# render nzlHome template
-	return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
-		heroSquads = hero_squads,
-		squads = menu_squads,
-	)
+	# RENDER TEMPLATE
+	# Check for custom template using brute force. Probably a cleaner way to do this!
+	logging.info("CHECK FOR TEMPLATE")
+	try:
+		template_path = "public/"+country.key.parent().get().code+"/"+country.code+"country.html"
+		logging.info(template_path)
+		return render_template(template_path,  ##TODO: Update name case format (nzl-home.html)
+			heroSquads = hero_squads,
+			squads = menu_squads,
+		)
+	except:
+		return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
+			heroSquads = hero_squads,
+			squads = menu_squads,
+		)
 
 
 # PROFILE of SQUAD (and team history) --------- 
