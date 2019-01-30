@@ -19,79 +19,14 @@ from heroes.matches.models import Match
 
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
+# RENDERING : public website#
+# Sports Heroes HOME ------------------
 
-# ================================================================================
-# EVALUATE URL's (get KEY to render and pass on)
-# ================================================================================
-
-@heroesweb_bp.route('/')
-	# 1. Evaluate base URL
-	# 2. Hand off to renderers
-def eval_base_url():
-	logging.info("EVAL URL")
-	logging.info(request.url)
-	#SPORT home page?
-	home = Sport.query(Sport.external_url == request.url).fetch(1)
-	if home:
-		return render_sport_home(home[0])
-	else:
-		home = Country.query(Country.external_url == request.url).fetch(1)
-		if home:
-			return render_country_home(home[0])
-
-	return render_sh_home()
-
-
-@heroesweb_bp.route('sport/<key>/')
-	# 1. Retrieve SPORT
-	# 2. Hand off to SPORT HOME PAGE renderer
-def eval_sport(key):
-	sport_key = ndb.Key(urlsafe=key)
-	sport = sport_key.get()
-	return render_sport_home(sport)
-
-@heroesweb_bp.route('country/<key>/')
-	# 1. Retrieve COUNTRY
-	# 2. Hand off to COUNTRY HOME PAGE renderer
-def eval_country(key):
-	country_key = ndb.Key(urlsafe=key)
-	country = country_key.get()
-	return render_country_home(country)
-
-
-@heroesweb_bp.route('squad/<key>/')
-	# 1. Retrieve SQUAD
-	# 2. Hand off to SQUAD PAGE renderer
-def eval_squad(key):
-	squad_key = ndb.Key(urlsafe=key)
-	squad = squad_key.get()
-	return render_squad(squad)
-
-
-@heroesweb_bp.route('rep/<key>/')
-	# 1. Retrieve REP
-	# 2. Hand off to REP PAGE renderer
-def eval_rep(key):
-	# check if key is a rep uid
-	reps = Rep.query(Rep.uid == key).fetch(1)
-	if reps:
-		rep = reps[0]
-	else: #it better be a NDB key object
-		rep_key = ndb.Key(urlsafe=key)
-		rep = rep_key.get()
-
-	return render_rep(rep)
-
-
-
-
-
-# ================================================================================
-# RENDERERS
-# ================================================================================
-
-
+@heroesweb_bp.route('/') 
 def render_sh_home():
+	# Lets see if I can detect the url
+	logging.info("#############   BASE URL")
+	logging.info(request.url)
 
 	all_sports = Sport.query(Sport.published == True).fetch()
 	return render_template('public/sh-home.html',
@@ -99,8 +34,12 @@ def render_sh_home():
     )
 
 
-def render_sport_home(sport):
-	countries = Country.query(Country.published == True, ancestor=sport.key).order(Country.name).fetch()
+# A SPORT home page
+@heroesweb_bp.route('sport/<key>/')
+def sport_home(key):
+	sport_key = ndb.Key(urlsafe=key)
+	sport = sport_key.get()
+	countries = Country.query(Country.published == True, ancestor=sport_key).order(Country.name).fetch()
 
 	return render_template('public/sh-sport.html',
 		sport = sport,
@@ -108,8 +47,14 @@ def render_sport_home(sport):
 	)
 
 
+# A SPORT/COUNTRY home page
+# eg: Underwater Hockey, New Zealand
 
-def render_country_home(country):
+@heroesweb_bp.route('country/<key>/')
+def render_country_home(key):
+	country_key = ndb.Key(urlsafe=key)
+	country = country_key.get()
+
 	hero_squads = []
 	hero_teams = Team.query(Team.show_on_home_page == True, ancestor=country.key).fetch()
 
@@ -157,7 +102,7 @@ def render_country_home(country):
 					break
 
 	# MENU ======== Get latest squad for every team that has a squad.
-	menu_squads = get_menu_squads(country.key)
+	menu_squads = get_menu_squads(country_key)
 
 	# render nzlHome template
 	return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
@@ -167,14 +112,17 @@ def render_country_home(country):
 
 
 # PROFILE of SQUAD (and team history) --------- 
-
-def render_squad(squad):
+@heroesweb_bp.route('squad/<key>/')
+def render_squad_profile(key):
+	squad_key = ndb.Key(urlsafe=key)
+	squad = squad_key.get()
 	# trace parents - if not used, delete
-	team = squad.key.parent().get()
+	team = squad_key.parent().get()
 	country = team.key.parent().get()
 
+
 	# get all the sqad members
-	squadMembers = Squadmember.query(ancestor=squad.key).fetch()
+	squadMembers = Squadmember.query(ancestor=squad_key).fetch()
 	# sort squadMembers. 1. Captain, 2. Vice Captain, 3. Players, 4 Coach, 5, Manager
 	squadMembers.sort(key=sortSquadMembersOnName)
 	squadMembers.sort(key=sortSquadMembersOnRole)
@@ -201,19 +149,31 @@ def render_squad(squad):
 
 
 # PROFILE of SQUADMEMBER ---------
+@heroesweb_bp.route('rep/<key>/')
+def render_rep_profile(key):
+	# check if key is a rep uid
+	reps = Rep.query(Rep.uid == key).fetch(1)
+	if reps:
+		rep = reps[0]
+		rep_key = rep.key
+	else: #it better be a NDB key object
+		rep_key = ndb.Key(urlsafe=key)
+		# squadmember = sm_key.get()
+		# rep_key = squadmember.rep
+		rep = rep_key.get()
 
-def render_rep(rep):
+
 	#SORT stats
 	if rep.stats:
 		rep.stats.sort(key=sortRepStats)
 
-	squadmembers = Squadmember.query(Squadmember.rep==rep.key).fetch()
+	squadmembers = Squadmember.query(Squadmember.rep==rep_key).fetch()
 	# sort squadmembers on year
 	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
 	squadmember = squadmembers[0]
 
 	# MENU ======== Get latest squad for every team that has a squad.
-	country_key = rep.key.parent()
+	country_key = rep_key.parent()
 	menu_squads = get_menu_squads(country_key)
 
 	return render_template('public/nzlSquadmember.html',
@@ -224,13 +184,7 @@ def render_rep(rep):
 	)
 
 
-
-
-
-
-# ================================================================================
-# HELPERS
-# ================================================================================
+# HELPERS ================================================================================
 
 def get_menu_squads(country_key):
 	teams = Team.query(ancestor=country_key).fetch()

@@ -91,11 +91,6 @@ def add_entry():
     sport = Sport(name=request.form['sportName'], code=request.form['sportCode'])
     # TODO sport.code must be unique
 
-    #External URL entrypoint 
-    if request.form['externalUrl']:
-        if request.form['externalUrl'] != "None":
-            sport.external_url = request.form['externalUrl']
-
     sport.put()
 
     return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
@@ -120,11 +115,6 @@ def update_entry(key):
         pass
 
     sport.published = published
-
-    #External URL entrypoint
-    if request.form['externalUrl']:
-        if request.form['externalUrl'] != "None":
-            sport.external_url = request.form['externalUrl']
 
     sport.put()
 

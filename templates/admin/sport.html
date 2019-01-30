@@ -33,8 +33,6 @@
                     <input type="checkbox" name="publishSport" value="published" 
                         {% if sportObject.published %} checked {% endif %} 
                     >Publish this sport<br>
-                    <label>External URL entrypoint</label>
-                    <input type="text" name="externalUrl" value="{{ sportObject.external_url }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -44,8 +42,6 @@
                     <input type="text" name="sportName">
                     <label>sport code</label>
                     <input type="text" name="sportCode"">
-                    <label>External URL entrypoint</label>
-                    <input type="text" name="externalUrl">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}
