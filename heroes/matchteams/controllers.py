@@ -52,7 +52,7 @@ def matchteam_view(key):
 
         squad_matchteam_members.append(squad_matchteam_member)
 
-    return render_template('matchteam.html',
+    return render_template('/admin/matchteam.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             matchteam_object=matchteam,

@@ -34,7 +34,7 @@ def rep_view(key):
     title = rep.title
     #END BREADCRUMB
 
-    return render_template('rep.html',
+    return render_template('/admin/rep.html',
         breadcrumb = breadcrumb_list,
         object_title=title,
         rep_object=rep,
@@ -59,7 +59,7 @@ def new_rep(key):
     breadcrumb_list = [sport, country]
     #END BREADCRUMB
 
-    return render_template('rep.html',
+    return render_template('/admin/rep.html',
         breadcrumb = breadcrumb_list,
         object_title='New rep',
         country_object=country,

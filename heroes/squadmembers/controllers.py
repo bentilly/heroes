@@ -49,7 +49,7 @@ def squadmember_view(key):
     form_action = "/admin/squadmember/update/" +  key
     upload_url = blobstore.create_upload_url(form_action)
 
-    return render_template('squadmember.html',
+    return render_template('/admin/squadmember.html',
         breadcrumb = breadcrumb_list,
         object_title=title,
         squadmember_object=squadmember,

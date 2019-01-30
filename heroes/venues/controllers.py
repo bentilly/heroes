@@ -23,7 +23,7 @@ def venue_view(key):
 	title = venue.title
 	#END BREADCRUMB
 
-	return render_template('venue.html',
+	return render_template('/admin/venue.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		venue_object=venue,
@@ -38,7 +38,7 @@ def new_venue(key):
 	breadcrumb_list = [sport]
 
 
-	return render_template('venue.html',
+	return render_template('/admin/venue.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New venue',
 		sport_object=sport,

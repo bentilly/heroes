@@ -51,7 +51,7 @@ def team_view(key):
         event_squads.append(event_squad)
 
 
-    return render_template('team.html',
+    return render_template('/admin/team.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             team_object=team,

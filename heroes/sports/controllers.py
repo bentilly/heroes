@@ -30,7 +30,7 @@ def sports_list():
     
     if users.is_current_user_admin():
         sports_entries = Sport.query().fetch()
-        return render_template('home.html',
+        return render_template('/admin/home.html',
                 object_title='Heroes',
                 sports=sports_entries,
                 logoutlink=logoutlink,
@@ -39,7 +39,7 @@ def sports_list():
     else:
         #need no admin page. Needs to include log out link
         #self.response.write('You are not an administrator.')
-        return render_template('notAdmin.html',
+        return render_template('/admin/notAdmin.html',
                 logoutlink=logoutlink,
                 user=currentuser,
             )
@@ -62,7 +62,7 @@ def sport_view(key):
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
     
 
-    return render_template('sport.html',
+    return render_template('/admin/sport.html',
             objectTitle=sport.name,
             sportObject = sport,
             countries=country_entries,
@@ -75,7 +75,7 @@ def sport_view(key):
 #NEW SPORT PAGE
 @sports_bp.route('/new')
 def new_sport():
-    return render_template('sport.html',
+    return render_template('/admin/sport.html',
             object_title='New sport',
         )
 

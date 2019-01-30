@@ -36,7 +36,7 @@ def matchteammember_view(key):
 	role_entries = Role.query(ancestor=country.key).fetch()
 	position_entries = Position.query(ancestor=country.key).fetch()
 
-	return render_template('matchteammember.html',
+	return render_template('/admin/matchteammember.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		matchteammember_object=matchteammember,

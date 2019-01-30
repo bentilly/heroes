@@ -29,7 +29,7 @@ def event_view(key):
     #END BREADCRUMB
 
 
-    return render_template('event.html',
+    return render_template('/admin/event.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             event_object=event,
@@ -44,7 +44,7 @@ def new_event(key):
 
     breadcrumb_list = [sport]
 
-    return render_template('event.html',
+    return render_template('/admin/event.html',
         breadcrumb = breadcrumb_list,
         object_title='New event',
         sport_object=sport,

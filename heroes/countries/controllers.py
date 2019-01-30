@@ -34,7 +34,7 @@ def country_view(key):
     role_entries = Role.query(ancestor=country_key).fetch()
     position_entries = Position.query(ancestor=country_key).fetch()
 
-    return render_template('country.html',
+    return render_template('/admin/country.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             country_object=country,
@@ -58,7 +58,7 @@ def new_country(key):
     #END BREADCRUMB
 
 
-    return render_template('country.html',
+    return render_template('/admin/country.html',
         breadcrumb = breadcrumb_list,
         object_title='New country',
         sport_object=sport,
