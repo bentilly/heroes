@@ -9,6 +9,7 @@ class Country(Base):
 	code = ndb.StringProperty(required=True)
 	flagemoji = ndb.StringProperty(required=False)
 	published = ndb.BooleanProperty(default=False) #whether to show on the website or not
+	external_url = ndb.StringProperty() #If this sport+country has an external home page url, eg: uwhhereos.co.nz (UWH in New Zealand home page)
 
 	@property
 	def title(self):

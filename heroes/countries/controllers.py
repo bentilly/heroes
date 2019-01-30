@@ -83,6 +83,11 @@ def add_entry(parent_key):
         team = Team(parent=country.key, division=division.key)
         team.put()
 
+    #External URL entrypoint
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            country.external_url = request.form['externalUrl']
+
     return redirect('/admin/country/{}'.format(country.key.urlsafe()))
 
 
@@ -105,6 +110,11 @@ def update_entry(key):
         pass
 
     country.published = published
+
+    #External URL entrypoint
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            country.external_url = request.form['externalUrl']
     
     country.put()
 
