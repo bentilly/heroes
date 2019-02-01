@@ -25,7 +25,7 @@ def position_view(key):
 	title = position.title
 	#END BREADCRUMB
 
-	return render_template('position.html',
+	return render_template('/admin/position.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		position_object=position,
@@ -41,7 +41,7 @@ def new_position(key):
 
 	breadcrumb_list = [sport, country]
 
-	return render_template('position.html',
+	return render_template('/admin/position.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New position',
 		country_object=country,

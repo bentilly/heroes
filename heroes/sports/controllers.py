@@ -30,7 +30,7 @@ def sports_list():
     
     if users.is_current_user_admin():
         sports_entries = Sport.query().fetch()
-        return render_template('home.html',
+        return render_template('/admin/home.html',
                 object_title='Heroes',
                 sports=sports_entries,
                 logoutlink=logoutlink,
@@ -39,35 +39,12 @@ def sports_list():
     else:
         #need no admin page. Needs to include log out link
         #self.response.write('You are not an administrator.')
-        return render_template('notAdmin.html',
+        return render_template('/admin/notAdmin.html',
                 logoutlink=logoutlink,
                 user=currentuser,
             )
 
-#REGISTER EDITOR 
-@sports_bp.route('/register', methods=['POST'])
-def register_editor():
-    currentuser = users.get_current_user()
-    editor = Editor(
-        userid=currentuser.user_id(),
-        firstname=request.form['firstName'],
-        lastname=request.form['lastName'],
-        phone=request.form['phone'],
-        country=request.form['country'],
-        sport=request.form['sport'],
 
-        )
-
-    editor.put()
-    # return redirect('/admin/sport/all')  Happens to fast. put() has not completed
-    logoutlink = users.create_logout_url("/")
-    sports_entries = Sport.query().fetch()
-    return render_template('home.html',
-            object_title='Heroes',
-            sports=sports_entries,
-            logoutlink=logoutlink,
-            user=currentuser,
-        )
 
 
 
@@ -85,12 +62,11 @@ def sport_view(key):
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
     
 
-    return render_template('sport.html',
-            object_title=sport.name,
-            sport_object = sport,
+    return render_template('/admin/sport.html',
+            objectTitle=sport.name,
+            sportObject = sport,
             countries=country_entries,
             divisions=division_entries,
-            #roles=role_entries,  #TODO - move to child of COUNTRY
             events=event_entries,
             venues=venue_entries,
             trophies=trophy_entries,
@@ -99,7 +75,7 @@ def sport_view(key):
 #NEW SPORT PAGE
 @sports_bp.route('/new')
 def new_sport():
-    return render_template('sport.html',
+    return render_template('/admin/sport.html',
             object_title='New sport',
         )
 
@@ -110,7 +86,16 @@ def new_sport():
 # ADD SPORT
 @sports_bp.route('/add', methods=['POST'])
 def add_entry():
-    sport = Sport(name=request.form['sportName'])
+
+    # TODO: Form not complete
+    sport = Sport(name=request.form['sportName'], code=request.form['sportCode'])
+    # TODO sport.code must be unique
+
+    #External URL entrypoint 
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            sport.external_url = request.form['externalUrl']
+
     sport.put()
 
     return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
@@ -119,9 +104,28 @@ def add_entry():
 # UPDATE SPORT
 @sports_bp.route('/update/<key>', methods=['POST'])
 def update_entry(key):
+    # TODO: Form not complete
     sport_key = ndb.Key(urlsafe=key)
     sport = sport_key.get()
     sport.name = request.form['sportName']
+    sport.code = request.form['sportCode'] #TODO must be unique
+    
+    #Check box
+    published = False
+    try:
+        if request.form['publishSport']:
+            published = True
+        pass
+    except:
+        pass
+
+    sport.published = published
+
+    #External URL entrypoint
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            sport.external_url = request.form['externalUrl']
+
     sport.put()
 
     return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))

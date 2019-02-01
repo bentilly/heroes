@@ -27,7 +27,7 @@ def new_trophy_page(sport_key=None):
         if sport_key:
             entry_data['parent'] = sport_key
         trophy = Trophy.create_new_revision(**entry_data)
-    return render_template('trophy.html', **data)
+    return render_template('/admin/trophy.html', **data)
 
 
 @trophy_bp.route('/<key>')
@@ -48,7 +48,7 @@ def update_trophy(uid):
         entry_data['parent'] = trophy.key.parent()
         trophy = Trophy.create_new_revision(**entry_data)
         data['trophy_object'] = trophy
-    return render_template('trophy.html', **data)
+    return render_template('/admin/trophy.html', **data)
 
 
 @trophy_bp.route('/<key>')

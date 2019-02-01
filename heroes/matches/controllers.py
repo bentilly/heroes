@@ -36,7 +36,7 @@ def match_view(key):
 	division_entries = Division.query(ancestor=event_key.parent()).fetch()
 	country_entries = Country.query(ancestor=event_key.parent()).fetch()
 
-	return render_template('match.html',
+	return render_template('/admin/match.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		match_object=match,
@@ -65,7 +65,7 @@ def new_match(key):
 	breadcrumb_list = [sport, event]
 	#END BREADCRUMB
 
-	return render_template('match.html',
+	return render_template('/admin/match.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New match',
 		event_object=event,

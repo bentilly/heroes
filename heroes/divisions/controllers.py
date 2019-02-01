@@ -25,7 +25,7 @@ def division_view(key):
     title = division.title
     #END BREADCRUMB
 
-    return render_template('division.html',
+    return render_template('/admin/division.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             division_object=division,
@@ -39,7 +39,7 @@ def new_division(key):
 
 	breadcrumb_list = [sport]
 
-	return render_template('division.html',
+	return render_template('/admin/division.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New division',
 		sport_object=sport,

@@ -51,7 +51,7 @@ def team_view(key):
         event_squads.append(event_squad)
 
 
-    return render_template('team.html',
+    return render_template('/admin/team.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             team_object=team,
@@ -80,7 +80,7 @@ def update_entry(key):
     except:
         pass
 
-    team.showOnHomePage = homepage
+    team.show_on_home_page = homepage
     
     team.put()
 

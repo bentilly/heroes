@@ -97,7 +97,7 @@ def squad_view(key):
 	upload_url = blobstore.create_upload_url(form_action)
 
 
-	return render_template('squad.html',
+	return render_template('/admin/squad.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		squad_object=squad,
@@ -128,7 +128,7 @@ def new_squad(key):
 
 	breadcrumb_list = [sport, country, team]
 
-	return render_template('squad.html',
+	return render_template('/admin/squad.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New squad',
 		team_object=team,

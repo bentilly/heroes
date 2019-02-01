@@ -25,7 +25,7 @@ def role_view(key):
 	title = role.title
 	#END BREADCRUMB
 
-	return render_template('role.html',
+	return render_template('/admin/role.html',
 		breadcrumb = breadcrumb_list,
 		object_title=title,
 		role_object=role,
@@ -41,7 +41,7 @@ def new_role(key):
 
 	breadcrumb_list = [sport, country]
 
-	return render_template('role.html',
+	return render_template('/admin/role.html',
 		breadcrumb = breadcrumb_list,
 		object_title='New role',
 		country_object=country,

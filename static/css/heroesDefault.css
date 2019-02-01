@@ -1,0 +1,48 @@
+/*PHOTO GRID*/
+div.team-photo-grid{
+	display: grid;
+	grid-template-columns:  33.333% 33.333% 33.333%;
+	grid-gap: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+div.team-photo-grid a{
+	color: #444444;
+}
+.grid-item{
+	border: 1px solid #999999;
+}
+.item-photo {
+  background-color: #444;
+  color: #fff;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+.image-holder{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	overflow: hidden;
+}
+.image-holder img{
+	width: 100%;
+}
+.item-caption{
+	text-align: center;
+	background-color: white;
+	padding: 5px 5px 8px 5px;
+}
+.player-name{
+	font-weight: 500;
+	font-size: 14px;
+}
+.player-role{
+	font-weight: 300;
+	font-size: 10px;
+	color: #666666;
+	text-transform: uppercase;
+}

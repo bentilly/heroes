@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ country.name }} {{ sport.name }}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+  <link rel="stylesheet" href="../../static/css/heroesDefault.css">
+
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <!-- JAVASCRIPT -->
+  <script type="text/javascript">
+      function toggleTeamNav() {
+          var element = document.getElementById("teamNav");
+          element.classList.toggle("is-active");
+      }
+  </script>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        {{ country.name }} {{ sport.name }}
+      </h1>
+      <!-- TEAMS MENU -->
+      <div class="dropdown" id="teamNav">
+        <div class="dropdown-trigger">
+          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" onclick="toggleTeamNav()">
+            <span>Teams</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            {% for squad in squads %}
+            <a href="{{ squad.publiclink }}" class="dropdown-item">
+              {{ squad.divisionName }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <p>&nbsp</p>
+      <h2 class="title is-3"> Latest Teams </h2>
+      <!-- REPEAT FOR EACH SQUAD -->
+      {% for heroSquad in heroSquads %}
+      <div class="container">
+        <h4 class="title is-4"><a href="{{ heroSquad.squad.publiclink }}">{{ heroSquad.squad.teamName }}</a></h4>
+        <p>{{ heroSquad.squad.title }}</p>
+        <p>{{ heroSquad.squad.eventHost}}</p>
+      </div>
+
+      <div class="team-photo-grid"> <!-- Not part of Bulma. See heroesDefault.css-->
+          {% for sm in heroSquad.squad_members %}
+          <a href="{{ sm.replink }}">
+          <div class="grid-item">
+              <div class="item-photo">
+                  <div class="image-holder">
+                      <img src="{{ sm.photoUrl }}">
+                  </div>
+              </div>
+              <div class="item-caption">
+                  <p class="player-name">{{ sm.title }}</p>
+                  <p class="player-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
+              </div>
+          </div>
+          </a>
+          {% endfor %}
+      </div>
+
+
+      {% endfor %}
+    </div>
+  </section>
+
+
+</body>
+</html>

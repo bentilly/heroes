@@ -4,10 +4,12 @@ from heroes import fields
 from heroes.models import Base
 
 class Country(Base):
+	#Parent = Sport
 	name = ndb.StringProperty(required=True)
-	#three letter country code
-	code = ndb.StringProperty(required=True)
+	code = ndb.StringProperty(required=True)	#three letter country code
 	flagemoji = ndb.StringProperty(required=False)
+	published = ndb.BooleanProperty(default=False)	#whether to show on the website or not
+	external_url = ndb.StringProperty()	#If this sport+country has an external home page url, eg: uwhhereos.co.nz (UWH in New Zealand home page)
 
 	@property
 	def title(self):

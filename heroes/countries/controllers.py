@@ -34,7 +34,7 @@ def country_view(key):
     role_entries = Role.query(ancestor=country_key).fetch()
     position_entries = Position.query(ancestor=country_key).fetch()
 
-    return render_template('country.html',
+    return render_template('/admin/country.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
             country_object=country,
@@ -58,7 +58,7 @@ def new_country(key):
     #END BREADCRUMB
 
 
-    return render_template('country.html',
+    return render_template('/admin/country.html',
         breadcrumb = breadcrumb_list,
         object_title='New country',
         sport_object=sport,
@@ -83,6 +83,11 @@ def add_entry(parent_key):
         team = Team(parent=country.key, division=division.key)
         team.put()
 
+    #External URL entrypoint
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            country.external_url = request.form['externalUrl']
+
     return redirect('/admin/country/{}'.format(country.key.urlsafe()))
 
 
@@ -94,6 +99,23 @@ def update_entry(key):
     country.name = request.form['countryName']
     country.code = request.form['countryCode']
     country.flagemoji = request.form['flagEmoji']
+
+     #Check box
+    published = False
+    try:
+        if request.form['publishCountry']:
+            published = True
+        pass
+    except:
+        pass
+
+    country.published = published
+
+    #External URL entrypoint
+    if request.form['externalUrl']:
+        if request.form['externalUrl'] != "None":
+            country.external_url = request.form['externalUrl']
+    
     country.put()
 
     return redirect('/admin/country/{}'.format(country.key.urlsafe()))

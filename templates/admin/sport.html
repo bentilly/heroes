@@ -19,14 +19,22 @@
                     </ul>
                 </nav>
                 <div class="objectTitle">
-                    <h1>{{ object_title }}</h1>
+                    <h1>{{ objectTitle }}</h1>
                 </div>
                 
                 
-                {% if sport_object %}
-                <form name="sportForm" action="/admin/sport/update/{{ sport_object.key.urlsafe() }}" method=post>
+                {% if sportObject %}
+                <form name="sportForm" action="/admin/sport/update/{{ sportObject.key.urlsafe() }}" method=post>
                     <label>sport name</label>
-                    <input type="text" name="sportName" value="{{ sport_object.name }}">
+                    <input type="text" name="sportName" value="{{ sportObject.name }}">
+                    <label>sport code</label>
+                    <input type="text" name="sportCode" value="{{ sportObject.code }}">
+                    <br /><br />
+                    <input type="checkbox" name="publishSport" value="published" 
+                        {% if sportObject.published %} checked {% endif %} 
+                    >Publish this sport<br>
+                    <label>External URL entrypoint</label>
+                    <input type="text" name="externalUrl" value="{{ sportObject.external_url }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -34,6 +42,10 @@
                 <form name="sportForm" action="/admin/sport/add" method=post>
                     <label>sport name</label>
                     <input type="text" name="sportName">
+                    <label>sport code</label>
+                    <input type="text" name="sportCode"">
+                    <label>External URL entrypoint</label>
+                    <input type="text" name="externalUrl">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}
@@ -43,8 +55,8 @@
                 
                 <div class="listTitle">
                     <h3>Countries</h3>
-                    {% if sport_object %}
-                    <a href="/admin/country/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% if sportObject %}
+                    <a href="/admin/country/new/{{ sportObject.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
                     {% endif %}
                 </div>
                 
@@ -60,8 +72,8 @@
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Events</h3>
-                    {% if sport_object %}
-                    <a href="/admin/event/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% if sportObject %}
+                    <a href="/admin/event/new/{{ sportObject.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
                     {% endif %}
                 </div>
                 
@@ -76,8 +88,8 @@
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Divisions</h3>
-                    {% if sport_object %}
-                    <a href="/admin/division/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% if sportObject %}
+                    <a href="/admin/division/new/{{ sportObject.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
                     {% endif %}
                 </div>
                 <ul class="standardList">
@@ -90,8 +102,8 @@
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Venues</h3>
-                    {% if sport_object %}
-                    <a href="/admin/venue/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% if sportObject %}
+                    <a href="/admin/venue/new/{{ sportObject.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
                     {% endif %}
                 </div>
                 <ul class="standardList">
@@ -105,8 +117,8 @@
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Trophies</h3>
-                    {% if sport_object %}
-                      <a href="/admin/trophy/new/{{ sport_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% if sportObject %}
+                      <a href="/admin/trophy/new/{{ sportObject.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
                     {% endif %}
                 </div>
                 <ul class="standardList">
