@@ -110,7 +110,7 @@ def render_sport_home(sport):
 			countries=countries,
 		)
 	except:
-		template_path = "public/sh-sport.html"
+		template_path = "public/default/sport.html"
 		return render_template(template_path,
 			sport = sport,
 			countries=countries,
@@ -168,20 +168,27 @@ def render_country_home(country):
 	# MENU ======== Get latest squad for every team that has a squad.
 	menu_squads = get_menu_squads(country.key)
 
-	# RENDER TEMPLATE
+
+	# RENDER TEMPLATE =========
+	# extra bits to pass to template
+	sport = country.key.parent().get()
 	# Check for custom template using brute force. Probably a cleaner way to do this!
 	logging.info("CHECK FOR TEMPLATE")
 	try:
-		template_path = "public/"+country.key.parent().get().code+"/"+country.code+"country.html"
+		template_path = "public/"+sport.code+"/"+country.code+"/country.html"
 		logging.info(template_path)
 		return render_template(template_path,  ##TODO: Update name case format (nzl-home.html)
 			heroSquads = hero_squads,
 			squads = menu_squads,
+			country = country,
+			sport = sport,
 		)
 	except:
-		return render_template('public/nzlHome.html',  ##TODO: Update name case format (nzl-home.html)
+		return render_template('public/default/country.html',  ##TODO: Update name case format (nzl-home.html)
 			heroSquads = hero_squads,
 			squads = menu_squads,
+			country = country,
+			sport = sport,
 		)
 
 
@@ -208,7 +215,8 @@ def render_squad(squad):
 	# MENU ======== Get latest squad for every team that has a squad.
 	menu_squads = get_menu_squads(country.key)
 
-	# render the page
+	# render the page 
+	#STILL TO DO GENERIC TEMLATE
 	return render_template('public/nzlTeam.html',
 		squad = squad,
 		squadmembers = squadMembers,
