@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>UWH Heroes</title>
+
+        <!-- FONTS -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../../static/css/sanitize.css">
+        <link rel="stylesheet" href="../../static/css/heroes-flex.css">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.1">
+        <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.2">
+
+        <!-- JAVASCRIPT -->
+        <script type="text/javascript">
+            function toggleTeamNav() {
+                var x = document.getElementById("teamNav");
+                if (x.style.display === "flex") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "flex";
+                }
+            }
+        </script>
+    </head>
+    
+    <body>
+         <header>
+            <a href="../../">
+                <img src="../../static/img/uwh-fern-rev.svg" />
+                <h1>New Zealand Underwater Hockey Teams</h1>
+            </a>
+            <div class="breadcrumb flexr">
+                
+                <a href="/" class="icon-link"><i class="fas fa-home"></i></a>
+                <p><a onclick="toggleTeamNav()">TEAMS</a></p>
+
+            </div>
+            <nav class="team-nav flexr w" id="teamNav">
+                {% for squad in squads %}
+                    <a href="{{ squad.publiclink }}">{{ squad.divisionName }}</a>
+                {% endfor %}
+                <!-- <a class="tier-one-team" href="#">Elite Men</a>
+                <a href="#">Masters Men</a> -->
+            </nav>
+        </header>
+        
+        <main>
+            <h3>Player Profile</h3>
+            <h1 class="player-name">{{ rep.title }}</h1>
+
+            <div class="photo-stats flexr">
+                <div class="player-photo"><img src="{{ squadmember.photoUrl }}"></div>
+                <div class="player-stats flexchild g">
+                    {% if rep.stats %}
+                    {% for stat in rep.stats %}
+                    <div class="stat-label">{{ stat.label }}</div>
+                    <div class="stat-value">{{ stat.value }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <h3>History</h3>
+            <div class="player-history">
+
+                {% for sm in squadmembers %}
+                <div class="history-item flexr">
+                    <div class="item-info flexchild g">
+                        <h4><a href="{{ sm.key.parent().get().publiclink }}" class="teamHistory">
+                            {{ sm.key.parent().get().eventdate.year }} {{ sm.key.parent().get().teamName }}
+                        </a></h4>
+                        <p class="player-team-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
+                        <p class="event">{{ sm.key.parent().get().event.get().name }}</p>
+                        <p class="event">{{ sm.key.parent().get().event.get().hostCity }}</p>
+                    </div>
+                    <div class="history-photo">
+                        <img src="{{ sm.photoUrl }}">
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </main>
+
+        <footer>
+            <p>UWH Heroes is bought to you by</p>
+            <a href=""><img src="../../static/img/uwh_logo_small3.png">
+        </footer>
+
+    </body>    
+</html>

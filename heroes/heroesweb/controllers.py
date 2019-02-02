@@ -172,8 +172,8 @@ def render_country_home(country):
 	# RENDER TEMPLATE =========
 	# extra bits to pass to template
 	sport = country.key.parent().get()
+
 	# Check for custom template using brute force. Probably a cleaner way to do this!
-	logging.info("CHECK FOR TEMPLATE")
 	try:
 		template_path = "public/"+sport.code+"/"+country.code+"/country.html"
 		logging.info(template_path)
@@ -215,14 +215,27 @@ def render_squad(squad):
 	# MENU ======== Get latest squad for every team that has a squad.
 	menu_squads = get_menu_squads(country.key)
 
-	# render the page 
-	#STILL TO DO GENERIC TEMLATE
-	return render_template('public/nzlTeam.html',
-		squad = squad,
-		squadmembers = squadMembers,
-		teamsquads = teamSquads, #for history
-		menusquads = menu_squads, #for menu
-	)
+	# RENDER TEMPLATE =========
+	sport = country.key.parent().get()
+
+	try:
+		logging.info("CREATE TEMPLATE")
+		template_path = "public/"+sport.code+"/"+country.code+"/team.html"
+		logging.info(template_path)
+		return render_template(template_path,
+			squad = squad,
+			squadmembers = squadMembers,
+			teamsquads = teamSquads, #for history
+			menusquads = menu_squads, #for menu
+		)
+	except:
+		return render_template('public/nzlTeam.html',
+			squad = squad,
+			squadmembers = squadMembers,
+			teamsquads = teamSquads, #for history
+			menusquads = menu_squads, #for menu
+		)	
+
 
 
 
@@ -243,13 +256,27 @@ def render_rep(rep):
 	country_key = rep.key.parent()
 	menu_squads = get_menu_squads(country_key)
 
-	return render_template('public/nzlSquadmember.html',
-		squadmember = squadmember,
-		rep = rep,
-		squadmembers = squadmembers,
-		squads = menu_squads,
-	)
+	# RENDER TEMPLATE =========
+	country = country_key.get()
+	sport = country_key.parent().get()
 
+	try:
+		template_path = "public/"+sport.code+"/"+country.code+"/rep.html"
+
+		return render_template(template_path,
+			squadmember = squadmember,
+			rep = rep,
+			squadmembers = squadmembers,
+			squads = menu_squads,
+		)
+
+	except:
+		return render_template('public/nzlSquadmember.html',
+			squadmember = squadmember,
+			rep = rep,
+			squadmembers = squadmembers,
+			squads = menu_squads,
+		)
 
 
 
