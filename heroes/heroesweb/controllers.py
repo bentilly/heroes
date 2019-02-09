@@ -329,7 +329,12 @@ def sortSquadMembersOnName(sm):
 	return sm.title
 
 def sortSquadMembersOnRole(sm):
-	return sm.role.get().sort
+	# SquadMember may not have a role set
+	try:
+		sort = sm.role.get().sort
+	except:
+		sort = 0
+	return sort
 
 def getSquadTitle(elem):
 	s = elem['squad']
