@@ -53,7 +53,8 @@ class Squadmember(Base):
         try:
             image_url = images.get_serving_url(self.photo_key)
         except:
-            #SPORT > COUNTRY > REP
+            # Get placeholder image
+            # SPORT > COUNTRY > REP
             country = self.rep.parent().get()
             sport = country.key.parent().get()
             image_url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"

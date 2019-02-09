@@ -28,6 +28,8 @@
                 <form name="roleForm" action="/admin/role/update/{{ role_object.key.urlsafe() }}" method=post>
                     <label>role name</label>
                     <input type="text" name="roleName" value="{{ role_object.name }}">
+                    <label>sorting</label>
+                    <input type="text" name="roleSort" value="{{ role_object.sort }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -35,6 +37,8 @@
                 <form name="roleForm" action="/admin/role/add/{{ country_object.key.urlsafe() }}" method=post>
                     <label>role name</label>
                     <input type="text" name="roleName">
+                    <label>sorting</label>
+                    <input type="text" name="roleSort" value="0">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

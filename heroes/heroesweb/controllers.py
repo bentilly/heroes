@@ -247,7 +247,8 @@ def render_rep(rep):
 	if rep.stats:
 		rep.stats.sort(key=sortRepStats)
 
-	squadmembers = Squadmember.query(Squadmember.rep==rep.key).fetch()
+	squadmembers = Squadmember.query(Squadmember.rep==rep.key).fetch() #Y
+
 	# sort squadmembers on year
 	squadmembers.sort(key=sortSquadMembersByDate, reverse=True)
 	squadmember = squadmembers[0]
@@ -306,6 +307,16 @@ def get_menu_squads(country_key):
 	return menu_squads
 
 
+
+# FORMAT a time delta
+def strfdelta(tdelta, fmt):
+    d = {"days": tdelta.days}
+    d["hours"], rem = divmod(tdelta.seconds, 3600)
+    d["minutes"], d["seconds"] = divmod(rem, 60)
+    return fmt.format(**d)
+
+# SORTING 
+
 def sortRepStats(stat):
     sortid = stat["sort"]
     return sortid
@@ -314,34 +325,11 @@ def sortSquadMembersByDate(sm):
 	sortvalue = sm.key.parent().get().eventdate.year
 	return sortvalue
 
-#format a time delta
-def strfdelta(tdelta, fmt):
-    d = {"days": tdelta.days}
-    d["hours"], rem = divmod(tdelta.seconds, 3600)
-    d["minutes"], d["seconds"] = divmod(rem, 60)
-    return fmt.format(**d)
-
 def sortSquadMembersOnName(sm):
-	name = sm.title
-	return name
+	return sm.title
 
 def sortSquadMembersOnRole(sm):
-	roleKey = 3
-	try:
-		role = sm.roleName
-
-		if role == "Captain":
-			roleKey = 1
-		if role == "Vice Captain":
-			roleKey = 2
-		if role == "Coach":
-			roleKey = 4
-		if role == "Manager":
-			roleKey = 5
-	except:
-		roleKey = 3
-
-	return roleKey
+	return sm.role.get().sort
 
 def getSquadTitle(elem):
 	s = elem['squad']

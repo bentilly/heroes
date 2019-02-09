@@ -42,6 +42,11 @@ indexes:
   properties:
   - name: firstname
 
+- kind: Role
+  ancestor: yes
+  properties:
+  - name: sort
+
 - kind: Team
   ancestor: yes
   properties:

@@ -31,7 +31,8 @@ def country_view(key):
 
     team_entries = Team.query(ancestor=country_key).fetch()
     rep_entries = Rep.query(ancestor=country_key).order(Rep.firstname).fetch()
-    role_entries = Role.query(ancestor=country_key).fetch()
+    role_entries = Role.query(ancestor=country_key).order(Role.sort).fetch()
+
     position_entries = Position.query(ancestor=country_key).fetch()
 
     return render_template('/admin/country.html',
