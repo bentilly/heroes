@@ -26,6 +26,8 @@
                         {{ object_title }}
                     </h1>
                 </div>
+
+                <!-- COUNTRY FORM -->
                 
                  {% if country_object %}
                 <form name="countryForm" action="/admin/country/update/{{ country_object.key.urlsafe() }}" method=post>
@@ -60,6 +62,7 @@
                 
             </div>
             
+            <!-- TEAMS -->
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Teams</h3>
@@ -73,6 +76,7 @@
             
             </div>
             
+            <!-- REPS -->
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Representatives</h3>
@@ -88,6 +92,7 @@
             
             </div>
             
+            <!-- ROLES -->
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Roles</h3>
@@ -97,7 +102,7 @@
                 </div>
                 <ul class="standardList">
                     {% for role in roles %}
-                    <li><a href="{{ role.link }}">{{ role.title }}</a></li>
+                    <li><a href="{{ role.link }}"> {{ role.sort }}: {{ role.title }}</a></li>
                     {% endfor %} 
                 </ul>
             

@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Belgium UWH Heroes</title>
+
+        <!-- FONTS -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../../static/css/sanitize.css">
+        <link rel="stylesheet" href="../../static/css/heroes-flex.css">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.32">
+        <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.2">
+        <link rel="stylesheet" href="../../static/uwh/BEL/files/styles.css">
+
+        <!-- JAVASCRIPT -->
+        <script type="text/javascript">
+            function toggleTeamNav() {
+                var x = document.getElementById("teamNav");
+                if (x.style.display === "flex") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "flex";
+                }
+            }
+        </script>
+    </head>
+    
+    <body>
+        <header>
+            <a href="../../">
+                <img src="../../static/uwh/BEL/img/lion.png" />
+                <h1>Belgium Underwater Hockey Teams</h1>
+            </a>
+            <div class="breadcrumb flexr">
+                
+                <a href="/" class="icon-link"><i class="fas fa-home"></i></a>
+                <p><a onclick="toggleTeamNav()">TEAMS</a></p>
+
+            </div>
+            <nav class="team-nav flexr w" id="teamNav">
+                {% for s in menusquads %}
+                    <a href="{{ s.publiclink }}">{{ s.divisionName }}</a>
+                {% endfor %}
+            </nav>
+        </header>
+        
+        <main>
+            <h3>Team profile</h3>
+            <h1 class="player-name">{{ squad.yearDivision }}</h1>
+            <h2 class="team-label"><!-- TODO: ADD PLACING <span>1st place</span> -->
+                {{ squad.event.get().name }} , {{ squad.eventHost }}
+            </h2>
+
+             <div class="team-photo-grid">
+                {% for sm in squadmembers %}
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="{{ sm.photoUrl }}">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">{{ sm.title }}</p>
+                        <p class="player-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+
+
+
+
+            <div class="photo-stats flexr">
+                <div class="team-photo"><img src="{{ squad.photoUrl }}"></div>
+            </div>
+
+            <h3>Team History</h3>
+            <div class="player-history">
+
+                {% for ts in teamsquads %}
+
+                <div class="history-item flexr">
+                    <div class="item-info flexchild g">
+                        <h4><a href="{{ ts.publiclink }}" class="teamHistory">{{ ts.yearDivision }}</a></h4>
+                        <!-- TODO: placings <p class="event">1st place</p> -->
+                        <p class="event">{{ ts.event.get().name }}</p>
+                        <p class="event">{{ ts.eventHost }}</p>
+                    </div>
+                    <div class="history-photo">
+                        <img src="{{ ts.photoUrl }}">
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </main>
+
+        <footer>
+            <p>UWH Heroes is bought to you by</p>
+            <a href=""><img src="../../static/img/uwh_logo_small3.png">
+        </footer>
+
+    </body>    
+</html>

@@ -93,30 +93,31 @@ def update_entry(key):
     
     # TODO: seems to be deleting photo if no file selected
     # was a photo uploaded
+
+    logging.info("PHOTOTOTOTOTOTOT")
+
     f = None
     try:
         f = request.files['photo']
-    except:
-        pass
-
-    # delete old photo
-    if f:
+        logging.info(f)
+        
+        #Delete old photo
         try:
             blob_key = squadmember.photo_key
             blob = blobstore.BlobInfo.get(blob_key)
             blob.delete()
         except:
-            logging.info("SQUADMEMBER: no photo to delete")
-
-    # Record new blobkey
-    try:
+            logging.info("SQUADMEMBER: no existing photo to delete")
+            
+        # Save new photo
         header = f.headers['Content-Type']
         parsed_header = parse_options_header(header)
         blob_key = parsed_header[1]['blob-key']
         squadmember.photo_key = BlobKey(blob_key)
         logging.info("SQUADMEMBER: saved new blobkey")
+        
     except:
-        logging.info("SQUADMEMBER: didnt save new blobkey")
+        logging.info("No info - do nothing")
 
     squadmember.put()
 

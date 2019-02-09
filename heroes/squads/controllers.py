@@ -149,6 +149,19 @@ def add_entry(team_key, event_key):
 	squad.put()
 	return redirect('/admin/team/{}'.format(team_key.urlsafe()))
 
+# REMOVE Squad
+@squad_bp.route('/remove/<squad_key>', methods=['GET'])
+def remove_entry(squad_key):
+	squad_key = ndb.Key(urlsafe=squad_key)
+	team_key = squad_key.parent()
+
+	# Dont delete if there are Squadmambers
+	squadmembers = Squadmember.query(ancestor=squad_key).fetch()
+
+	if len(squadmembers) == 0:
+		squad_key.delete()
+
+	return redirect('/admin/team/{}'.format(team_key.urlsafe()))
 
 # UPLOAD squad photo
 @squad_bp.route('/uploadPhoto/<key>', methods=['POST'])

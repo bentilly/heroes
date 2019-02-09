@@ -42,19 +42,26 @@
                 <div class="listTitle">
                     <h3>Squads</h3>
                 </div>
-                <!--                Created squads-->
+                <!-- Created squads-->
                 <ul class="standardList">
                     {% for event in event_squads %}
                         {% if event.squad %}
-                        <li><a href="{{ event.squad.link }}">{{ event.squad.title }}</a></li>
+                        <li>
+                            <a href="{{ event.squad.link }}">{{ event.squad.title }}</a>
+                            <a href="/admin/squad/remove/{{ event.squad.key.urlsafe() }}">
+                                <i class="fa fa-minus-circle minusmember"></i>
+                            </a>
+                        </li>
                         {% endif %}
                     {% endfor %}
+                    <p class="tiny">&nbsp</p>
+                    <p class="tiny">Delete all Squad Members before removing Squad<p>
                 </ul>
-<!--                didnt play-->
+                <!-- didnt play-->
                 <ul class="standardList inactive">
                     {% for event in event_squads %}
                         {% if event.squad %}
-<!--                        do nothing-->
+                        <!-- do nothing-->
                         {% else %}
                         <li class="inactive">{{ event.event.title }}<a href="/admin/squad/add/{{ team_object.key.urlsafe() }}/{{ event.event.key.urlsafe() }}"><i class="fa fa-plus addmember"></i></i></a></li>
                         {% endif %}

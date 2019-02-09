@@ -76,16 +76,13 @@ def add_entry(parent_key):
     country = country_key.get()
 
     if request.form['uid'] == "None" or request.form['uid'] == "":
-        logging.info("ADD >>>>>>>>>>>>>> UID empty - SKIP")
         rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)
 
     else:
         rep_check = Rep.query(Rep.uid == request.form['uid']).fetch(1)
         if rep_check:
-            logging.info("ADD >>>>>>>>>>>>>> UID is a duplicate. DID NOT ADD UID")
             rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], parent=country_key)   
         else:
-            logging.info("ADD >>>>>>>>>>>>>> UID unique - ADD TO REP")
             rep = Rep(firstname=request.form['firstname'], lastname=request.form['lastname'], uid=request.form['uid'], parent=country_key) 
 
     rep.put()
@@ -103,20 +100,17 @@ def update_entry(key):
 
     # UID
     if request.form['uid'] == "None":
-        logging.info(">>>>>>>>>>>>>> UID empty - SKIP")
+        logging.info("UID == NONE")
     else:
         if rep.uid != request.form['uid']:  #if its changed...
-            logging.info(">>>>>>>>>>>>>> UID different...")
             rep_check = Rep.query(Rep.uid == request.form['uid']).fetch(1)
             if rep_check:
-                logging.info(">>>>>>>>>>>>>> New UID a duplicate - DID NOT SAVE")
                 # bounce back
                 #TODO add error message
                 return redirect('/admin/rep/{}'.format(rep.key.urlsafe()))
 
             else:
                 #its changed and unique
-                logging.info(">>>>>>>>>>>>>> UID unique - UPDATE AND SAVE")
                 rep.uid = request.form['uid']
 
         else:

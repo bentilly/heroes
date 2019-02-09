@@ -56,7 +56,8 @@ def new_role(key):
 def add_entry(parent_key):
 	country_key = ndb.Key(urlsafe=parent_key)
 
-	role = Role(name=request.form['roleName'], parent=country_key)
+	sort = int(request.form['roleSort'])
+	role = Role(name=request.form['roleName'], sort=sort, parent=country_key)
 	role.put()
 
 	return redirect('/admin/role/{}'.format(role.key.urlsafe()))
@@ -68,6 +69,7 @@ def update_entry(key):
     role_key = ndb.Key(urlsafe=key)
     role = role_key.get()
     role.name = request.form['roleName']
+    role.sort = int(request.form['roleSort'])
     role.put()
 
     return redirect('/admin/role/{}'.format(role.key.urlsafe()))

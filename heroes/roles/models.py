@@ -5,6 +5,7 @@ from heroes.models import Base
 
 class Role(Base):
 	name = ndb.StringProperty(required=True)
+	sort = ndb.IntegerProperty(default=0)
 
 	@property
 	def title(self):
