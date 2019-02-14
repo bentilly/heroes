@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>New Zealand Handball Teams</title>
+
+        <!-- FONTS -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="../../static/css/sanitize.css">
+        <link rel="stylesheet" href="../../static/css/heroes-flex.css">
+        <link rel="stylesheet" href="../../static/css/nzl-home.css?v=1.0.13">
+        <link rel="stylesheet" href="../../static/css/nzl-profile.css?v=1.0.2">
+        <link rel="stylesheet" href="../../static/hball/NZL/files/styles.css">
+
+        <!-- JAVASCRIPT -->
+        <script type="text/javascript">
+            function toggleTeamNav() {
+                var x = document.getElementById("teamNav");
+                if (x.style.display === "flex") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "flex";
+                }
+            }
+        </script>
+    </head>
+    
+    <body>
+         <header>
+            <a href="/">
+                <img class="logo" src="../../static/hball/NZL/img/NZHFlogo_white.png" />
+                <h1>New Zealand Handball Teams</h1>
+            </a>
+            <div class="breadcrumb flexr">
+                
+                <a href="/" class="icon-link"><i class="fas fa-home"></i></a>
+                <p><a onclick="toggleTeamNav()">TEAMS</a></p>
+
+            </div>
+            <nav class="team-nav flexr w" id="teamNav">
+                {% for squad in squads %}
+                    <a href="{{ squad.publiclink }}">{{ squad.divisionName }}</a>
+                {% endfor %}
+            </nav>
+        </header>
+        
+        <main>
+
+        <h2 class="latestTeamsTitle">Latest Teams</h2>
+        <!-- REPEAT FOR EACH SQUAD -->
+        {% for heroSquad in heroSquads %}
+         <section class="team">
+             <div class="team-title">
+                 <h2><a href="{{ heroSquad.squad.publiclink }}">{{ heroSquad.squad.teamName }}</a></h2>
+                 <p>{{ heroSquad.squad.title }}</p>
+                 <p>{{ heroSquad.squad.eventHost}}</p>
+                 <p>{{ heroSquad.squad.eventdate.strftime('%-d %B %Y') }}</p>
+             </div>
+
+             {% if heroSquad.nextMatchIn %}
+             <div class="next-game">
+                <h5>Next game in:</h5>
+                <div class="time-flags flexr">
+                    <p class="time-to-go">
+                        {% if heroSquad.nextMatchIn.d > 0 %}
+                        {{ heroSquad.nextMatchIn.d }}<span>days</span>
+                        {% endif %}
+
+                        {{ heroSquad.nextMatchIn.h }}<span>hrs</span>{{ heroSquad.nextMatchIn.m }}<span>min</span></p>
+                        
+                </div>
+             </div>
+             {% endif %}
+
+             <div class="team-photo-grid">
+                {% for sm in heroSquad.squad_members %}
+                <a href="{{ sm.replink }}">
+                <div class="grid-item">
+                    <div class="item-photo">
+                        <div class="image-holder">
+                            <img src="{{ sm.photoUrl }}">
+                        </div>
+                    </div>
+                    <div class="item-caption">
+                        <p class="player-name">{{ sm.title }}</p>
+                        <p class="player-role">{{ sm.roleName }} - {{ sm.positionName }}</p>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+
+
+    </main>
+
+    <!-- <footer>
+        <p>UWH Heroes is bought to you by</p>
+        <a href="http://uwh.co.nz"><img src="../../static/img/uwh_logo_small3.png">
+    </footer> -->
+
+</body>    
+</html>
