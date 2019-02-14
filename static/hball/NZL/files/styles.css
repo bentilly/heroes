@@ -1,0 +1,17 @@
+body{
+	background-image: none;
+}
+
+header img.logo{
+	/*height: 200px;*/
+}
+
+div.team-title{
+	/*color: #FFBB40;*/
+}
+div.team-title a{
+	color: #7396ce;
+}
+h1.player-name{
+	color: #7396ce;
+}
