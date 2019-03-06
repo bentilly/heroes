@@ -1,0 +1,86 @@
+.sh-rep-hero{
+  margin-top: 40px;
+}
+.sh-rep-hero img{
+  max-width: 340px;
+}
+.sh-rep-stats{
+  margin-top: 75px;
+}
+.sh-rep-stat{
+  margin-bottom: 10px;
+}
+.sh-rep-history{
+  background-color: #F6F6F6;
+  margin-top: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.sh-rep-history img{
+  max-width: 250px;
+}
+.sh-rep-history h4, p{
+  margin-bottom: 0px;
+}
+.sh-rep-history .row{
+  margin-bottom: 20px;
+}
+.sh-rep-history-info{
+  margin-bottom: 10px;
+}
+.sh-rep-history-img{
+  text-align: right;
+}
+
+
+
+
+.heroflag{
+  font-size: 100px;
+  margin: -30px 0px -30px 0px;
+  padding: 0px;
+}
+a.player-link-card{
+  color: #333333;
+}
+a.player-link-card:hover{
+  color: #0056b3;
+}
+img.repHeroImage{
+  max-width: 320px;
+}
+
+
+@media (min-width: 768px) and (max-width: 2500px) {
+   .container {
+      width: 768px;
+   }   
+}
+
+
+/* JUMBOTRON */
+.jumbotron {
+  margin-bottom: 0;
+  background-color: #fff;
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}

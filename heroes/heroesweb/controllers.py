@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, render_template_string
 from google.appengine.ext import ndb
 from google.appengine.api import images
 
@@ -17,6 +17,8 @@ from heroes.teams.models import Team
 from heroes.squads.models import Squad
 from heroes.matches.models import Match
 
+
+
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
 
@@ -28,8 +30,6 @@ heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 	# 1. Evaluate base URL
 	# 2. Hand off to renderers
 def eval_base_url():
-	logging.info("EVAL URL")
-	logging.info(request.url)
 	#SPORT home page?
 	home = Sport.query(Sport.external_url == request.url).fetch(1)
 	if home:
@@ -92,11 +92,11 @@ def eval_rep(key):
 
 
 def render_sh_home():
-
 	all_sports = Sport.query(Sport.published == True).fetch()
-	return render_template('public/sh-home.html',
-        allSports=all_sports,
-    )
+
+	t = '<html><body>hello world!</body></html>'  # Pull from database
+
+	return render_template_string(t)
 
 
 def render_sport_home(sport):
