@@ -31,7 +31,24 @@
 .sh-rep-history-img{
   text-align: right;
 }
-
+/*TEAM*/
+h1.sh-team-name{
+  margin-bottom: 0px;
+}
+.sh-team-comp{
+  margin-bottom: 10px;
+}
+.sh-team-current{
+  margin-top: 40px;
+}
+.sh-team-history{
+  margin-top: 40px;
+  padding: 40px 0px;
+  background-color: #F6F6F6;
+}
+.sh-team-history .row{
+  margin-bottom: 20px;
+}
 
 
 

@@ -11,7 +11,7 @@
     <!-- Custom styles for this template -->
     <link href="bs01.css" rel="stylesheet">
 
-    <title>Floyd Pepper : Spain : Underwater Hockey : Sports Heroes</title>
+    <title>2018 Elite Men: Spain : Underwater Hockey : Sports Heroes</title>
   </head>
   <body>
 
@@ -50,56 +50,62 @@
 <!-- MAIN ======================== -->
 <main role="main">
 
-<!-- HERO .................... -->
+<!-- CURRENT TEAM .................... -->
+<div class="container sh-team-current">
 
-<div class="container sh-rep-hero">
-  <div class="row justify-content-center">
-    <div class="col">
-      <h6>Player Profile</h6>
-      <h1>Floyd Pepper</h1> <!-- {{ rep.title }} -->
-      <div><img src="img/ralph.png"></div>
+  <!-- TEAM -->
+  <h6>Team Profile</h6>
+  <h1 class="sh-team-name">2018 Elite Men</h1>
+  <p class="sh-team-comp">2018 World Championships, Quebec, Canada</p>
+  <div class="row">
+
+    <!-- Item -->
+    <div class="col-md-4">
+      <a href="#" class="player-link-card">
+        <div class="card mb-4 shadow-sm">
+          <img src="img/ralph.png" class="card-img-top">
+          <div class="card-body">
+            <h6>Sebastian IveGottareal</h6>
+            <small>Player/Coach - Forward</small>
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="col sh-rep-stats">
-        <!-- {% if rep.stats %} --><!-- {% for stat in rep.stats %} -->
-        <div class="sh-rep-stat">
-          <small>Player number</small><!-- {{ stat.label }} -->
-          <h4>#44</h4><!-- {{ stat.value }} -->
+
+    <!-- Item -->
+    <div class="col-md-4">
+      <a href="#" class="player-link-card">
+        <div class="card mb-4 shadow-sm">
+          <img src="img/ralph.png" class="card-img-top">
+          <div class="card-body">
+            <h6>Sebastian IveGottareal</h6>
+            <small>Player/Coach - Forward</small>
+          </div>
         </div>
-        <div class="sh-rep-stat">
-          <small>Weight</small><!-- {{ stat.label }} -->
-          <h4>92kg</h4><!-- {{ stat.value }} -->
-        </div>
-        <div class="sh-rep-stat">
-          <small>Home town</small><!-- {{ stat.label }} -->
-          <h4>Auckland</h4><!-- {{ stat.value }} -->
-        </div>
-        <div class="sh-rep-stat">
-          <small>A really long stat</small><!-- {{ stat.label }} -->
-          <h4>That thing that Im pretty good at</h4><!-- {{ stat.value }} -->
-        </div>
-        <!-- {% endfor %} --><!-- {% endif %} -->
+      </a>
     </div>
   </div>
+
+  <img class="sh-team-photo img-fluid img-thumbnail" src="img/MensTeam06.jpg">
+
 </div>
 
-<div class="sh-rep-history">
+<!-- HISTORY -->
+<div class="sh-team-history">
   <div class="container">
-    <h6>Player History</h6>
+    <h6>Team History</h6>
     <hr />
 
     <!-- ITEM -->
     <div class="row justify-content-center">
       <div class="col sh-rep-history-info">
         <h4><a href="#" class=""><!-- {{ sm.key.parent().get().publiclink }} -->
-          2019 ESP Elite Men
-            <!-- {{ sm.key.parent().get().eventdate.year }} {{ sm.key.parent().get().teamName }} -->
+          2017 Elite Men
         </a></h4>
-        <p>Player - Captain</p><!-- {{ sm.roleName }} - {{ sm.positionName }} -->
-        <small>World Championships <br /><!-- {{ sm.key.parent().get().event.get().name }} -->
-        Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
+        <small>World Championships <br />Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
       </div>
       <div class="col sh-rep-history-img">
-        <a href="#"><img class="img-thumbnail" src="img/ralph.png"></a>
+        <a href="#"><img class="img-thumbnail" src="img/MensTeam06.jpg"></a>
       </div>
     </div>
 
@@ -107,23 +113,19 @@
     <div class="row justify-content-center">
       <div class="col sh-rep-history-info">
         <h4><a href="#" class=""><!-- {{ sm.key.parent().get().publiclink }} -->
-          2019 ESP Elite Men
-            <!-- {{ sm.key.parent().get().eventdate.year }} {{ sm.key.parent().get().teamName }} -->
+          2017 Elite Men
         </a></h4>
-        <p>Player - Captain</p><!-- {{ sm.roleName }} - {{ sm.positionName }} -->
-        <small>World Championships <br /><!-- {{ sm.key.parent().get().event.get().name }} -->
-        Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
+        <small>World Championships <br />Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
       </div>
       <div class="col sh-rep-history-img">
-        <a href="#"><img class="img-thumbnail" src="img/ralph.png"></a>
+        <a href="#"><img class="img-thumbnail" src="img/MensTeam06.jpg"></a>
       </div>
     </div>
+
 
   </div>
 </div>
 
-
-</main>
 
 <!-- FOOTER ======================== -->
 <footer class="text-muted">
