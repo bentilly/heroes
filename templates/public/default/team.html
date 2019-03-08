@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/sh-default.css" rel="stylesheet">
+    <!-- SPORT > COUNTRY > TEAM > SQUAD -->
+    <title>{{ squad.yearDivision }} : {{ squad.key.parent().parent().get().name }} : {{ squad.key.parent().parent().parent().get().name }} : Sports Heroes</title>
+  </head>
+  <body>
+
+
+
+<!-- HEADER ======================== -->
+<header>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="
+{% if squad.key.parent().parent().get().external_url %}
+    {{ squad.key.parent().parent().get().external_url }}
+{% else %}
+    {{ squad.key.parent().parent().get().publiclink }}
+{% endif %}
+    ">{{ squad.key.parent().parent().get().flagemoji }} {{ squad.key.parent().parent().parent().get().name }} - {{ squad.key.parent().parent().get().name }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sh-navbarToggler" aria-controls="sh-navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="sh-navbarToggler">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="
+{% if squad.key.parent().parent().get().external_url %}
+    {{ squad.key.parent().parent().get().external_url }}
+{% else %}
+    {{ squad.key.parent().parent().get().publiclink }}
+{% endif %}
+          ">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Teams
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+{% for s in menusquads %}
+            <a class="dropdown-item" href="{{ s.publiclink }}">{{ s.divisionName }}</a>
+{% endfor %}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+
+<!-- MAIN ======================== -->
+<main role="main">
+
+<!-- CURRENT TEAM .................... -->
+<div class="container sh-team-current">
+
+  <!-- TEAM -->
+  <h6>Team Profile</h6>
+  <h1 class="sh-team-name">{{ squad.yearDivision }}</h1>
+  <p class="sh-team-comp">{{ squad.event.get().name }}, {{ squad.eventHost }}</p>
+  <div class="row">
+
+{% for sm in squadmembers %}
+    <!-- Item -->
+    <div class="col-md-4">
+      <a href="{{ sm.replink }}" class="player-link-card">
+        <div class="card mb-4 shadow-sm">
+          <img src="{{ sm.photoUrl }}" class="card-img-top">
+          <div class="card-body">
+            <h6>{{ sm.title }}</h6>
+            <small>{{ sm.roleName }} - {{ sm.positionName }}</small>
+          </div>
+        </div>
+      </a>
+    </div>
+{% endfor %}
+
+  </div>
+
+  <img class="sh-team-photo img-fluid img-thumbnail" src="{{ squad.photoUrl }}">
+
+</div>
+
+<!-- HISTORY -->
+<div class="sh-team-history">
+  <div class="container">
+    <h6>Team History</h6>
+    <hr />
+
+{% for ts in teamsquads %}
+
+    <!-- ITEM -->
+    <div class="row justify-content-center">
+      <div class="col sh-rep-history-info">
+        <h4><a href="{{ ts.publiclink }}" class="">
+          {{ ts.yearDivision }}
+        </a></h4>
+        <small>{{ ts.event.get().name }}<br />{{ ts.eventHost }}</small>
+      </div>
+      <div class="col sh-rep-history-img">
+        <a href="#"><img class="img-thumbnail" src="{{ ts.photoUrl }}"></a>
+      </div>
+    </div>
+
+{% endfor %}
+
+  </div>
+</div>
+
+
+<!-- FOOTER ======================== -->
+<footer class="text-muted">
+  <div class="container">
+    <small>This hall of fame is powered by <a href="http://sportsheroes.net">Sports Heroes</a></small>
+  </div>
+</footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

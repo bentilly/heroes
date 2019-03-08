@@ -1,3 +1,4 @@
+import os
 from google.appengine.ext import ndb
 
 from heroes import fields
@@ -53,11 +54,26 @@ class Squadmember(Base):
         try:
             image_url = images.get_serving_url(self.photo_key)
         except:
-            # Get placeholder image
-            # SPORT > COUNTRY > REP
-            country = self.rep.parent().get()
-            sport = country.key.parent().get()
-            image_url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
+            try:
+                # Get franchise-specific placeholder image
+                # SPORT > COUNTRY > REP
+                country = self.rep.parent().get()
+                sport = country.key.parent().get()
+                url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
+                if os.path.isfile(url):
+                    return url
+                else:
+                    image_url = "/static/img/placeholder.png"
+            except:
+                # Catchall
+                image_url = "/static/img/placeholder.png"
 
         return image_url
+
+
+
+
+
+
+
     

@@ -47,6 +47,11 @@ indexes:
   properties:
   - name: sort
 
+- kind: Sport
+  properties:
+  - name: published
+  - name: name
+
 - kind: Team
   ancestor: yes
   properties:

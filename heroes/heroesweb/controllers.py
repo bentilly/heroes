@@ -88,15 +88,29 @@ def eval_rep(key):
 
 # ================================================================================
 # RENDERERS
+#	t = '<html><body>hello world!</body></html>'  # How to pull a template from database
+#	return render_template_string(t)
 # ================================================================================
+
+# NOTE: Gradually converting 
+#	SPORT => LEAGUE
+#	COUNTRY => FRANCHISE
 
 
 def render_sh_home():
-	all_sports = Sport.query(Sport.published == True).fetch()
+	all_leagues = []
 
-	t = '<html><body>hello world!</body></html>'  # Pull from database
+	leagues = Sport.query(Sport.published == True).order(Sport.name).fetch()
+	for l in leagues:
+		l_franchises = Country.query(Country.published == True, ancestor=l.key).order(Country.name).fetch()
+		league = {"name":l.name, "franchises":l_franchises}
+		all_leagues.append(league)
 
-	return render_template_string(t)
+	template_path = "public/sh-home.html"
+
+	return render_template(template_path,
+			leagues = all_leagues,
+		)
 
 
 def render_sport_home(sport):
@@ -184,7 +198,7 @@ def render_country_home(country):
 			sport = sport,
 		)
 	except:
-		return render_template('public/default/country.html',  ##TODO: Update name case format (nzl-home.html)
+		return render_template('public/default/franchise.html',
 			heroSquads = hero_squads,
 			squads = menu_squads,
 			country = country,
@@ -219,7 +233,6 @@ def render_squad(squad):
 	sport = country.key.parent().get()
 
 	try:
-		logging.info("CREATE TEMPLATE")
 		template_path = "public/"+sport.code+"/"+country.code+"/team.html"
 		logging.info(template_path)
 		return render_template(template_path,
@@ -229,7 +242,7 @@ def render_squad(squad):
 			menusquads = menu_squads, #for menu
 		)
 	except:
-		return render_template('public/nzlTeam.html',
+		return render_template('public/default/team.html',
 			squad = squad,
 			squadmembers = squadMembers,
 			teamsquads = teamSquads, #for history
@@ -272,7 +285,7 @@ def render_rep(rep):
 		)
 
 	except:
-		return render_template('public/nzlSquadmember.html',
+		return render_template('public/default/rep.html',
 			squadmember = squadmember,
 			rep = rep,
 			squadmembers = squadmembers,
