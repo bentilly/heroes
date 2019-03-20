@@ -1,4 +1,5 @@
 import os
+import logging
 from google.appengine.ext import ndb
 
 from heroes import fields
@@ -59,9 +60,9 @@ class Squadmember(Base):
                 # SPORT > COUNTRY > REP
                 country = self.rep.parent().get()
                 sport = country.key.parent().get()
-                url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
+                url = "static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
                 if os.path.isfile(url):
-                    return url
+                    return "/"+url
                 else:
                     image_url = "/static/img/placeholder.png"
             except:

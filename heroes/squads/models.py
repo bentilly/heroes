@@ -1,4 +1,6 @@
 from google.appengine.ext import ndb
+import logging
+import os
 
 from heroes import fields
 from heroes.models import Base
@@ -65,13 +67,13 @@ class Squad(Base):
             try:
                 # Get franchise-specific placeholder image
                 # SPORT > COUNTRY > REP
-                country = self.rep.parent().get()
+                country = self.key.parent().parent().get()
                 sport = country.key.parent().get()
-                url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
+                url = "static/"+sport.code+"/"+country.code+"/img/imgplaceholder-wide.png"
                 if os.path.isfile(url):
-                    return url
+                    return "/"+url
                 else:
-                    image_url = "/static/img/placeholder.png"
+                    image_url = "/static/img/placeholder-wide.png"
             except:
                 # Catchall
                 image_url = "/static/img/placeholder-wide.png"
