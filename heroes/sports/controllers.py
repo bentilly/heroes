@@ -5,7 +5,7 @@ from google.appengine.api import users
 
 import logging
 
-from .models import Sport
+from heroes.sports.models import Sport
 from heroes.countries.models import Country
 from heroes.divisions.models import Division
 from heroes.roles.models import Role

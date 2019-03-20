@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, request
 
 from google.appengine.ext import ndb
 
-from .models import Country
+from heroes.countries.models import Country
 from heroes.sports.models import Sport
 from heroes.divisions.models import Division
 from heroes.teams.models import Team
@@ -10,7 +10,21 @@ from heroes.representatives.models import Rep
 from heroes.roles.models import Role
 from heroes.positions.models import Position
 
+# CLOUD STORAGE
+import os
+import cloudstorage
+from google.appengine.api import app_identity
+
 country_bp = Blueprint('country', __name__)
+
+
+# CLOUD STORAGE #
+# def get_bucket_name():
+    # return "my bucket name"
+
+    # bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    # return bucket_name
+
 
 # RENDERING #
 
@@ -36,6 +50,8 @@ def country_view(key):
 
     position_entries = Position.query(ancestor=country_key).fetch()
 
+    bucket_name = get_bucket_name()
+
     return render_template('/admin/country.html',
             breadcrumb = breadcrumb_list,
             object_title=title,
@@ -44,6 +60,7 @@ def country_view(key):
             reps=rep_entries,
             roles=role_entries,
             positions=position_entries,
+            bucketName = bucket_name,
         )
 
 #NEW country PAGE

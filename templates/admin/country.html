@@ -61,6 +61,23 @@
                 {% endif %}
                 
             </div>
+
+            <!-- FILES -->
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>FILES</h3>
+                    {% if country_object %}
+                    <a href="/admin/rep/new/{{ country_object.key.urlsafe() }}"><i class="fa fa-plus"></i></a>
+                    {% endif %}
+                </div>
+                <p>{{ bucketName }}</p>
+                <ul class="standardList">
+
+                    <li><a href="#">a file</a></li>
+
+                </ul>
+            
+            </div>
             
             <!-- TEAMS -->
             <div class="listContainer">
