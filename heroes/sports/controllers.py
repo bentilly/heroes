@@ -13,6 +13,8 @@ from heroes.events.models import Event
 from heroes.venues.models import Venue
 from heroes.trophies.models import Trophy
 from heroes.users.models import Editor
+from heroes.templates.models import Template
+
 
 
 
@@ -60,6 +62,29 @@ def sport_view(key):
     event_entries = Event.query(ancestor=sport_key).order(Event.startdate).fetch()
     venue_entries = Venue.query(ancestor=sport_key).fetch()
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
+
+
+    # TEMPLATES #
+    templates = {
+                    'sport': None,
+                    'country': None,
+                    'team': None,
+                    'rep': None
+                }
+    templates_entries = Template.query(ancestor=sport_key).fetch()
+
+    for t in templates_entries:
+        if t.label == 'sport':
+            templates['sport'] = t
+
+        if t.label == 'country':
+            templates['country'] = t
+
+        if t.label == 'team':
+            templates['team'] = t
+
+        if t.label == 'rep':
+            templates['rep'] = t
     
 
     return render_template('/admin/sport.html',
@@ -70,6 +95,7 @@ def sport_view(key):
             events=event_entries,
             venues=venue_entries,
             trophies=trophy_entries,
+            templates = templates,
         )
 
 #NEW SPORT PAGE

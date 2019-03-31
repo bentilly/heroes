@@ -30,6 +30,7 @@ nav ul li a:hover{
 .listContainer{
     padding: 10px;
     margin-right: 20px;
+    /*border:1px solid green;*/
 }
 dt{
     color: #999999;
@@ -66,6 +67,8 @@ a:hover i{
 .listTitle{
     display: flex;
     margin-top: 26px;
+    min-width: 200px;
+    /*border:1px solid pink;*/
 }
 .listTitle i{
     font-size: 20px;
@@ -174,9 +177,22 @@ table button{
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
-
 .tiny{
     font-size: 10px;
+}
+.fileList{
+    margin: 10px 0px;
+}
+.fileCard{
+    padding: 5px;
+    border: 1px lightgrey solid;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+.fileCard .fileDelete{
+    /*border: 1px pink solid;*/
+    font-size: 14px;
 }
 
 

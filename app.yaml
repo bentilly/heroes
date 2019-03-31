@@ -15,6 +15,7 @@ handlers:
 #NEXT main.py
 
 - url: .*
+  # script: gcs2.app #testing cloudstorage
   script: main.app
 #NEXT main.py
 

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Code Mirror -->
+    <link href="../static/codemirror/lib/codemirror.css" rel="stylesheet">
+    <script src="../static/codemirror/lib/codemirror.js"></script>
+    <script src="../static/codemirror/addon/selection/selection-pointer.js"></script>
+    <script src="../static/codemirror/mode/xml/xml.js"></script>
+    <script src="../static/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../static/codemirror/mode/css/css.js"></script>
+    <script src="../static/codemirror/mode/vbscript/vbscript.js"></script>
+    <script src="../static/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="../static/css/sh-default.css" rel="stylesheet">
+
+    <!-- SPORT > COUNTRY > REP -->
+    <title>Edit code : Sports Heroes</title>
+  </head>
+
+
+  <body>
+
+     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+      <!-- HEADER ======================== -->
+      <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">🇧🇪 Belgium Fluffy Ball</a>
+
+          <div class=" navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <span class="navbar-text">Template: Team page</span>
+              </li>
+            </ul>
+
+            <button class="btn btn-success my-2 my-sm-0" type="button">Save</button>
+
+          </div>
+        </nav>
+      </header>
+
+      <main role="main" class="inner cover">
+        <div class="container-fluid codeEditor">
+          <form>
+            <textarea id="code" name="code">
+    code goes here
+            </textarea>
+          </form>
+        </div>
+      </main>
+
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+      // Define an extended mixed-mode that understands vbscript and
+      // leaves mustache/handlebars embedded templates in html mode
+      var mixedMode = {
+        name: "htmlmixed",
+        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+                       mode: null},
+                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+                       mode: "vbscript"}]
+      };
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: mixedMode,
+        selectionPointer: true
+      });
+    </script>
+
+  </body>
+</html>

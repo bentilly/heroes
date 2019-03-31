@@ -128,6 +128,81 @@
                 </ul>
             
             </div>
+
+
+            <!-- ----------------------- -->
+
+            {% if sportObject %}
+            <!-- TEMPLATES -->
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Templates</h3>
+                </div>
+                <ul class="standardList">
+
+                {% if templates %}
+                <!-- Sport -->
+                <li>
+                    {% if templates.sport %}
+                    <a href="/admin/template/{{ templates.sport.key.urlsafe() }}" target="_blank">Edit Sport template</a>
+                    {% else %}
+                    <a href="/admin/template/create/sport/{{ sportObject.key.urlsafe() }}" target="_blank">Add Sport template</a>
+                    {% endif %}
+                </li>
+                <!-- Country -->
+                <li>
+                    {% if templates.country %}
+                    <a href="/admin/template/{{ templates.country.key.urlsafe() }}" target="_blank">Edit Country template</a>
+                    {% else %}
+                    <a href="/admin/template/create/country/{{ sportObject.key.urlsafe() }}" target="_blank">Add Country template</a>
+                    {% endif %}
+                </li>
+                <!-- Team -->
+                <li>
+                    {% if templates.team %}
+                    <a href="/admin/template/{{ templates.team.key.urlsafe() }}" target="_blank">Edit Team template</a>
+                    {% else %}
+                    <a href="/admin/template/create/team/{{ sportObject.key.urlsafe() }}" target="_blank">Add Team template</a>
+                    {% endif %}
+                </li>
+                <!-- Representative -->
+                <li>
+                    {% if templates.rep %}
+                    <a href="/admin/template/{{ templates.rep.key.urlsafe() }}" target="_blank">Edit Rep template</a>
+                    {% else %}
+                    <a href="/admin/template/create/rep/{{ sportObject.key.urlsafe() }}" target="_blank">Add Rep template</a>
+                    {% endif %}
+                </li>
+                {% endif %}
+
+
+
+                </ul>
+            
+            </div>
+
+            <!-- FILES -->
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Files</h3>
+                </div>
+                <p class="tiny">Files used in templates, eg: .css files or template images. Please limit to 1MB max. WARNING: Files are not backed up</p>
+                <ul class="standardList fileList">
+                    {% for f in fileList %}
+                        <li class="flexr sb fileCard">
+                            <a href="{{ f.filepath }}" target="_blank">{{ f.basename }}</a>
+                            <a href="/admin/country/deletefile/{{ country_object.key.urlsafe() }}/{{ f.basename }}" class="fileDelete"><i class="fa fa-trash"></i></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <!-- UPLOAD FILE FORM -->
+                <form action="/admin/sport/uploadfile/{{ sportObject.key.urlsafe() }}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="uploaded-file">
+                    <button type="submit">Upload</button>
+                </form>
+            
+            </div>
+            {% endif %}
             
             
         </div>

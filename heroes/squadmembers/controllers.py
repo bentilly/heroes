@@ -94,8 +94,6 @@ def update_entry(key):
     # TODO: seems to be deleting photo if no file selected
     # was a photo uploaded
 
-    logging.info("PHOTOTOTOTOTOTOT")
-
     f = None
     try:
         f = request.files['photo']

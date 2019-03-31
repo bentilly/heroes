@@ -16,6 +16,7 @@ from .venues.controllers import venue_bp
 from .matches.controllers import match_bp
 from .matchteams.controllers import matchteam_bp
 from .matchteammembers.controllers import matchteammember_bp
+from .templates.controllers import template_bp
 from .trophies.controllers import trophy_bp
 from .images.controllers import image_bp
 
@@ -47,6 +48,7 @@ def create_app():
     app.register_blueprint(match_bp, url_prefix='/admin/match')
     app.register_blueprint(matchteam_bp, url_prefix='/admin/matchteam')
     app.register_blueprint(matchteammember_bp, url_prefix='/admin/matchteammember')
+    app.register_blueprint(template_bp, url_prefix='/admin/template')
     app.register_blueprint(trophy_bp, url_prefix='/admin/trophy')
     app.register_blueprint(image_bp, url_prefix='/image')
 
