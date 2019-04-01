@@ -15,10 +15,28 @@ from heroes.trophies.models import Trophy
 from heroes.users.models import Editor
 from heroes.templates.models import Template
 
-
-
+# CLOUD STORAGE
+import os
+import cloudstorage
+from google.appengine.api import app_identity
+import ntpath
 
 sports_bp = Blueprint('sports', __name__)
+
+
+# CLOUD STORAGE #
+def get_bucket_name():
+    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    return bucket_name
+
+def is_local():
+    """ Check if you are currently running on localhost or on GAE. """
+    if os.environ.get('SERVER_NAME', '').startswith('localhost'):
+        return True
+    elif 'development' in os.environ.get('SERVER_SOFTWARE', '').lower():
+        return True
+    else:
+        return False
 
 
 # RENDERING #
@@ -64,6 +82,22 @@ def sport_view(key):
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
 
 
+    # CLOUD STORAGE #
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/'+sport.code
+    url = 'http://localhost:8080/_ah/gcs' if is_local() else 'https://storage.googleapis.com'
+    file_list = []
+
+    files = cloudstorage.listbucket(bucket_and_folder, max_keys=10)
+    for f in files:
+        filename = f.filename
+        basename = ntpath.basename(f.filename)
+        filepath = url+f.filename
+        file = {'filename':filename, 'basename':basename, 'filepath':filepath}
+
+        file_list.append(file)
+
+
     # TEMPLATES #
     templates = {
                     'sport': None,
@@ -95,6 +129,7 @@ def sport_view(key):
             events=event_entries,
             venues=venue_entries,
             trophies=trophy_entries,
+            fileList = file_list,
             templates = templates,
         )
 
@@ -105,9 +140,65 @@ def new_sport():
             object_title='New sport',
         )
 
+# FILES ==========================================================
+
+#UPLOAD A FILE
+@sports_bp.route('/uploadfile/<key>', methods=['POST'])
+def upload_file(key):
+
+    #get parent
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
+
+    # work out bucket and folder
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/'+sport.code
+
+    # read file
+    uploaded_file = request.files['uploaded-file']
+    file_content = uploaded_file.read()
+
+    # file name remove spaces
+    file_name = str(uploaded_file.filename).replace(" ", "-")
+    file_type = uploaded_file.content_type
+
+    # upload the file to Google Cloud Storage
+    gcs_file = cloudstorage.open(
+        bucket_and_folder + '/' + file_name,
+        'w',
+        content_type=file_type,
+        retry_params=cloudstorage.RetryParams(backoff_factor=1.1)
+        )
+
+    gcs_file.write(file_content)
+    gcs_file.close()
+
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
+
+#DELETE A FILE
+@sports_bp.route('/deletefile/<key>/<basename>')
+def delete_file(key, basename):
+
+    #get parent
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
+
+    # work out bucket and folder
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/'+sport.code
+    filename = bucket_and_folder+'/'+basename
+
+    try:
+        cloudstorage.delete(filename)
+    except:
+        logging.info('Could not delete file')
 
 
-# HANDLERS #
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
+
+
+
+# HANDLERS ========================================#
 
 # ADD SPORT
 @sports_bp.route('/add', methods=['POST'])

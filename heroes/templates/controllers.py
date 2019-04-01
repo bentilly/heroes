@@ -14,13 +14,26 @@ template_bp = Blueprint('template', __name__)
 @template_bp.route('/create/<label>/<parent_key>/')
 def template_create(label, parent_key):
 	par_key = ndb.Key(urlsafe=parent_key)
-	content = "Template code goes here"
+	content = "<html><body><p>Add template html</p></body></html>"
 
 	template = Template(label=label, content=content, parent=par_key)
 	template.put()
 
+	# ancestors
+	p = template.key.parent().get()
+	if p.key.kind() == "Sport":
+		sport = p
+		country = None
+
+	else:
+		country = p
+		sport = p.key.parent().get()
+		# Loose....Should to better
+
 	return render_template('/admin/template.html',
 		template = template,
+		country=country,
+		sport=sport,
 	)
 
 # READ A TEMPLATE.
@@ -35,6 +48,7 @@ def template_view(key):
 	if p.key.kind() == "Sport":
 		sport = p
 		country = None
+
 	else:
 		country = p
 		sport = p.key.parent().get()

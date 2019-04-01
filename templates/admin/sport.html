@@ -191,7 +191,7 @@
                     {% for f in fileList %}
                         <li class="flexr sb fileCard">
                             <a href="{{ f.filepath }}" target="_blank">{{ f.basename }}</a>
-                            <a href="/admin/country/deletefile/{{ country_object.key.urlsafe() }}/{{ f.basename }}" class="fileDelete"><i class="fa fa-trash"></i></a>
+                            <a href="/admin/sport/deletefile/{{ sportObject.key.urlsafe() }}/{{ f.basename }}" class="fileDelete"><i class="fa fa-trash"></i></a>
                         </li>
                     {% endfor %}
                 </ul>

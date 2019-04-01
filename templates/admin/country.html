@@ -51,10 +51,10 @@
 
                 <!-- TEMPLATE -->
                 <p class="tiny">
-                    {% if templates.club %}
-                    <a href="/admin/template/{{ templates.club.key.urlsafe() }}" target="_blank">Edit Country template</a>
+                    {% if templates.country %}
+                    <a href="/admin/template/{{ templates.country.key.urlsafe() }}" target="_blank">Edit Country template</a>
                     {% else %}
-                    <a href="/admin/template/create/club/{{ country_object.key.urlsafe() }}" target="_blank">Create Country template</a>
+                    <a href="/admin/template/create/country/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Country template</a>
                     {% endif %}
                 </p>
 
@@ -97,7 +97,7 @@
                     {% if templates.team %}
                     <a href="/admin/template/{{ templates.team.key.urlsafe() }}" target="_blank">Edit Team template</a>
                     {% else %}
-                    <a href="/admin/template/create/team/{{ country_object.key.urlsafe() }}" target="_blank">Create Team template</a>
+                    <a href="/admin/template/create/team/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Team template</a>
                     {% endif %}
                     {% endif %}
                 </p>
@@ -126,7 +126,7 @@
                     {% if templates.rep %}
                     <a href="/admin/template/{{ templates.rep.key.urlsafe() }}" target="_blank">Edit Rep template</a>
                     {% else %}
-                    <a href="/admin/template/create/rep/{{ country_object.key.urlsafe() }}" target="_blank">Create Representative template</a>
+                    <a href="/admin/template/create/rep/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Representative template</a>
                     {% endif %}
                     {% endif %}
                 </p>
