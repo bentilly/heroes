@@ -181,17 +181,17 @@ def render_country_home(country):
 	menu_squads = get_menu_squads(country.key)
 
 
-	# RENDER TEMPLATE =========
+	# RENDER TEMPLATE ===========================
 	sport = country.key.parent().get()
 
-	templates_entries = Template.query(Template.label == 'country', ancestor=country.key).fetch()
-	if len(templates_entries) > 0: #Check for custom COUNTRY template
-		t=templates_entries[0].content
-	else: #Check for default template at SPORT
-		templates_entries = Template.query(Template.label == 'country', ancestor=sport.key).fetch()
-		if len(templates_entries) > 0: #Check for custom COUNTRY template
-			t=templates_entries[0].content
-		else:
+	try:
+		templates = Template.query(Template.label == 'country', ancestor=country.key).fetch()
+		t = templates[0].content
+	except:
+		try:
+			templates = Template.query(Template.label == 'd_country', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
 			t="no template found"
 
 	return render_template_string(t,
@@ -228,14 +228,14 @@ def render_squad(squad):
 	# RENDER TEMPLATE =========
 	sport = country.key.parent().get()
 
-	templates_entries = Template.query(Template.label == 'team', ancestor=country.key).fetch()
-	if len(templates_entries) > 0: #Check for custom COUNTRY template
-		t=templates_entries[0].content
-	else: #Check for default template at SPORT
-		templates_entries = Template.query(Template.label == 'team', ancestor=sport.key).fetch()
-		if len(templates_entries) > 0: #Check for custom COUNTRY template
-			t=templates_entries[0].content
-		else:
+	try:
+		templates = Template.query(Template.label == 'team', ancestor=country.key).fetch()
+		t = templates[0].content
+	except:
+		try:
+			templates = Template.query(Template.label == 'd_team', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
 			t="no template found"
 
 	return render_template_string(t,
@@ -270,14 +270,14 @@ def render_rep(rep):
 	country = country_key.get()
 	sport = country_key.parent().get()
 
-	templates_entries = Template.query(Template.label == 'rep', ancestor=country.key).fetch()
-	if len(templates_entries) > 0: #Check for custom COUNTRY template
-		t=templates_entries[0].content
-	else: #Check for default template at SPORT
-		templates_entries = Template.query(Template.label == 'rep', ancestor=sport.key).fetch()
-		if len(templates_entries) > 0: #Check for custom COUNTRY template
-			t=templates_entries[0].content
-		else:
+	try:
+		templates = Template.query(Template.label == 'rep', ancestor=country.key).fetch()
+		t = templates[0].content
+	except:
+		try:
+			templates = Template.query(Template.label == 'd_rep', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
 			t="no template found"
 
 	return render_template_string(t,

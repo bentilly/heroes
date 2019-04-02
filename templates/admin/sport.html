@@ -151,26 +151,26 @@
                 </li>
                 <!-- Country -->
                 <li>
-                    {% if templates.country %}
-                    <a href="/admin/template/{{ templates.country.key.urlsafe() }}" target="_blank">Edit Country template</a>
+                    {% if templates.d_country %}
+                    <a href="/admin/template/{{ templates.d_country.key.urlsafe() }}" target="_blank">Edit Country template</a>
                     {% else %}
-                    <a href="/admin/template/create/country/{{ sportObject.key.urlsafe() }}" target="_blank">Add Country template</a>
+                    <a href="/admin/template/create/d_country/{{ sportObject.key.urlsafe() }}" target="_blank">Add Country template</a>
                     {% endif %}
                 </li>
                 <!-- Team -->
                 <li>
-                    {% if templates.team %}
-                    <a href="/admin/template/{{ templates.team.key.urlsafe() }}" target="_blank">Edit Team template</a>
+                    {% if templates.d_team %}
+                    <a href="/admin/template/{{ templates.d_team.key.urlsafe() }}" target="_blank">Edit Team template</a>
                     {% else %}
-                    <a href="/admin/template/create/team/{{ sportObject.key.urlsafe() }}" target="_blank">Add Team template</a>
+                    <a href="/admin/template/create/d_team/{{ sportObject.key.urlsafe() }}" target="_blank">Add Team template</a>
                     {% endif %}
                 </li>
                 <!-- Representative -->
                 <li>
-                    {% if templates.rep %}
-                    <a href="/admin/template/{{ templates.rep.key.urlsafe() }}" target="_blank">Edit Rep template</a>
+                    {% if templates.d_rep %}
+                    <a href="/admin/template/{{ templates.d_rep.key.urlsafe() }}" target="_blank">Edit Rep template</a>
                     {% else %}
-                    <a href="/admin/template/create/rep/{{ sportObject.key.urlsafe() }}" target="_blank">Add Rep template</a>
+                    <a href="/admin/template/create/d_rep/{{ sportObject.key.urlsafe() }}" target="_blank">Add Rep template</a>
                     {% endif %}
                 </li>
                 {% endif %}

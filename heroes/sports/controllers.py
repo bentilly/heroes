@@ -99,26 +99,29 @@ def sport_view(key):
 
 
     # TEMPLATES #
+    # NEED TO IGNORE COUNTRY TEMPLATES!!!!!!!!!!!!!!!
     templates = {
                     'sport': None,
-                    'country': None,
-                    'team': None,
-                    'rep': None
+                    'd_country': None,
+                    'd_team': None,
+                    'd_rep': None
                 }
     templates_entries = Template.query(ancestor=sport_key).fetch()
 
     for t in templates_entries:
+
+
         if t.label == 'sport':
             templates['sport'] = t
 
-        if t.label == 'country':
-            templates['country'] = t
+        if t.label == 'd_country':
+            templates['d_country'] = t
 
-        if t.label == 'team':
-            templates['team'] = t
+        if t.label == 'd_team':
+            templates['d_team'] = t
 
-        if t.label == 'rep':
-            templates['rep'] = t
+        if t.label == 'd_rep':
+            templates['d_rep'] = t
     
 
     return render_template('/admin/sport.html',

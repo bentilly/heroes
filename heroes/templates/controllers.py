@@ -19,7 +19,7 @@ def template_create(label, parent_key):
 	template = Template(label=label, content=content, parent=par_key)
 	template.put()
 
-	# ancestors
+	# ancestors for menu
 	p = template.key.parent().get()
 	if p.key.kind() == "Sport":
 		sport = p
