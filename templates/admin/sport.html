@@ -49,6 +49,18 @@
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}
+
+                <!-- TEMPLATE -->
+                {% if templates %}
+                <p>&nbsp;</p>
+                <p class="tiny">
+                    {% if templates.sport %}
+                    <a href="/admin/template/{{ templates.sport.key.urlsafe() }}" target="_blank">Edit Sport template</a>
+                    {% else %}
+                    <a href="/admin/template/create/sport/{{ sportObject.key.urlsafe() }}" target="_blank">Create custom Sport template</a>
+                    {% endif %}
+                </p>
+                {% endif %}
                 
             </div>
             <div class="listContainer">

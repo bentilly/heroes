@@ -1,0 +1,127 @@
+html,
+body{
+	font-family: 'Roboto', sans-serif;
+	/*font-family: 'Exo', sans-serif;*/
+	/*position: relative;*/
+}
+
+/*BLADES AND CONTAINERS*/
+.bggrey{
+	background-color: #f0f0f0;
+}
+
+.blade h2{
+	font-family: 'Exo', sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	margin-top: 50px;
+	color: #123456;
+	text-transform: uppercase;
+	border-bottom: 2px solid #123456;
+}
+.container{
+	max-width: 600px;
+	text-align: center;
+	margin:auto;
+}
+
+
+.hero{
+	height: 100%;
+}
+/*IMAGE*/
+.heroimage{
+	background: url(https://storage.googleapis.com/dev-sports-heroes.appspot.com/uwh/colUWH.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.attribution{
+	background: #123456;
+	color: white;
+	font-size: 10px;
+	padding-left: 5px;
+	padding-top: 2px;
+}
+.attribution a{
+	color: white;
+	opacity: .5;
+}
+
+/*HERO HEADER*/
+.heroheader{
+	background-color: #123456;
+	color: white;
+	height: 50px;
+	align-items: center;
+}
+.heroheader .left{
+	flex-basis: 40%;
+}
+.heroheader .left a{
+	color: white;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-left: 10px;
+}
+.heroheader .middle{
+	text-align: center;
+	flex-basis: 20%;
+}
+.heroheader .right{
+	text-align: right;
+	flex-basis: 40%;
+}
+.heroheader .right a{
+	color: white;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: 500;
+	border: 1px solid white;
+	padding: 7px 20px;
+	margin-right: 10px;
+	border-radius: 4px;
+}
+.heroheader .right a:hover{
+	background-color: rgb(255,255,255,0.3);
+}
+
+/*HERO BODY*/
+.herobody{
+	background-color: #123456;
+	color: white;
+	height: 110px;
+	text-align: center;
+}
+.herobody h1{
+	font-family: 'Exo', sans-serif;
+	font-size: 30px;
+	font-weight: 700;
+	margin-top: 10px;
+}
+.herobody h4{
+	font-weight: 200;
+}
+
+/*COUNTRIES*/
+.countries{
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+.country-list .country{
+	margin: 15px;
+}
+.country-list .country a{
+	color: #123456;
+}
+
+/*CONTACT*/
+.contact{
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+
+

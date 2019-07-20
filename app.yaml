@@ -3,7 +3,7 @@
 # ===============
 application: dev-sports-heroes #Development site
 # ===============
-version: 1-1-11-templatesystem-02
+version: 1-1-12-sporthome
 runtime: python27
 api_version: 1
 threadsafe: yes
