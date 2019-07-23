@@ -111,8 +111,11 @@ def update_entry(key):
         header = f.headers['Content-Type']
         parsed_header = parse_options_header(header)
         blob_key = parsed_header[1]['blob-key']
-        squadmember.photo_key = BlobKey(blob_key)
+        squadmember.photo_key = BlobKey(blob_key) #looks like Im not saving the Squadmenber.photo (!!???)
         logging.info("SQUADMEMBER: saved new blobkey")
+
+        # saves to Cloud Storage default bucket
+
         
     except:
         logging.info("No info - do nothing")

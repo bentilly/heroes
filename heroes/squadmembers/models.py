@@ -52,8 +52,13 @@ class Squadmember(Base):
     @property
     def photoUrl(self):
         # photo
+        logging.info("---------------------------------")
+        logging.info(self.photo_key)
+        logging.info(images.get_serving_url(self.photo_key))
+
         try:
-            image_url = images.get_serving_url(self.photo_key)
+            image_url = images.get_serving_url(self.photo_key) #<<<< NOT WORKING <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
         except:
             try:
                 # Get franchise-specific placeholder image
