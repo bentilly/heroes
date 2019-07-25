@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, render_template_string
 from google.appengine.ext import ndb
 from google.appengine.api import images
 
@@ -16,6 +16,9 @@ from heroes.squadmembers.models import Squadmember
 from heroes.teams.models import Team
 from heroes.squads.models import Squad
 from heroes.matches.models import Match
+from heroes.templates.models import Template
+
+
 
 heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 
@@ -28,8 +31,6 @@ heroesweb_bp = Blueprint('heroesweb_bp', __name__)
 	# 1. Evaluate base URL
 	# 2. Hand off to renderers
 def eval_base_url():
-	logging.info("EVAL URL")
-	logging.info(request.url)
 	#SPORT home page?
 	home = Sport.query(Sport.external_url == request.url).fetch(1)
 	if home:
@@ -61,7 +62,7 @@ def eval_country(key):
 
 @heroesweb_bp.route('squad/<key>/')
 	# 1. Retrieve SQUAD
-	# 2. Hand off to SQUAD PAGE renderer
+	# 2. Hand off to SQUAD PAGE renderer (Team template)
 def eval_squad(key):
 	squad_key = ndb.Key(urlsafe=key)
 	squad = squad_key.get()
@@ -88,30 +89,41 @@ def eval_rep(key):
 
 # ================================================================================
 # RENDERERS
+#	t = '<html><body>hello world!</body></html>'  # How to pull a template from database
+#	return render_template_string(t)
 # ================================================================================
+
+# NOTE: Gradually converting 
+#	SPORT => LEAGUE
+#	COUNTRY => CLUB
 
 
 def render_sh_home():
+	all_leagues = []
 
-	all_sports = Sport.query(Sport.published == True).fetch()
-	return render_template('public/sh-home.html',
-        allSports=all_sports,
-    )
+	leagues = Sport.query(Sport.published == True).order(Sport.name).fetch()
+	for l in leagues:
+		l_franchises = Country.query(Country.published == True, ancestor=l.key).order(Country.name).fetch()
+		league = {"name":l.name, "franchises":l_franchises}
+		all_leagues.append(league)
+
+	template_path = "public/sh-home.html"
+
+	return render_template(template_path,
+			leagues = all_leagues,
+		)
 
 
 def render_sport_home(sport):
 	countries = Country.query(Country.published == True, ancestor=sport.key).order(Country.name).fetch()
+	templates_entries = Template.query(Template.label == 'sport', ancestor=sport.key).fetch()
 
-	# Check for custom template using brute force. Probably a cleaner way to do this!
-	try:
-		template_path = "public/"+sport.code+"/sport.html"
-		return render_template(template_path,
-			sport = sport,
-			countries=countries,
-		)
-	except:
-		template_path = "public/default/sport.html"
-		return render_template(template_path,
+	if len(templates_entries) > 0:
+		t=templates_entries[0].content
+	else:
+		t="no template found"
+
+	return render_template_string(t,
 			sport = sport,
 			countries=countries,
 		)
@@ -169,22 +181,20 @@ def render_country_home(country):
 	menu_squads = get_menu_squads(country.key)
 
 
-	# RENDER TEMPLATE =========
-	# extra bits to pass to template
+	# RENDER TEMPLATE ===========================
 	sport = country.key.parent().get()
 
-	# Check for custom template using brute force. Probably a cleaner way to do this!
 	try:
-		template_path = "public/"+sport.code+"/"+country.code+"/country.html"
-		logging.info(template_path)
-		return render_template(template_path,  ##TODO: Update name case format (nzl-home.html)
-			heroSquads = hero_squads,
-			squads = menu_squads,
-			country = country,
-			sport = sport,
-		)
+		templates = Template.query(Template.label == 'country', ancestor=country.key).fetch()
+		t = templates[0].content
 	except:
-		return render_template('public/default/country.html',  ##TODO: Update name case format (nzl-home.html)
+		try:
+			templates = Template.query(Template.label == 'd_country', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
+			t="no template found"
+
+	return render_template_string(t,
 			heroSquads = hero_squads,
 			squads = menu_squads,
 			country = country,
@@ -219,17 +229,16 @@ def render_squad(squad):
 	sport = country.key.parent().get()
 
 	try:
-		logging.info("CREATE TEMPLATE")
-		template_path = "public/"+sport.code+"/"+country.code+"/team.html"
-		logging.info(template_path)
-		return render_template(template_path,
-			squad = squad,
-			squadmembers = squadMembers,
-			teamsquads = teamSquads, #for history
-			menusquads = menu_squads, #for menu
-		)
+		templates = Template.query(Template.label == 'team', ancestor=country.key).fetch()
+		t = templates[0].content
 	except:
-		return render_template('public/nzlTeam.html',
+		try:
+			templates = Template.query(Template.label == 'd_team', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
+			t="no template found"
+
+	return render_template_string(t,
 			squad = squad,
 			squadmembers = squadMembers,
 			teamsquads = teamSquads, #for history
@@ -262,25 +271,21 @@ def render_rep(rep):
 	sport = country_key.parent().get()
 
 	try:
-		template_path = "public/"+sport.code+"/"+country.code+"/rep.html"
-
-		return render_template(template_path,
-			squadmember = squadmember,
-			rep = rep,
-			squadmembers = squadmembers,
-			squads = menu_squads,
-		)
-
+		templates = Template.query(Template.label == 'rep', ancestor=country.key).fetch()
+		t = templates[0].content
 	except:
-		return render_template('public/nzlSquadmember.html',
+		try:
+			templates = Template.query(Template.label == 'd_rep', ancestor=sport.key).fetch()
+			t = templates[0].content
+		except:	
+			t="no template found"
+
+	return render_template_string(t,
 			squadmember = squadmember,
 			rep = rep,
 			squadmembers = squadmembers,
 			squads = menu_squads,
 		)
-
-
-
 
 
 # ================================================================================

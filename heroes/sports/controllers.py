@@ -5,7 +5,7 @@ from google.appengine.api import users
 
 import logging
 
-from .models import Sport
+from heroes.sports.models import Sport
 from heroes.countries.models import Country
 from heroes.divisions.models import Division
 from heroes.roles.models import Role
@@ -13,10 +13,30 @@ from heroes.events.models import Event
 from heroes.venues.models import Venue
 from heroes.trophies.models import Trophy
 from heroes.users.models import Editor
+from heroes.templates.models import Template
 
-
+# CLOUD STORAGE
+import os
+import cloudstorage
+from google.appengine.api import app_identity
+import ntpath
 
 sports_bp = Blueprint('sports', __name__)
+
+
+# CLOUD STORAGE #
+def get_bucket_name():
+    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    return bucket_name
+
+def is_local():
+    """ Check if you are currently running on localhost or on GAE. """
+    if os.environ.get('SERVER_NAME', '').startswith('localhost'):
+        return True
+    elif 'development' in os.environ.get('SERVER_SOFTWARE', '').lower():
+        return True
+    else:
+        return False
 
 
 # RENDERING #
@@ -60,6 +80,51 @@ def sport_view(key):
     event_entries = Event.query(ancestor=sport_key).order(Event.startdate).fetch()
     venue_entries = Venue.query(ancestor=sport_key).fetch()
     trophy_entries = Trophy.get_latest_revisions(ancestor=sport_key)
+
+
+    # CLOUD STORAGE #
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/files/'+sport.code+'/'
+    url = 'http://localhost:8080/_ah/gcs' if is_local() else 'https://storage.googleapis.com'
+    file_list = []
+
+    files = cloudstorage.listbucket(bucket_and_folder, delimiter='/')
+    for f in files:
+        filename = f.filename
+        basename = ntpath.basename(f.filename)
+        if basename:
+            filepath = url+f.filename
+            file = {'filename':filename, 'basename':basename, 'filepath':filepath}
+            file_list.append(file)
+        else:
+            logging.info("Its a folder - dont show")
+
+
+
+    # TEMPLATES #
+    # NEED TO IGNORE COUNTRY TEMPLATES!!!!!!!!!!!!!!!
+    templates = {
+                    'sport': None,
+                    'd_country': None,
+                    'd_team': None,
+                    'd_rep': None
+                }
+    templates_entries = Template.query(ancestor=sport_key).fetch()
+
+    for t in templates_entries:
+
+
+        if t.label == 'sport':
+            templates['sport'] = t
+
+        if t.label == 'd_country':
+            templates['d_country'] = t
+
+        if t.label == 'd_team':
+            templates['d_team'] = t
+
+        if t.label == 'd_rep':
+            templates['d_rep'] = t
     
 
     return render_template('/admin/sport.html',
@@ -70,6 +135,8 @@ def sport_view(key):
             events=event_entries,
             venues=venue_entries,
             trophies=trophy_entries,
+            fileList = file_list,
+            templates = templates,
         )
 
 #NEW SPORT PAGE
@@ -79,9 +146,68 @@ def new_sport():
             object_title='New sport',
         )
 
+# FILES ==========================================================
+
+#UPLOAD A FILE
+@sports_bp.route('/uploadfile/<key>', methods=['POST'])
+def upload_file(key):
+
+    #TODO: dont upload if no file!
+
+    #get parent
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
+
+    # work out bucket and folder
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/files/'+sport.code
+
+    # read file
+    uploaded_file = request.files['uploaded-file']
+    file_content = uploaded_file.read()
+
+        # file name remove spaces
+    file_name = str(uploaded_file.filename).replace(" ", "-")
+    if file_name:
+        file_type = uploaded_file.content_type
+        # upload the file to Google Cloud Storage
+        gcs_file = cloudstorage.open(
+            bucket_and_folder + '/' + file_name,
+            'w',
+            content_type=file_type,
+            retry_params=cloudstorage.RetryParams(backoff_factor=1.1)
+            )
+        gcs_file.write(file_content)
+        gcs_file.close()
+    else:
+        logging.info('No file so dont save anything')
+
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
+
+#DELETE A FILE
+@sports_bp.route('/deletefile/<key>/<basename>')
+def delete_file(key, basename):
+
+    #get parent
+    sport_key = ndb.Key(urlsafe=key)
+    sport = sport_key.get()
+
+    # work out bucket and folder
+    bucket_name = get_bucket_name()
+    bucket_and_folder = '/'+bucket_name+'/files/'+sport.code #TODO Abstract to a helper
+    filename = bucket_and_folder+'/'+basename
+
+    try:
+        cloudstorage.delete(filename)
+    except:
+        logging.info('Could not delete file')
 
 
-# HANDLERS #
+    return redirect('/admin/sport/{}'.format(sport.key.urlsafe()))
+
+
+
+# HANDLERS ========================================#
 
 # ADD SPORT
 @sports_bp.route('/add', methods=['POST'])

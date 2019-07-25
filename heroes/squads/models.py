@@ -1,4 +1,6 @@
 from google.appengine.ext import ndb
+import logging
+import os
 
 from heroes import fields
 from heroes.models import Base
@@ -10,6 +12,7 @@ from google.appengine.api import images
 class Squad(Base):
     # TEAM IS PARENT
     event = ndb.KeyProperty(kind=Event, required=True)
+    code = ndb.StringProperty(required=False) #uid for this squad. Enables multiple squads in a year
 
     photo = ndb.BlobProperty()
     photo_key = ndb.BlobKeyProperty()
@@ -62,11 +65,19 @@ class Squad(Base):
         try:
             image_url = images.get_serving_url(self.photo_key)
         except:
-            # Get placeholder image
-            # SPORT > COUNTRY > TEAM > SQUAD
-            country = self.key.parent().parent().get()
-            sport = country.key.parent().get()
-            image_url = "/static/"+sport.code+"/"+country.code+"/img/imgplaceholder.png"
+            try:
+                # Get franchise-specific placeholder image
+                # SPORT > COUNTRY > REP
+                country = self.key.parent().parent().get()
+                sport = country.key.parent().get()
+                url = "static/"+sport.code+"/"+country.code+"/img/imgplaceholder-wide.png"
+                if os.path.isfile(url):
+                    return "/"+url
+                else:
+                    image_url = "/static/img/placeholder-wide.png"
+            except:
+                # Catchall
+                image_url = "/static/img/placeholder-wide.png"
 
         return image_url
 

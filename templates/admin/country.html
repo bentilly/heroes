@@ -6,6 +6,7 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/sanitize.css">
+        <link rel="stylesheet" href="/static/css/heroes-flex.css">
         <link rel="stylesheet" href="/static/css/heroes.css">
     </head>
     <body>
@@ -45,6 +46,18 @@
                     <input type="text" name="externalUrl" value="{{ country_object.external_url }}">
                     <button type="submit">Save</button>
                 </form>
+
+                <br />
+
+                <!-- TEMPLATE -->
+                <p class="tiny">
+                    {% if templates.country %}
+                    <a href="/admin/template/{{ templates.country.key.urlsafe() }}" target="_blank">Edit Country template</a>
+                    {% else %}
+                    <a href="/admin/template/create/country/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Country template</a>
+                    {% endif %}
+                </p>
+
                 
                 {% else %}
                 <form name="countryForm" action="/admin/country/add/{{ sport_object.key.urlsafe() }}" method=post>
@@ -61,6 +74,8 @@
                 {% endif %}
                 
             </div>
+
+            
             
             <!-- TEAMS -->
             <div class="listContainer">
@@ -73,6 +88,20 @@
                     <li><a href="{{ team.link }}">{{ team.title }}</a></li>
                     {% endfor %} 
                 </ul>
+
+                <br />
+
+                <!-- TEMPLATE -->
+                <p class="tiny">
+                    {% if templates %}
+                    {% if templates.team %}
+                    <a href="/admin/template/{{ templates.team.key.urlsafe() }}" target="_blank">Edit Team template</a>
+                    {% else %}
+                    <a href="/admin/template/create/team/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Team template</a>
+                    {% endif %}
+                    {% endif %}
+                </p>
+
             
             </div>
             
@@ -89,7 +118,18 @@
                     <li><a href="{{ rep.link }}">{{ rep.title }}</a></li>
                     {% endfor %} 
                 </ul>
-            
+
+                <br />
+                <!-- TEMPLATE -->
+                <p class="tiny">
+                    {% if templates %}
+                    {% if templates.rep %}
+                    <a href="/admin/template/{{ templates.rep.key.urlsafe() }}" target="_blank">Edit Rep template</a>
+                    {% else %}
+                    <a href="/admin/template/create/rep/{{ country_object.key.urlsafe() }}" target="_blank">Create custom Representative template</a>
+                    {% endif %}
+                    {% endif %}
+                </p>
             </div>
             
             <!-- ROLES -->
@@ -107,7 +147,8 @@
                 </ul>
             
             </div>
-            
+
+            <!-- POSITIONS -->
             <div class="listContainer">
                 <div class="listTitle">
                     <h3>Positions</h3>
@@ -122,6 +163,30 @@
                 </ul>
             
             </div>
+
+            <!-- FILES -->
+            {% if country_object %}
+            <div class="listContainer">
+                <div class="listTitle">
+                    <h3>Files</h3>
+                </div>
+                <p class="tiny">Files used in templates, eg: .css files or template images. Please limit to 1MB max. WARNING: Files are not backed up</p>
+                <ul class="standardList fileList">
+                    {% for f in fileList %}
+                        <li class="flexr sb fileCard">
+                            <a href="{{ f.filepath }}" target="_blank">{{ f.basename }}</a>
+                            <a href="/admin/country/deletefile/{{ country_object.key.urlsafe() }}/{{ f.basename }}" class="fileDelete"><i class="fa fa-trash"></i></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <!-- UPLOAD FILE FORM -->
+                <form action="/admin/country/uploadfile/{{ country_object.key.urlsafe() }}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="uploaded-file">
+                    <button type="submit">Upload</button>
+                </form>
+            
+            </div>
+            {% endif %}
             
             
     </body>

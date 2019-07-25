@@ -1,34 +1,71 @@
 <!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Sports heroes</title>
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/sanitize.css">
-        <link rel="stylesheet" href="/static/css/heroes.css">
-    </head>
-    <body>
-        
-        <div id="contentParent">
-            <div class="attributeContainer">
-                <div>
-                    <h1>Sports Heroes</h1>
-                </div>
-            </div>
-            <div class="listContainer">
-                <div class="listTitle">
-                    <h3>Sports</h3>
-                </div>
-                <ul class="standardList">
-                    
-                    {% for sport in allSports %}
-                    <li><a href="{{ sport.publiclink }}">{{ sport.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/sh-home.css" rel="stylesheet">
+
+    <title>Sports Heroes : Your team's hall of fame</title>
+  </head>
+
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">SH</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <div class="dropdown">
+              <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Teams
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+
+                {% for l in leagues %}
+                <h6 class="dropdown-header">{{l.name}}</h6>
+                {% for f in l.franchises %}
+                <a class="dropdown-item" href="{{ f.publiclink }}">{{f.name}}</a>
+                {% endfor %}
+                <div class="dropdown-divider"></div>
+                {% endfor %}
+
+
+                <!-- <h6 class="dropdown-header">Handball</h6>
+                <a class="dropdown-item" href="#">New Zealand</a>
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Underwater&nbsp;Hockey</h6>
+                <a class="dropdown-item" href="#">Belgium</a>
+                <a class="dropdown-item" href="#">New Zealand</a> -->
+              </div>
             </div>
         </div>
+      </header>
 
-    </body>
+      <main role="main" class="inner cover horizon">
+        <h1 class="cover-heading">Sports Heroes</h1>
+        <p class="lead">Your team's hall of fame</p>
+        <p class="lead">
+          <a href="mailto:info@sportsheroes.net" class="btn btn-lg btn-secondary">Create your team</a>
+        </p>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <small><a href="mailto:info@sportsheroes.net">info@sportsheroes.net</a></small>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
 </html>

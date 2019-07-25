@@ -28,6 +28,8 @@
                 <form name="divisionForm" action="/admin/division/update/{{ division_object.key.urlsafe() }}" method=post>
                     <label>division name</label>
                     <input type="text" name="divisionName" value="{{ division_object.name }}">
+                    <label>division code</label>
+                    <input type="text" name="divisionCode" value="{{ division_object.code }}">
                     <button type="submit">Save</button>
                 </form>
                 
@@ -35,6 +37,8 @@
                 <form name="divisionForm" action="/admin/division/add/{{ sport_object.key.urlsafe() }}" method=post>
                     <label>division name</label>
                     <input type="text" name="divisionName">
+                    <label>division code</label>
+                    <input type="text" name="divisionCode">
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

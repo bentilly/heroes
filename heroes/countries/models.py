@@ -2,6 +2,7 @@ from google.appengine.ext import ndb
 
 from heroes import fields
 from heroes.models import Base
+from heroes.templates.models import Template
 
 class Country(Base):
 	#Parent = Sport

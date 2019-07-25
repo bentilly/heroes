@@ -1,9 +1,9 @@
 # ===============
-# application: sports-heroes # PRODUCTION dont break!!!
+application: sports-heroes # PRODUCTION dont break!!!
 # ===============
-# application: dev-sports-heroes #vDevelopment site
+# application: dev-sports-heroes #Development site
 # ===============
-version: 1-1-8-handballtemplate
+version: 1-1-14-clouduploads
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -15,6 +15,7 @@ handlers:
 #NEXT main.py
 
 - url: .*
+  # script: gcs2.app #testing cloudstorage
   script: main.app
 #NEXT main.py
 

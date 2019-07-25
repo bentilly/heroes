@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="bs01.css" rel="stylesheet">
+
+    <title>Floyd Pepper : Spain : Underwater Hockey : Sports Heroes</title>
+  </head>
+  <body>
+
+
+
+<!-- HEADER ======================== -->
+<header>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">🇪🇸 Underwater Hockey - Spain</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sh-navbarToggler" aria-controls="sh-navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="sh-navbarToggler">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Teams
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Elite Men</a>
+            <a class="dropdown-item" href="#">Elite Women</a>
+            <a class="dropdown-item" href="#">Under 21 Men</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+
+<!-- MAIN ======================== -->
+<main role="main">
+
+<!-- HERO .................... -->
+
+<div class="container sh-rep-hero">
+  <div class="row justify-content-center">
+    <div class="col">
+      <h6>Player Profile</h6>
+      <h1>Floyd Pepper</h1> <!-- {{ rep.title }} -->
+      <div><img src="img/ralph.png"></div>
+    </div>
+    <div class="col sh-rep-stats">
+        <!-- {% if rep.stats %} --><!-- {% for stat in rep.stats %} -->
+        <div class="sh-rep-stat">
+          <small>Player number</small><!-- {{ stat.label }} -->
+          <h4>#44</h4><!-- {{ stat.value }} -->
+        </div>
+        <div class="sh-rep-stat">
+          <small>Weight</small><!-- {{ stat.label }} -->
+          <h4>92kg</h4><!-- {{ stat.value }} -->
+        </div>
+        <div class="sh-rep-stat">
+          <small>Home town</small><!-- {{ stat.label }} -->
+          <h4>Auckland</h4><!-- {{ stat.value }} -->
+        </div>
+        <div class="sh-rep-stat">
+          <small>A really long stat</small><!-- {{ stat.label }} -->
+          <h4>That thing that Im pretty good at</h4><!-- {{ stat.value }} -->
+        </div>
+        <!-- {% endfor %} --><!-- {% endif %} -->
+    </div>
+  </div>
+</div>
+
+<div class="sh-rep-history">
+  <div class="container">
+    <h6>Player History</h6>
+    <hr />
+
+    <!-- ITEM -->
+    <div class="row justify-content-center">
+      <div class="col sh-rep-history-info">
+        <h4><a href="#" class=""><!-- {{ sm.key.parent().get().publiclink }} -->
+          2019 ESP Elite Men
+            <!-- {{ sm.key.parent().get().eventdate.year }} {{ sm.key.parent().get().teamName }} -->
+        </a></h4>
+        <p>Player - Captain</p><!-- {{ sm.roleName }} - {{ sm.positionName }} -->
+        <small>World Championships <br /><!-- {{ sm.key.parent().get().event.get().name }} -->
+        Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
+      </div>
+      <div class="col sh-rep-history-img">
+        <a href="#"><img class="img-thumbnail" src="img/ralph.png"></a>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div class="row justify-content-center">
+      <div class="col sh-rep-history-info">
+        <h4><a href="#" class=""><!-- {{ sm.key.parent().get().publiclink }} -->
+          2019 ESP Elite Men
+            <!-- {{ sm.key.parent().get().eventdate.year }} {{ sm.key.parent().get().teamName }} -->
+        </a></h4>
+        <p>Player - Captain</p><!-- {{ sm.roleName }} - {{ sm.positionName }} -->
+        <small>World Championships <br /><!-- {{ sm.key.parent().get().event.get().name }} -->
+        Wellington, New Zealand</small><!-- {{ sm.key.parent().get().event.get().hostCity }} -->
+      </div>
+      <div class="col sh-rep-history-img">
+        <a href="#"><img class="img-thumbnail" src="img/ralph.png"></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</main>
+
+<!-- FOOTER ======================== -->
+<footer class="text-muted">
+  <div class="container">
+    <p class="float-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>This hall of fame is powered by <a href="#">Sports Heroes</a></p>
+  </div>
+</footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
