@@ -6,6 +6,7 @@ from heroes.sports.models import Sport
 
 class Division(Base):
 	name = ndb.StringProperty(required=True)
+	code = ndb.StringProperty(required=False)
 
 	@property
 	def title(self):

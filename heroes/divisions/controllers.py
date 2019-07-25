@@ -55,7 +55,7 @@ def add_entry(parent_key):
 	sport_key = ndb.Key(urlsafe=parent_key)
 	sport = sport_key.get()
 
-	division = Division(name=request.form['divisionName'], parent=sport_key)
+	division = Division(name=request.form['divisionName'], code=request.form['divisionCode'], parent=sport_key)
 	division.put()
 
 	#Update TEAMS
@@ -73,6 +73,7 @@ def update_entry(key):
     division_key = ndb.Key(urlsafe=key)
     division = division_key.get()
     division.name = request.form['divisionName']
+    division.code = request.form['divisionCode']
     division.put()
 
     return redirect('/admin/division/{}'.format(division.key.urlsafe()))

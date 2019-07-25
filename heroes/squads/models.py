@@ -12,6 +12,7 @@ from google.appengine.api import images
 class Squad(Base):
     # TEAM IS PARENT
     event = ndb.KeyProperty(kind=Event, required=True)
+    code = ndb.StringProperty(required=False) #uid for this squad. Enables multiple squads in a year
 
     photo = ndb.BlobProperty()
     photo_key = ndb.BlobKeyProperty()

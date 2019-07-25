@@ -30,7 +30,9 @@
 
                         <label>Photo</label>
                         <input type="file" name="photo" id="photo">
-                        <button type="submit">Upload</button>
+                        <label>Squad code (usually just the year unless there is more than one squad in a year)</label>
+                        <input type="text" name="squadCode" value="{{ squad_object.code }}">
+                        <button type="submit">Save & Upload</button>
 
                     </form>
 

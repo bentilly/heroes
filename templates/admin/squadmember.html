@@ -26,7 +26,9 @@
                 
                 
                 {% if squadmember_object %}
-                <form name="squadForm" action="{{ upload_url }}" method=post enctype="multipart/form-data">
+                <!-- <form name="squadForm" action="{{ upload_url }}" method=post enctype="multipart/form-data"> -->
+                    <!-- dont need special upload url for cloud storage -->
+                    <form action="/admin/squadmember/update/{{ squadmember_object.key.urlsafe() }}" method="post" enctype="multipart/form-data">
                     <label>Role in squad</label>
                     <select name="roleinput">
                         {% if squadmember_object.role %}
@@ -58,13 +60,15 @@
                     
                     
                     <label>Photo</label>
-                    <input type="file" name="photo" id="photo">
+                    <input type="file" name="uploaded-file">
                     
                     
                     <button type="submit">Save</button>
                 </form>
-
-                <img src="{{ photo_url }}">
+                <p>&nbsp;</p>
+                <label>Squadmember photo</label>
+                <p class="">{{ squadmember_object.photoUrl }}  <a href="/admin/squadmember/deletephoto/{{ squadmember_object.key.urlsafe() }}" class="photoDelete"><i class="fa fa-trash"></i></a></p>
+                <img src="{{ squadmember_object.photoUrl }}">
                 
                 {% endif %}
             </div>

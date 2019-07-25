@@ -171,6 +171,11 @@ def upload_squad_photo(key):
 	squad = squad_key.get()
 
 
+	squad.code = request.form['squadCode']
+	squad.put()
+
+	### Replace PHOTO UPLOAD with cloud storage methods
+
 	# TODO: may be deleting photo if no file selected
 	# was a photo uploaded
 	f = None
