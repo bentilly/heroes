@@ -24,19 +24,21 @@
                     <h1>{{ object_title }}</h1>
                 </div>
                 
-                {% if squad_object %}
-                
-                    <form name="squadPhotoForm" action="{{ upload_url }}" method=post enctype="multipart/form-data">
+                {% if squad_object %}                
+                    <form name="squadPhotoForm" action="/admin/squad/update/{{ squad_object.key.urlsafe() }}" method=post enctype="multipart/form-data">
 
-                        <label>Photo</label>
-                        <input type="file" name="photo" id="photo">
                         <label>Squad code (usually just the year unless there is more than one squad in a year)</label>
                         <input type="text" name="squadCode" value="{{ squad_object.code }}">
+                        <label>Photo</label>
+                        <input type="file" name="uploaded-file">
                         <button type="submit">Save & Upload</button>
 
                     </form>
 
-                    <img src="{{ photo_url }}">
+                    <p>&nbsp;</p>
+                    <label>Squad photo</label>
+                    <p class="">{{ squad_object.photoUrl }}  <a href="/admin/squad/deletephoto/{{ squad_object.key.urlsafe() }}" class="photoDelete"><i class="fa fa-trash"></i></a></p>
+                    <img src="{{ squad_object.photoUrl }}">
                 
                 {% else %}
                 <form name="squadForm" action="/admin/squad/add/{{ team_object.key.urlsafe() }}" method=post>

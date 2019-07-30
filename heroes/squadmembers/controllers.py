@@ -72,7 +72,7 @@ def squadmember_view(key):
         roles=role_entries,
         # photo_url=image_url,
         positions=position_entries,
-        upload_url=upload_url,
+        # upload_url=upload_url,
     )
 
 

@@ -4,7 +4,7 @@ from google.appengine.ext import ndb
 
 import logging
 
-# For photos
+# For photos (might not need any more)
 from google.appengine.api import images
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
@@ -19,7 +19,30 @@ from heroes.matches.models import Match
 from heroes.matchteams.models import Matchteam
 from heroes.representatives.models import Rep
 
+# CLOUD STORAGE
+import os
+import cloudstorage
+from google.appengine.api import app_identity
+import ntpath
+
+
+
 squad_bp = Blueprint('squad', __name__)
+
+# CLOUD STORAGE #
+def get_bucket_name():
+    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    return bucket_name
+
+def is_local():
+    """ Check if you are currently running on localhost or on GAE. """
+    if os.environ.get('SERVER_NAME', '').startswith('localhost'):
+        return True
+    elif 'development' in os.environ.get('SERVER_SOFTWARE', '').lower():
+        return True
+    else:
+        return False
+
 
 # RENDERING #
 
@@ -88,13 +111,13 @@ def squad_view(key):
 		team_matches.append(team_match)
 
 	#-----PHOTO for this squad
-	try:
-		image_url = images.get_serving_url(squad.photo_key)
-	except:
-		image_url = "avatar"
+	# try:
+	# 	image_url = images.get_serving_url(squad.photo_key)
+	# except:
+	# 	image_url = "avatar"
 
-	form_action = "/admin/squad/uploadPhoto/" +  key
-	upload_url = blobstore.create_upload_url(form_action)
+	# form_action = "/admin/squad/uploadPhoto/" +  key
+	# upload_url = blobstore.create_upload_url(form_action)
 
 
 	return render_template('/admin/squad.html',
@@ -106,8 +129,8 @@ def squad_view(key):
 		team_matches=team_matches,
 		matchteams=matchteam_entries,
 		rep_squadmembers=rep_squadmembers,
-		photo_url=image_url,
-		upload_url = upload_url,
+		# photo_url=image_url,
+		# upload_url = upload_url,
 	)
 
 #NEW squad PAGE
@@ -163,56 +186,95 @@ def remove_entry(squad_key):
 
 	return redirect('/admin/team/{}'.format(team_key.urlsafe()))
 
-# UPLOAD squad photo
-@squad_bp.route('/uploadPhoto/<key>', methods=['POST'])
-def upload_squad_photo(key):
+
+# UPDATE squad
+@squad_bp.route('/update/<key>', methods=['POST'])
+def update_entry(key):
 
 	squad_key = ndb.Key(urlsafe=key)
 	squad = squad_key.get()
 
+	if request.form['squadCode']:
+		squad.code = request.form['squadCode']
 
-	squad.code = request.form['squadCode']
+
+	#SQUAD PHOTO
+	#define file name and path
+	#   [bucket] /photos/[sport]/[country]/[division]/[squad(year)]/[first]-[last].jpg
+	#   - crap if anything changes name (but not too hard to fix)
+	#   - good for bulk upload
+	#   - only works for jpgs
+	uploaded_file = request.files['uploaded-file']
+	file_content = uploaded_file.read()
+
+	if file_content:
+		logging.info(" THERE IS A PHOTO!")
+		# check for jpg
+		file_type = uploaded_file.content_type
+
+		if file_type == "image/jpeg":
+			filepath = generate_photo_filename(squad_key)
+
+			# upload the file to Google Cloud Storage
+			gcs_file = cloudstorage.open(
+				filepath ,
+				'w',
+				content_type=file_type,
+				retry_params=cloudstorage.RetryParams(backoff_factor=1.1)
+				)
+			gcs_file.write(file_content)
+			gcs_file.close()
+
+		else:
+			logging.info("Wrong image type")
+
+	else:
+		logging.info("No photo uploaded")
+
 	squad.put()
 
-	### Replace PHOTO UPLOAD with cloud storage methods
-
-	# TODO: may be deleting photo if no file selected
-	# was a photo uploaded
-	f = None
-	try:
-		f = request.files['photo']
-	except:
-		pass
-
-	# delete old photo
-	if f:
-		try:
-			blob_key = squad.photo_key
-			blob = blobstore.BlobInfo.get(blob_key)
-			blob.delete()
-			logging.info("SQUAD: deleted old photo")
-		except:
-			logging.info("SQUAD: no photo to delete")
-
-	# Record new blobkey
-	try:
-		header = f.headers['Content-Type']
-		parsed_header = parse_options_header(header)
-		blob_key = parsed_header[1]['blob-key']
-		squad.photo_key = BlobKey(blob_key)
-		logging.info("SQUAD: saved new blobkey for TEAM PHOTO")
-		squad.put()
-
-	except:
-		logging.info("SQUAD: didnt save new TEAM PHOTO")
+	return redirect('/admin/squad/{}'.format(squad.key.urlsafe()))
 
 
-	return redirect('/admin/squad/{}'.format(squad_key.urlsafe()))
+# DELETE PHOTO
+@squad_bp.route('/deletephoto/<squad_key>/', methods=['GET'])
+def delete_photo(squad_key):
+    squad_key = ndb.Key(urlsafe=squad_key)
+    squad = squad_key.get()
+    filepath = generate_photo_filename(squad_key)
+    try:
+        cloudstorage.delete(filepath)
+    except:
+        logging.info("NO PHOTO TO DELETE")
+
+    return redirect('/admin/squad/{}'.format(squad.key.urlsafe()))
 
 
 
+# ================================================================================
+# HELPERS
+# ================================================================================
 
+def generate_photo_filename(squad_key):
+    bucket_name = get_bucket_name()
+    #get parent objects
+    squad = squad_key.get()
+    team_key = squad_key.parent()
+    country_key = team_key.parent()
+    sport_key = country_key.parent()
+    # file path codes
+    sport_code = sport_key.get().code
+    country_code = country_key.get().code
+    division_code = team_key.get().division.get().code
+    squad_code = squad_key.get().code
+    #bucket and folder
+    bucket_and_folder = '/'+bucket_name+'/photos/'+sport_code+'/'+country_code+'/'+division_code+'/'+squad_code
+    logging.info(bucket_and_folder)
+    #file name
+    file_name = squad_code+'-'+country_code+'-'+division_code
+    file_name = file_name+'.jpg'
 
+    return bucket_and_folder + '/' + file_name
 
 
 
