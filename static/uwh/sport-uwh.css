@@ -31,7 +31,7 @@ body{
 }
 /*IMAGE*/
 .heroimage{
-	background: url(https://storage.googleapis.com/sports-heroes.appspot.com/uwh/colUWH.jpg) no-repeat center center fixed;
+	background: url(https://storage.googleapis.com/sports-heroes.appspot.com/uwh/colUWH.jpg) no-repeat center center scroll; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -123,5 +123,21 @@ body{
 	margin-bottom: 50px;
 }
 
+@media only screen and (max-width: 450px) {
+	.herobody h1{
+		font-size: 24px;
+	}
+	.herobody h4{
+		font-size: 14px;
+	}
+}
+@media only screen and (max-width: 600px) {
+	.herobody h1{
+		font-size: 24px;
+	}
+	.herobody h4{
+		font-size: 14px;
+	}
+}
 
 
