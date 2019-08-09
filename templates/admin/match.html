@@ -26,21 +26,28 @@
                 
                 {% if match_object %}
                 <form name="matchForm" action="/admin/match/update/{{ match_object.key.urlsafe() }}" method=post>
-                    <label>match date</label>
-                    <input type="date" name="matchdate" value="{{ match_object.dateAsQuebec }}">
-                    
-                    <label>start time date</label>
-                    <input type="time" name="matchstarttime" value="{{ match_object.timeAsQuebec }}">
-                    
+                    <label>match start UTC</label>
+                    <strong>{{ match_object.timeproperty }}, {{ match_object.datestring }}</strong>
+                    <label>match time zone</label>
+                    <strong>{{ match_object.venue.get().timezone }}</strong>
+                    <label>match start LOCAL</label>
+                    <strong>{{ match_object.timeproperty_local }}, {{ match_object.datestring_local }}</strong>
+
                     <label>venue</label>
                     <select name="matchvenue">
-<!--                        <option value="{{ match_object.venue.urlsafe() }}">{{ match_object.venue.get().name }}</option>-->
                         {% for venue in venues %}
                         <option value="{{ venue.key.urlsafe() }}"
                                 {% if match_object.venue.urlsafe() == venue.key.urlsafe() %} selected="selected" {% endif %}
                                 >{{ venue.name }}</option>
                         {% endfor %}
                     </select>
+
+                    <label>match date (local)</label>
+                    <input type="date" name="matchdate" value="{{ match_object.dateproperty_local }}">
+                    
+                    <label>start time date (local)</label>
+                    <input type="time" name="matchstarttime" value="{{ match_object.timeproperty_local }}">
+                    
                     
                     <label>division</label>
                     <select name="matchdivision">

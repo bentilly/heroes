@@ -28,6 +28,14 @@
                 <form name="venueForm" action="/admin/venue/update/{{ venue_object.key.urlsafe() }}" method=post>
                     <label>venue name</label>
                     <input type="text" name="venueName" value="{{ venue_object.name }}">
+                    <label>time zone</label>
+                    <select name="timezone">
+                        <!-- Hack in current selected timezone -->
+                        <option value="{{  venue_object.timezone }}">{{  venue_object.timezone }}</option>
+                        <option value="Pacific/Auckland">Pacific/Auckland</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Canada/Eastern">Canada/Eastern</option>
+                    </select>
                     <button type="submit">Save</button>
                 </form>
                 
@@ -35,6 +43,12 @@
                 <form name="venueForm" action="/admin/venue/add/{{ sport_object.key.urlsafe() }}" method=post>
                     <label>venue name</label>
                     <input type="text" name="venueName">
+                    <label>time zone</label>
+                    <select name="timezone">
+                        <option value="Pacific/Auckland">Pacific/Auckland</option>
+                        <option value="Europe/London">Europe/London</option>
+                        <option value="Canada/Eastern">Canada/Eastern</option>
+                    </select>
                     <button type="submit">Save</button>
                 </form>
                 {% endif %}

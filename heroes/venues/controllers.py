@@ -54,7 +54,7 @@ def add_entry(parent_key):
 	sport_key = ndb.Key(urlsafe=parent_key)
 	sport = sport_key.get()
 
-	venue = Venue(name=request.form['venueName'], parent=sport_key)
+	venue = Venue(name=request.form['venueName'], timezone=request.form['timezone'], parent=sport_key)
 	venue.put()
 
 	return redirect('/admin/venue/{}'.format(venue.key.urlsafe()))
@@ -66,6 +66,7 @@ def update_entry(key):
     venue_key = ndb.Key(urlsafe=key)
     venue = venue_key.get()
     venue.name = request.form['venueName']
+    venue.timezone = request.form['timezone']
     venue.put()
 
     return redirect('/admin/venue/{}'.format(venue.key.urlsafe()))

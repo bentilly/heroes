@@ -96,6 +96,7 @@ def eval_rep(key):
 # NOTE: Gradually converting 
 #	SPORT => LEAGUE
 #	COUNTRY => CLUB
+# 	TROPHY => TITLE
 
 
 def render_sh_home():
@@ -154,7 +155,8 @@ def render_country_home(country):
 	hero_squads.sort(key=getSquadTitle)  #TODO: Update name case format (get_squad_title)
 
 	#Next next match for each hero_squad in hero_squads
-	now = datetime.datetime.now() #now is UTC. match.date is also UTC
+	#	>>> NOW is UTC. match.date is also stored as UTC.
+	now = datetime.datetime.now() 
 
 	for hero_squad in hero_squads:
 		squad = hero_squad["squad"]
